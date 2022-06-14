@@ -6,7 +6,7 @@
     tools:actionBarNavMode="tabs"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     android:background="@color/dark_violet"
     tools:context=".screen.Login">
 
@@ -14,7 +14,23 @@
         android:layout_width="125dp"
         android:layout_height="117dp"
         android:contentDescription="@string/logo"
-        android:layout_marginBottom="400dp"
+        android:layout_marginTop="50dp"
         android:src="@drawable/ic_splash_white_logo" />
 
+    <com.google.android.material.card.MaterialCardView
+        style="@style/CustomCardCorners"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="100dp"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 </LinearLayout>
