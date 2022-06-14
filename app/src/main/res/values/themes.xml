@@ -32,4 +32,10 @@
         <item name="cornerSizeTopRight">59dp</item>
     </style>
 
+
+    <!-- Remove border bottom color of text field -->
+    <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">#fff</item>
+        <item name="boxStrokeWidth">2dp</item>
+    </style>
 </resources>

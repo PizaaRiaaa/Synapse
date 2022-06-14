@@ -41,27 +41,46 @@
                 android:textSize="30sp" />
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                android:theme="@style/LoginTextInputLayoutStyle"
+                app:boxStrokeColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:boxCornerRadiusBottomEnd="10dp"
-                app:boxCornerRadiusBottomStart="10dp"
-                android:layout_gravity="center_vertical"
-                app:boxCornerRadiusTopEnd="10dp"
-                app:boxCornerRadiusTopStart="10dp"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                app:endIconMode="clear_text">
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/etName"
+                    android:id="@+id/etEmail"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/email"
-                    android:inputType="textCapWords"
-                    android:maxWidth="335dp"
+                    android:layout_height="55dp"
+                    android:hint="@string/login_email"
+                    android:background="@color/light_grey_input"
                     android:textColor="@color/light_grey"
-                    android:textColorHint="@color/dark_violet" />
+                    android:textColorHint="@color/dark_grey"
+                    android:fontFamily="@font/roboto_bold" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/white"
+                android:layout_marginTop="20dp"
+                android:textColorHint="@color/dark_grey"
+                app:endIconMode="password_toggle">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:hint="@string/login_password"
+                    android:background="@color/light_grey_input"
+                    android:textColor="@color/light_grey"
+                    android:fontFamily="@font/roboto_bold"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
 
 
         </LinearLayout>
