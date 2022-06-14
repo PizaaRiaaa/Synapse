@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Synapse</string>
+    <string name="logo">logo</string>
+
+    <!-- ONBOARDING -->
+    <string name="subtitle">Heading</string>
+    <string name="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel libero hendrerit, euismod ligula non, pharetra nisi. In hac habitasse platea dictumst. Mauris elementum non dui et pulvinar.</string>
+    <string name="btnFinish">GET STARTED</string>
+
+</resources>
