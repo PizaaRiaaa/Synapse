@@ -55,8 +55,8 @@
                     android:layout_height="55dp"
                     android:hint="@string/login_email"
                     android:background="@color/light_grey_input"
-                    android:textColor="@color/light_grey"
-                    android:textColorHint="@color/dark_grey"
+                    android:textColor="@color/dark_grey"
+                    android:textColorHint="@color/light_grey"
                     android:fontFamily="@font/roboto_bold" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -76,7 +76,8 @@
                     android:layout_height="55dp"
                     android:hint="@string/login_password"
                     android:background="@color/light_grey_input"
-                    android:textColor="@color/light_grey"
+                    android:textColor="@color/dark_grey"
+                    android:textColorHint="@color/light_grey"
                     android:fontFamily="@font/roboto_bold"
                     />
             </com.google.android.material.textfield.TextInputLayout>
