@@ -44,7 +44,7 @@
         app:iconTint="@color/white"
         android:text="@string/btnFinish"
         android:textSize="13sp"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
 
 </RelativeLayout>

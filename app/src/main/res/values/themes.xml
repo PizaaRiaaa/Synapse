@@ -3,7 +3,7 @@
     <style name="Theme.Synapse" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/light_grey</item>
+        <item name="colorPrimary">@color/dark_violet</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
 
@@ -30,12 +30,5 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopLeft">59dp</item>
         <item name="cornerSizeTopRight">59dp</item>
-    </style>
-
-
-    <!-- Remove border bottom color of text field -->
-    <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-        <item name="boxStrokeColor">#fff</item>
-        <item name="boxStrokeWidth">2dp</item>
     </style>
 </resources>
