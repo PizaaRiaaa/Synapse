@@ -6,5 +6,7 @@
     <string name="subtitle">Heading</string>
     <string name="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel libero hendrerit, euismod ligula non, pharetra nisi. In hac habitasse platea dictumst. Mauris elementum non dui et pulvinar.</string>
     <string name="btnFinish">GET STARTED</string>
+    <string name="email">Email</string>
+    <string name="hello_again">Login</string>
 
 </resources>
