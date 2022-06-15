@@ -6,7 +6,7 @@
     <string name="subtitle">Heading</string>
     <string name="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel libero hendrerit, euismod ligula non, pharetra nisi. In hac habitasse platea dictumst. Mauris elementum non dui et pulvinar.</string>
     <string name="btnFinish">GET STARTED</string>
-    <string name="hello_again">Welcome to Synapse!</string>
+    <string name="hello_again">Login</string>
 
     <!-- LOGIN SCREEN -->
     <string name="login_email">Email</string>
@@ -14,5 +14,6 @@
     <string name="forgot_password">Forgot Password?</string>
     <string name="login">LOGIN</string>
     <string name="new_to_synapse">New to Synapse? Register</string>
+    <string name="glad_to_see_you_back">Glad to see you back</string>
 
 </resources>

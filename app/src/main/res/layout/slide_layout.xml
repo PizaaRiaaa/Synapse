@@ -27,7 +27,7 @@
                 android:id="@+id/slide_heading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
+                android:fontFamily="@font/redhatdisplay_light"
                 android:text="@string/subtitle"
                 android:textAlignment="center"
                 android:textColor="@color/dark_grey"
@@ -35,10 +35,10 @@
 
             <TextView
                 android:id="@+id/slide_desc"
-                android:layout_width="318dp"
+                android:layout_width="378dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/roboto_regular"
+                android:fontFamily="@font/redhatdisplay_light"
                 android:text="@string/description"
                 android:textAlignment="center"
                 android:textColor="@color/light_grey"

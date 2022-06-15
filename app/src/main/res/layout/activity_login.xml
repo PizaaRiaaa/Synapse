@@ -34,7 +34,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
+                android:fontFamily="@font/redhatdisplay_semibold"
                 android:gravity="center"
                 android:text="@string/hello_again"
                 android:textColor="@color/dark_grey"
@@ -43,10 +43,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
+                android:fontFamily="@font/redhatdisplay_regular"
                 android:gravity="center"
-                android:text="Stay connected with your love ones"
+                android:text="@string/glad_to_see_you_back"
                 android:textColor="@color/dark_grey"
+                android:layout_marginTop="15dp"
                 android:textSize="15sp" />
 
             <!-- EMAIL INPUT -->
@@ -64,9 +65,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:background="@drawable/rounded_text_login"
-                    android:fontFamily="@font/roboto_bold"
+                    android:fontFamily="@font/redhatdisplay_semibold"
                     android:hint="@string/login_email"
-                    android:textColor="@color/light_grey"
+                    android:textColor="@color/dark_violet"
                     android:textSize="16sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -87,7 +88,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:background="@drawable/rounded_text_login"
-                    android:fontFamily="@font/roboto_bold"
+                    android:fontFamily="@font/redhatdisplay_semibold"
                     android:hint="@string/login_password"
                     android:includeFontPadding="true"
                     android:textColor="@color/light_grey"
@@ -102,14 +103,14 @@
                 android:background="@drawable/rounded_button_login"
                 android:gravity="center"
                 android:text="@string/login"
-                android:fontFamily="@font/roboto_bold"
+                android:fontFamily="@font/redhatdisplay_bold"
                 android:textSize="14sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:fontFamily="@font/roboto_bold"
+                android:fontFamily="@font/redhatdisplay_bold"
                 android:text="@string/forgot_password"
                 android:textAlignment="center"
                 android:textColor="@color/dark_grey"
@@ -119,10 +120,11 @@
                 android:id="@+id/tvNewToSynapse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="10dp"
                 android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/redhatdisplay_regular"
                 android:text="@string/new_to_synapse"
                 android:textColor="@color/light_grey"
-                android:fontFamily="@font/roboto_medium"
                 android:textSize="15sp" />
         </LinearLayout>
 
