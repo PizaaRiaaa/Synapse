@@ -27,7 +27,7 @@ public class SliderAdapter extends PagerAdapter {
 
     // IMAGES
     public int[] slide_images = {
-            R.drawable.ic_logo,
+            R.drawable.ic_logo_with_text,
             R.drawable.ic_onboarding_2,
             R.drawable.ic_onboarding_3
     };

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:background="@color/dark_violet"
+    android:background="@drawable/ic_background"
     tools:context=".screen.Login">
 
     <ImageView
@@ -15,18 +15,18 @@
         android:layout_height="117dp"
         android:contentDescription="@string/logo"
         android:layout_marginTop="90dp"
-        android:src="@drawable/ic_splash_white_logo" />
+        android:src="@drawable/ic_splash_logo" />
 
     <com.google.android.material.card.MaterialCardView
         style="@style/CustomCardCorners"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="60dp"
         android:background="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:gravity="center_vertical"
             android:orientation="vertical">
@@ -34,74 +34,96 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_bold"
+                android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
                 android:text="@string/hello_again"
                 android:textColor="@color/dark_grey"
-                android:textSize="30sp" />
+                android:textSize="25sp" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center"
+                android:text="Stay connected with your love ones"
+                android:textColor="@color/dark_grey"
+                android:textSize="15sp" />
+
+            <!-- EMAIL INPUT -->
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-                app:boxStrokeColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                app:hintTextColor="@color/light_grey"
-                app:endIconMode="clear_text">
+                app:boxStrokeColor="@color/white"
+                app:endIconMode="clear_text"
+                app:hintTextColor="@color/mid_grey">
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/etEmail"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:background="@drawable/rounded_text_login"
+                    android:fontFamily="@font/roboto_bold"
                     android:hint="@string/login_email"
-                    android:textSize="16sp"
-                    android:textColor="@color/dark_grey"
-                    android:fontFamily="@font/roboto_bold" />
+                    android:textColor="@color/light_grey"
+                    android:textSize="16sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- PASSWORD INPUT -->
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:boxStrokeColor="@color/white"
                 android:layout_marginTop="20dp"
-                app:hintTextColor="@color/light_grey"
-                android:textColorHint="@color/dark_grey"
-                app:endIconMode="password_toggle">
+                android:textColorHint="@color/mid_grey"
+                app:boxStrokeColor="@color/white"
+                app:endIconMode="password_toggle"
+                app:hintTextColor="@color/mid_grey">
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/etPassword"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:background="@drawable/rounded_text_login"
-                    android:hint="@string/login_password"
-                    android:textSize="16sp"
-                    android:textColor="@color/dark_grey"
-                    android:includeFontPadding="true"
                     android:fontFamily="@font/roboto_bold"
-                    />
+                    android:hint="@string/login_password"
+                    android:includeFontPadding="true"
+                    android:textColor="@color/light_grey"
+                    android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/loginBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="13sp"
-                android:gravity="center"
-                android:layout_marginBottom="30dp"
+                android:layout_marginTop="30dp"
                 android:background="@drawable/rounded_button_login"
-                android:text="@string/login" />
+                android:gravity="center"
+                android:text="@string/login"
+                android:fontFamily="@font/roboto_bold"
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/roboto_bold"
                 android:text="@string/forgot_password"
                 android:textAlignment="center"
-                android:fontFamily="@font/roboto_bold"
-                android:layout_marginTop="15dp"
-                android:textSize="15sp"/>
+                android:textColor="@color/dark_grey"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tvNewToSynapse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/new_to_synapse"
+                android:textColor="@color/light_grey"
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="15sp" />
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
