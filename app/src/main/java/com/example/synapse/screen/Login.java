@@ -2,29 +2,53 @@ package com.example.synapse.screen;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
 import com.example.synapse.R;
+import com.google.firebase.auth.FirebaseAuth;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
-import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 
+
 public class Login extends AppCompatActivity {
+
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+        //  INITIALIZE FIREBASE AUTH
+        mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getCurrentUser() != null){
+            finish();
+            return;
+        }
+
+        Button btnLogin = findViewById(R.id.loginBtn);
+        btnLogin.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                authenticateUser();
+            }
+        });
+
+
+
+        // CHANGE SUBSTRING COLOR
+        TextView tvUserRegister = (TextView) findViewById(R.id.tvNewToSynapse);
         TextView tvRegister = findViewById(R.id.tvNewToSynapse);
         String text = "New to Synapse? Register";
 
@@ -36,10 +60,11 @@ public class Login extends AppCompatActivity {
         ssb.setSpan(dark_Violet, 17, 24, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         tvRegister.setText(ssb);
 
+
         // SHOW STATUS BAR
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        // TRANPARENT STATUS BAR
+        // TRANSPARENT STATUS BAR
         if (Build.VERSION.SDK_INT >= 21) {
             Window window = getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
@@ -51,5 +76,11 @@ public class Login extends AppCompatActivity {
             window.setStatusBarColor(Color.TRANSPARENT);
             window.setNavigationBarColor(Color.TRANSPARENT);
         }
+
+        // PROCEED TO REGISTER SCREEN
+        tvUserRegister.setOnClickListener(view -> {
+            startActivity(new Intent(Login.this, Register.class));
+        });
+
     }
  }
