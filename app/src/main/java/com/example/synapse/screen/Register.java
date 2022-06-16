@@ -93,7 +93,7 @@ public class Register extends AppCompatActivity {
     }
 
     private void showMainActivity(){
-       Intent intent = new Intent(this, Splashscreen.class);
+       Intent intent = new Intent(this, MainActivity.class);
        startActivity(intent);
        finish();
     }

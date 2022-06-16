@@ -117,7 +117,7 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/tvNewToSynapse"
+                android:id="@+id/tvSwitchToRegister"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
