@@ -1,14 +1,20 @@
 package com.example.synapse.screen;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import com.example.synapse.R;
+import com.example.synapse.Splashscreen;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseUser;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -16,7 +22,10 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -28,29 +37,48 @@ import android.widget.Toast;
 
 public class Login extends AppCompatActivity {
 
+    private EditText etEmail, etPassword;
     private FirebaseAuth mAuth;
+    private static final String TAG = "loginActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        etEmail = findViewById(R.id.etEmail);
+        etPassword = findViewById(R.id.etLoginPassword);
 
-        //  INITIALIZE FIREBASE AUTH
+        //  initialize firebase auth
         mAuth = FirebaseAuth.getInstance();
-        if(mAuth.getCurrentUser() != null){
-            finish();
-            return;
-        }
 
-        Button btnLogin = findViewById(R.id.loginBtn);
-        btnLogin.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                authenticateUser();
-            }
+        // login user
+        Button btnLogin = findViewById(R.id.btnLogin);
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view){
+                    String textEmail = etEmail.getText().toString();
+                    String textPassword = etPassword.getText().toString();
+
+                    if(TextUtils.isEmpty(textEmail)){
+                        Toast.makeText(Login.this, "Please enter your email", Toast.LENGTH_LONG).show();
+                        etEmail.setError("Email is required");
+                        etEmail.requestFocus();
+                    }else if(!Patterns.EMAIL_ADDRESS.matcher(textEmail).matches()){
+                        Toast.makeText(Login.this, "Please re-enter your email", Toast.LENGTH_LONG).show();
+                        etEmail.setError("Valid email is required");
+                        etPassword.requestFocus();
+                   }else if(TextUtils.isEmpty(textPassword)){
+                        Toast.makeText(Login.this, "Please enter your password", Toast.LENGTH_LONG).show();
+                        etPassword.setError("Password is required");
+                        etPassword.requestFocus();
+                   }else{
+                        loginUser(textEmail, textPassword);
+                    }
+             }
         });
 
+        // proceed to register screen
         TextView tvSwitchToRegister = findViewById(R.id.tvSwitchToRegister);
         tvSwitchToRegister.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -59,24 +87,10 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        // CHANGE SUBSTRING COLOR
-        TextView tvUserRegister = (TextView) findViewById(R.id.tvSwitchToRegister);
-        TextView tvRegister = findViewById(R.id.tvSwitchToRegister);
-        String text = "New to Synapse? Register";
-
-        SpannableString ss = new SpannableString(text);
-        SpannableStringBuilder ssb = new SpannableStringBuilder(text);
-
-        ForegroundColorSpan dark_Violet = new ForegroundColorSpan(ContextCompat.getColor(this, R.color.dark_violet));
-
-        ssb.setSpan(dark_Violet, 17, 24, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        tvRegister.setText(ssb);
-
-
-        // SHOW STATUS BAR
+        // show status bar
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        // TRANSPARENT STATUS BAR
+        // transparent status bar
         if (Build.VERSION.SDK_INT >= 21) {
             Window window = getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
@@ -88,42 +102,83 @@ public class Login extends AppCompatActivity {
             window.setStatusBarColor(Color.TRANSPARENT);
             window.setNavigationBarColor(Color.TRANSPARENT);
         }
+    }
 
-        // PROCEED TO REGISTER SCREEN
-        tvUserRegister.setOnClickListener(view -> {
-            startActivity(new Intent(Login.this, Register.class));
+    private void loginUser(String email, String password){
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+
+                    // get instance of the current user
+                    FirebaseUser firebaseUser = mAuth.getCurrentUser();
+
+                    // check if email is verified before user can access the MainActivity
+                    if(firebaseUser.isEmailVerified()){
+                        Toast.makeText(Login.this, "You are logged in now", Toast.LENGTH_LONG).show();
+
+                        // open user's MainActivity
+                    }else{
+                        firebaseUser.sendEmailVerification();
+                        mAuth.signOut();
+                        showAlertDialog();
+                    }
+
+                }else{
+                    try{
+                         throw task.getException();
+                    }catch(FirebaseAuthInvalidUserException e){
+                         etEmail.setError("User does not exists or is not longer valid. Please register again.");
+                         etEmail.requestFocus();
+                    }catch(FirebaseAuthInvalidCredentialsException e){
+                        etPassword.setError("Invalid credentials. Kindly, check and re-enter.");
+                        etPassword.requestFocus();
+                    }catch(Exception e){
+                        Log.e(TAG, e.getMessage());
+                        Toast.makeText(Login.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
+    }
+
+    private void showAlertDialog(){
+        // setup the alert builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
+        builder.setTitle("Email Not Verified");
+        builder.setMessage("Please verify your email now. You can not login without email verification.");
+
+        // open email app if user clicks/taps continue
+        builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_APP_EMAIL);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // open email app in new window and not within our app
+                startActivity(intent);
+            }
         });
 
+        // create the AlertDialog
+        AlertDialog alertDialog = builder.create();
+
+        // show the AlertDialog
+        alertDialog.show();
     }
 
-    private void authenticateUser(){
-        EditText etEmail = findViewById(R.id.etEmail);
-        EditText etPassword = findViewById(R.id.etLoginPassword);
+    // check if User is already logged in, then direct to the MainActivity
+    @Override
+    protected void onStart(){
+        super.onStart();
+        if(mAuth.getCurrentUser() != null){
+            Toast.makeText(Login.this, "Already Logged In!", Toast.LENGTH_SHORT).show();
 
-        String email = etEmail.getText().toString();
-        String password = etPassword.getText().toString();
-
-        if(email.isEmpty() || password.isEmpty()){
-           Toast.makeText(this,"Please fill all fields", Toast.LENGTH_LONG).show();
-           return;
+            // start the MainActivity
+            startActivity(new Intent(Login.this, UserProfile.class));
+            finish();
+        }else{
+            Toast.makeText(Login.this, "You can Login now!", Toast.LENGTH_SHORT).show();
         }
-
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            showMainActivity();
-                        } else {
-                            Toast.makeText(Login.this, "Authentication failed.", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-    }
-    private void showMainActivity(){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
     }
 
     private void switchToRegister(){

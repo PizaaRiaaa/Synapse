@@ -8,34 +8,9 @@
     android:gravity="center"
     tools:context=".screen.MainActivity">
 
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Logout"
-        android:textSize="15sp"/>
-
     <TextView
-        android:id="@+id/tvMainActivityFullName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:text="FullName:"/>
-
-    <TextView
-        android:id="@+id/tvMainActivityEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:text="Email"/>
-
-    <TextView
-        android:id="@+id/tvMainActivityPhoneNum"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:text="Phone Number:"/>
+        android:textSize="30sp"
+        android:text="Hello World"/>
 </LinearLayout>
