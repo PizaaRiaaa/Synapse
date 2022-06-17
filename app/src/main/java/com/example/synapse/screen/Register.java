@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.synapse.screen.User;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Register extends AppCompatActivity {
@@ -37,7 +36,7 @@ public class Register extends AppCompatActivity {
             return;
         }
 
-        Button btnRegister = findViewById((R.id.signUpBtn));
+        Button btnRegister = findViewById(R.id.signUpBtn);
         btnRegister.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -93,13 +92,13 @@ public class Register extends AppCompatActivity {
     }
 
     private void showMainActivity(){
-       Intent intent = new Intent(this, MainActivity.class);
+       Intent intent = new Intent(Register.this, MainActivity.class);
        startActivity(intent);
        finish();
     }
 
     private void backToLogin(){
-        Intent intent = new Intent(this, Login.class);
+        Intent intent = new Intent(Register.this, Login.class);
         startActivity(intent);
         finish();
     }
