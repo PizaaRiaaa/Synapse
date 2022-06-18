@@ -1,4 +1,4 @@
-package com.example.synapse.screen;
+package com.example.synapse.screen.util;
 
 public class User {
     public String fullName;

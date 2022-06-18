@@ -1,4 +1,4 @@
-package com.example.synapse.screen;
+package com.example.synapse.screen.util;
 
 public class ReadWriteUserDetails {
     public String fullName, email, mobileNumber, password;

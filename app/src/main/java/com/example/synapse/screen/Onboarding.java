@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.synapse.R;
+import com.example.synapse.screen.util.SliderAdapter;
 
 public class Onboarding extends AppCompatActivity {
 

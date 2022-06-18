@@ -1,7 +1,6 @@
 package com.example.synapse;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,13 +10,9 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.Toast;
-
 import com.example.synapse.screen.Login;
-import com.example.synapse.screen.MainActivity;
 import com.example.synapse.screen.Onboarding;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 @SuppressLint("CustomSplashScreen")
 public class Splashscreen extends AppCompatActivity {
