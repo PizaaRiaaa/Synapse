@@ -6,37 +6,26 @@
     tools:actionBarNavMode="tabs"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:background="@drawable/ic_background"
+    android:gravity="center"
+    android:background="@color/bg_light_grey"
     tools:context=".screen.Login">
-
-    <ImageView
-        android:layout_width="125dp"
-        android:layout_height="117dp"
-        android:contentDescription="@string/logo"
-        android:layout_marginTop="90dp"
-        android:src="@drawable/ic_splash_logo" />
-
-    <com.google.android.material.card.MaterialCardView
-        style="@style/CustomCardCorners"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
-        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:gravity="center_vertical"
+            android:layout_height="0dp"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tvWelcomeToSynapse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
                 android:fontFamily="@font/redhatdisplay_semibold"
                 android:gravity="center"
-                android:text="@string/hello_again"
+                android:text="@string/tvWelcome"
                 android:textColor="@color/dark_grey"
                 android:textSize="25sp" />
 
@@ -46,53 +35,43 @@
                 android:layout_marginTop="15dp"
                 android:fontFamily="@font/redhatdisplay_regular"
                 android:gravity="center"
-                android:text="@string/glad_to_see_you_back"
-                android:textColor="@color/dark_grey"
+                android:text="@string/tvGladToSeeYouBack"
+                android:textColor="@color/light_grey"
                 android:textSize="15sp" />
 
             <!-- EMAIL -->
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
+                android:layout_marginTop="50dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:boxStrokeColor="@color/white"
                 app:endIconMode="clear_text"
-                app:hintTextColor="@color/mid_grey">
-
-                <androidx.appcompat.widget.AppCompatEditText
+                android:hint="@string/login_email"
+                app:boxBackgroundColor="@android:color/transparent"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp">
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
                     android:background="@drawable/rounded_text_login"
-                    android:fontFamily="@font/redhatdisplay_semibold"
-                    android:hint="@string/login_email"
-                    android:textColor="@color/dark_violet"
-                    android:textSize="16sp" />
-
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- PASSWORD -->
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:textColorHint="@color/mid_grey"
-                app:boxStrokeColor="@color/white"
                 app:endIconMode="password_toggle"
-                app:hintTextColor="@color/mid_grey">
+                android:hint="@string/login_password"
+                app:boxBackgroundColor="@android:color/black"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp">
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etLoginPassword"
                     android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:background="@drawable/rounded_text_login"
-                    android:fontFamily="@font/redhatdisplay_semibold"
-                    android:hint="@string/login_password"
-                    android:includeFontPadding="true"
-                    android:textColor="@color/light_grey"
-                    android:textSize="16sp" />
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_text_login" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
@@ -102,31 +81,59 @@
                 android:layout_marginTop="30dp"
                 android:background="@drawable/rounded_button_login"
                 android:fontFamily="@font/redhatdisplay_bold"
-                android:gravity="center"
-                android:text="@string/login"
+                android:text="@string/btnLogin"
                 android:textSize="14sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:fontFamily="@font/redhatdisplay_bold"
+                android:fontFamily="@font/redhatdisplay_regular"
                 android:text="@string/forgot_password"
                 android:textAlignment="center"
                 android:textColor="@color/dark_grey"
                 android:textSize="15sp" />
 
-            <TextView
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="25dp"
+                android:background="@color/horizontal_line_grey"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center|bottom"
+                android:orientation="vertical"
+                tools:ignore="NestedWeights">
+
+                <TextView
                 android:id="@+id/tvSwitchToRegister"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:fontFamily="@font/redhatdisplay_regular"
-                android:padding="10dp"
-                android:text="@string/new_to_synapse"
+                android:text="@string/tvDontHaveAccount"
                 android:textColor="@color/light_grey"
+                    android:layout_marginBottom="10dp"
                 android:textSize="15sp" />
-        </LinearLayout>
 
-    </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.button.MaterialButton
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:id="@+id/btnRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cornerRadius="10dp"
+                app:strokeColor="@color/bt_stroke"
+                app:strokeWidth="2dp"
+                app:backgroundTint="@color/white"
+                android:padding="15dp"
+                android:textColor="@color/dark_grey"
+                android:fontFamily="@font/redhatdisplay_bold"
+                android:textAllCaps="false"
+                android:text="@string/btnRegister"
+                android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
 </LinearLayout>

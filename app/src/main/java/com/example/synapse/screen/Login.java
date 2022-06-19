@@ -79,13 +79,26 @@ public class Login extends AppCompatActivity {
         });
 
         // proceed to register screen
-        TextView tvSwitchToRegister = findViewById(R.id.tvSwitchToRegister);
+        TextView tvSwitchToRegister = findViewById(R.id.btnRegister);
         tvSwitchToRegister.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 switchToRegister();
             }
         });
+
+        // CHANGE SUBSTRING COLOR
+        TextView tvRegister = findViewById(R.id.tvWelcomeToSynapse);
+        String text = "Welcome to Synapse";
+
+        SpannableString ss = new SpannableString(text);
+        SpannableStringBuilder ssb = new SpannableStringBuilder(text);
+
+        ForegroundColorSpan light_green = new ForegroundColorSpan(ContextCompat.getColor(this, R.color.light_green));
+
+        ssb.setSpan(light_green, 11, 18, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        tvRegister.setText(ssb);
+
 
         // show status bar
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
