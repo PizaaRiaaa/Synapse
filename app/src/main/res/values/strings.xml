@@ -17,4 +17,9 @@
     <string name="tvDontHaveAccount">Don\'t have Synapse account</string>
     <string name="tvGladToSeeYouBack">Glad to see you back!</string>
 
+    <!-- PICK ROLE SCREEN -->
+    <string name="join_carer_senior">Join as carer or \n senior citizen</string>
+    <string name="carer">Carer</string>
+    <string name="senior_citizen">Senior</string>
+
 </resources>

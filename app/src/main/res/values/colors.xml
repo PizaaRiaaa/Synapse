@@ -21,8 +21,11 @@
     <color name="horizontal_line_grey">#ECEBEB</color>
     <color name="et_bgTint">#FCFCFC</color>
     <color name="bg_light_grey">#F8F8F8</color>
+
     <color name="et_stroke">#D1D1D1</color>
     <color name="bt_stroke">#ECEBEB</color>
+    <color name="bt_pickRole_stroke">@color/light_green</color>
+
     <color name="light_grey">#797979</color>
     <color name="tp_light_grey">#CFCFCF</color>
     <color name="mid_grey">#7E7E7E</color>
