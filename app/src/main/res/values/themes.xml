@@ -36,4 +36,8 @@
         <item name="cornerSizeTopLeft">59dp</item>
         <item name="cornerSizeTopRight">59dp</item>
     </style>
+
+    <style name="login_text_color">
+        <item name="android:textColor">@color/mid_grey</item>
+    </style>
 </resources>
