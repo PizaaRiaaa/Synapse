@@ -8,6 +8,17 @@
     android:background="@color/white"
     tools:context=".screen.PickRole">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:fontFamily="@font/redhatdisplay_semibold"
+        android:textSize="25sp"
+        android:textColor="@color/dark_grey"
+        android:layout_marginTop="150dp"
+        android:text="@string/join_carer_senior"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,6 +32,8 @@
             android:layout_height="200dp"
             android:layout_weight="1"
             android:layout_margin="20dp"
+            app:cornerRadius="10dp"
+            android:textAlignment="center"
             app:backgroundTint="@color/et_bgTint"
             app:strokeColor="@color/et_stroke"
             app:strokeWidth="3dp"
@@ -34,14 +47,13 @@
             android:layout_height="200dp"
             android:layout_weight="1"
             android:layout_margin="20dp"
+            app:cornerRadius="10dp"
             android:textAlignment="center"
             app:backgroundTint="@color/et_bgTint"
             app:strokeColor="@color/et_stroke"
             app:strokeWidth="3dp"
             android:textColor="@color/dark_grey"
             android:text="@string/senior_citizen"/>
-
-
     </LinearLayout>
 
 </LinearLayout>

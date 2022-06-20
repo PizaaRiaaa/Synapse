@@ -1,11 +1,9 @@
 package com.example.synapse.screen;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -20,15 +18,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.example.synapse.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
@@ -77,15 +71,14 @@ public class Login extends AppCompatActivity {
 
 
         // proceed to register screen
-        TextView tvSwitchToRegister = findViewById(R.id.btnRegister);
-        tvSwitchToRegister.setOnClickListener(view -> switchToRegister());
+        TextView tvSwitchToPickRole = findViewById(R.id.btnRegister);
+        tvSwitchToPickRole.setOnClickListener(view -> switchToPickRole());
 
 
         // CHANGE SUBSTRING COLOR
         @SuppressLint("CutPasteId") TextView tvRegister = findViewById(R.id.btnRegister);
         String text = "Don't have an account? Register!";
 
-        SpannableString ss = new SpannableString(text);
         SpannableStringBuilder ssb = new SpannableStringBuilder(text);
 
         ForegroundColorSpan light_green = new ForegroundColorSpan(ContextCompat.getColor(this, R.color.light_green));
@@ -113,38 +106,35 @@ public class Login extends AppCompatActivity {
     }
 
     private void loginUser(String email, String password){
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(Login.this, task -> {
+            if(task.isSuccessful()){
 
-                    // get instance of the current user
-                    FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                // get instance of the current user
+                FirebaseUser firebaseUser = mAuth.getCurrentUser();
 
-                    // check if email is verified before user can access the MainActivity
-                    if(firebaseUser.isEmailVerified()){
-                        Toast.makeText(Login.this, "You are logged in now", Toast.LENGTH_LONG).show();
+                // check if email is verified before user can access the MainActivity
+                if(firebaseUser.isEmailVerified()){
+                    Toast.makeText(Login.this, "You are logged in now", Toast.LENGTH_LONG).show();
 
-                        // open user's MainActivity
-                    }else{
-                        firebaseUser.sendEmailVerification();
-                        mAuth.signOut();
-                        showAlertDialog();
-                    }
-
+                    // open user's MainActivity
                 }else{
-                    try{
-                         throw task.getException();
-                    }catch(FirebaseAuthInvalidUserException e){
-                         etEmail.setError("User does not exists or is not longer valid. Please register again.");
-                         etEmail.requestFocus();
-                    }catch(FirebaseAuthInvalidCredentialsException e){
-                        etPassword.setError("Invalid credentials. Kindly, check and re-enter.");
-                        etPassword.requestFocus();
-                    }catch(Exception e){
-                        Log.e(TAG, e.getMessage());
-                        Toast.makeText(Login.this, e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
+                    firebaseUser.sendEmailVerification();
+                    mAuth.signOut();
+                    showAlertDialog();
+                }
+
+            }else{
+                try{
+                     throw task.getException();
+                }catch(FirebaseAuthInvalidUserException e){
+                     etEmail.setError("User does not exists or is not longer valid. Please register again.");
+                     etEmail.requestFocus();
+                }catch(FirebaseAuthInvalidCredentialsException e){
+                    etPassword.setError("Invalid credentials. Kindly, check and re-enter.");
+                    etPassword.requestFocus();
+                }catch(Exception e){
+                    Log.e(TAG, e.getMessage());
+                    Toast.makeText(Login.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -157,14 +147,11 @@ public class Login extends AppCompatActivity {
         builder.setMessage("Please verify your email now. You can not login without email verification.");
 
         // open email app if user clicks/taps continue
-        builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(Intent.ACTION_MAIN);
-                intent.addCategory(Intent.CATEGORY_APP_EMAIL);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // open email app in new window and not within our app
-                startActivity(intent);
-            }
+        builder.setPositiveButton("Continue", (dialog, which) -> {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_APP_EMAIL);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // open email app in new window and not within our app
+            startActivity(intent);
         });
 
         // create the AlertDialog
@@ -189,9 +176,8 @@ public class Login extends AppCompatActivity {
         }
     }
 
-    private void switchToRegister(){
-        Intent intent = new Intent(this, Register.class);
+    private void switchToPickRole(){
+        Intent intent = new Intent(this, PickRole.class);
         startActivity(intent);
-        finish();
     }
  }

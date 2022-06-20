@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Synapse"
         tools:targetApi="31">
         <activity
-            android:name=".PickRole"
+            android:name=".screen.PickRole"
             android:exported="false" />
         <activity
             android:name=".screen.UserProfile"
