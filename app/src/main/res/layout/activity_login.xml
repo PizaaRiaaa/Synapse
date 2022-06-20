@@ -130,7 +130,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:fontFamily="@font/redhatdisplay_regular"
+                    android:fontFamily="@font/redhatdisplay_semibold"
                     android:text="@string/tvDontHaveAccount"
                     android:textAlignment="center"
                     android:textColor="@color/dark_grey"

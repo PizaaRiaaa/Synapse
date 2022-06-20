@@ -1,22 +1,8 @@
 package com.example.synapse.screen;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import com.example.synapse.R;
-import com.example.synapse.Splashscreen;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.auth.FirebaseUser;
-
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -33,6 +19,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
+import com.example.synapse.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class Login extends AppCompatActivity {
@@ -54,39 +54,46 @@ public class Login extends AppCompatActivity {
 
         // login user
         Button btnLogin = findViewById(R.id.btnLogin);
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view){
-                    String textEmail = etEmail.getText().toString();
-                    String textPassword = etPassword.getText().toString();
+        btnLogin.setOnClickListener(view -> {
+            String textEmail = etEmail.getText().toString();
+            String textPassword = etPassword.getText().toString();
 
-                    if(TextUtils.isEmpty(textEmail)){
-                        Toast.makeText(Login.this, "Please enter your email", Toast.LENGTH_LONG).show();
-                        etEmail.setError("Email is required");
-                        etEmail.requestFocus();
-                    }else if(!Patterns.EMAIL_ADDRESS.matcher(textEmail).matches()){
-                        Toast.makeText(Login.this, "Please re-enter your email", Toast.LENGTH_LONG).show();
-                        etEmail.setError("Valid email is required");
-                        etPassword.requestFocus();
-                   }else if(TextUtils.isEmpty(textPassword)){
-                        Toast.makeText(Login.this, "Please enter your password", Toast.LENGTH_LONG).show();
-                        etPassword.setError("Password is required");
-                        etPassword.requestFocus();
-                   }else{
-                        loginUser(textEmail, textPassword);
-                    }
-             }
-        });
+            if(TextUtils.isEmpty(textEmail)){
+                Toast.makeText(Login.this, "Please enter your email", Toast.LENGTH_LONG).show();
+                etEmail.setError("Email is required");
+                etEmail.requestFocus();
+            }else if(!Patterns.EMAIL_ADDRESS.matcher(textEmail).matches()){
+                Toast.makeText(Login.this, "Please re-enter your email", Toast.LENGTH_LONG).show();
+                etEmail.setError("Valid email is required");
+                etPassword.requestFocus();
+           }else if(TextUtils.isEmpty(textPassword)){
+                Toast.makeText(Login.this, "Please enter your password", Toast.LENGTH_LONG).show();
+                etPassword.setError("Password is required");
+                etPassword.requestFocus();
+           }else{
+                loginUser(textEmail, textPassword);
+            }
+     });
 
 
         // proceed to register screen
         TextView tvSwitchToRegister = findViewById(R.id.btnRegister);
-        tvSwitchToRegister.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                switchToRegister();
-            }
-        });
+        tvSwitchToRegister.setOnClickListener(view -> switchToRegister());
+
+
+        // CHANGE SUBSTRING COLOR
+        @SuppressLint("CutPasteId") TextView tvRegister = findViewById(R.id.btnRegister);
+        String text = "Don't have an account? Register!";
+
+        SpannableString ss = new SpannableString(text);
+        SpannableStringBuilder ssb = new SpannableStringBuilder(text);
+
+        ForegroundColorSpan light_green = new ForegroundColorSpan(ContextCompat.getColor(this, R.color.light_green));
+
+        ssb.setSpan(light_green, 23, 32, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        tvRegister.setText(ssb);
+
+
 
         // show status bar
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
