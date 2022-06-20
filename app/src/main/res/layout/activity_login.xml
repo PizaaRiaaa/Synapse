@@ -19,31 +19,38 @@
             android:orientation="vertical"
             tools:ignore="UselessParent">
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:layout_gravity="end"
+                android:src="@drawable/sample"/>
+
+
             <TextView
                 android:id="@+id/tvWelcomeToSynapse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:fontFamily="@font/redhatdisplay_semibold"
-                android:gravity="center"
-                android:text="@string/tvWelcome"
+                android:layout_marginTop="30dp"
+                android:textAlignment="center"
+                android:fontFamily="@font/redhatdisplay_bold"
+                android:text="@string/login"
                 android:textColor="@color/dark_grey"
-                android:textSize="25sp" />
+                android:textSize="30sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
+                android:textAlignment="center"
                 android:fontFamily="@font/redhatdisplay_regular"
-                android:gravity="center"
-                android:text="@string/tvGladToSeeYouBack"
+                android:text="@string/tvSub_header"
                 android:textColor="@color/light_grey"
                 android:textSize="15sp" />
 
             <!-- EMAIL -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="15dp"
                 android:layout_height="wrap_content"
                 app:endIconMode="clear_text"
                 app:hintEnabled="false"
@@ -103,19 +110,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:fontFamily="@font/redhatdisplay_regular"
                 android:text="@string/forgot_password"
                 android:textAlignment="center"
                 android:textColor="@color/dark_grey"
                 android:textSize="15sp" />
-
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="2dp"
-                android:layout_marginTop="25dp"
-                android:background="@color/horizontal_line_grey"/>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -126,30 +126,15 @@
                 tools:ignore="NestedWeights">
 
                 <TextView
-                android:id="@+id/tvSwitchToRegister"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/redhatdisplay_regular"
-                android:text="@string/tvDontHaveAccount"
-                android:textColor="@color/dark_grey"
-                    android:layout_marginBottom="10dp"
-                android:textSize="15sp" />
-
-                <com.google.android.material.button.MaterialButton
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:id="@+id/btnRegister"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cornerRadius="10dp"
-                app:strokeColor="@color/bt_stroke"
-                app:strokeWidth="3dp"
-                app:backgroundTint="@color/bg_light_grey"
-                android:padding="15dp"
-                android:textColor="@color/dark_grey"
-                android:fontFamily="@font/redhatdisplay_bold"
-                android:textAllCaps="false"
-                android:text="@string/btnRegister"
-                android:textSize="14sp" />
+                    android:id="@+id/btnRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/redhatdisplay_regular"
+                    android:text="@string/tvDontHaveAccount"
+                    android:textAlignment="center"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="15sp" />
             </LinearLayout>
         </LinearLayout>
 </LinearLayout>

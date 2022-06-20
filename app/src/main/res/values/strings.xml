@@ -9,13 +9,14 @@
     <string name="tvWelcome">Welcome to Synapse</string>
 
     <!-- LOGIN SCREEN -->
+    <string name="login">Login</string>
     <string name="login_email">Phone, email or username</string>
     <string name="login_password">Password</string>
     <string name="forgot_password">Forgot your password?</string>
     <string name="btnLogin">LOGIN</string>
     <string name="btnRegister">Create new account</string>
-    <string name="tvDontHaveAccount">Don\'t have Synapse account</string>
-    <string name="tvGladToSeeYouBack">Glad to see you back!</string>
+    <string name="tvDontHaveAccount">Don\'t have an account? Register!</string>
+    <string name="tvSub_header">Notify your senior loved ones</string>
 
     <!-- PICK ROLE SCREEN -->
     <string name="join_carer_senior">Join as carer or \n senior citizen</string>
