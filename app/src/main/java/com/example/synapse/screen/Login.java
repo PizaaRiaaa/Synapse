@@ -78,6 +78,7 @@ public class Login extends AppCompatActivity {
              }
         });
 
+
         // proceed to register screen
         TextView tvSwitchToRegister = findViewById(R.id.btnRegister);
         tvSwitchToRegister.setOnClickListener(new View.OnClickListener(){
