@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@color/bg_light_grey"
+    android:background="@color/white"
     tools:context=".screen.Login">
 
         <LinearLayout
@@ -142,8 +142,8 @@
                 android:layout_height="wrap_content"
                 app:cornerRadius="10dp"
                 app:strokeColor="@color/bt_stroke"
-                app:strokeWidth="2dp"
-                app:backgroundTint="@color/white"
+                app:strokeWidth="3dp"
+                app:backgroundTint="@color/bg_light_grey"
                 android:padding="15dp"
                 android:textColor="@color/dark_grey"
                 android:fontFamily="@font/redhatdisplay_bold"

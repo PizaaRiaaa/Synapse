@@ -113,8 +113,8 @@ public class Login extends AppCompatActivity {
                     | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-            window.setNavigationBarColor(Color.TRANSPARENT);
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.mid_grey));
+            window.setNavigationBarColor(ContextCompat.getColor(this, R.color.mid_grey));
         }
     }
 
