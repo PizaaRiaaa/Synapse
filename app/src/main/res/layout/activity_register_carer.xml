@@ -8,7 +8,7 @@
     tools:context=".screen.RegisterCarer">
 
     <ImageButton
-        android:id="@+id/ibBack"
+        android:id="@+id/ibRegisterCarerBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
@@ -58,7 +58,7 @@
             android:textColor="@color/dark_grey"
             android:textSize="20sp" />
 
-        <!-- Full name -->
+        <!-- full name -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_marginTop="15dp"
@@ -82,7 +82,7 @@
                 android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Email address -->
+        <!-- email address -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_marginTop="15dp"
@@ -106,7 +106,7 @@
                 android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Mobile number -->
+        <!-- mobile number -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_marginTop="15dp"
@@ -130,7 +130,7 @@
                 android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- PASSWORD -->
+        <!-- password -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
@@ -174,12 +174,11 @@
         android:gravity="center|bottom"
         android:orientation="vertical">
 
-
         <TextView
-            android:id="@+id/tvAlreadyHaveAnAccount"
+            android:id="@+id/tvCarerHaveAccount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="30dp"
             android:fontFamily="@font/redhatdisplay_semibold"
             android:text="@string/already_have_account"
             android:textAlignment="center"
