@@ -8,16 +8,25 @@
     android:background="@color/white"
     tools:context=".screen.PickRole">
 
+    <ImageButton
+        android:id="@+id/ibBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:src="@drawable/ic_back_button"
+        android:layout_margin="20dp"
+        android:contentDescription="@string/back" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textAlignment="center"
+        android:layout_marginTop="50dp"
         android:fontFamily="@font/redhatdisplay_semibold"
-        android:textSize="25sp"
+        android:text="@string/join_carer_senior"
+        android:textAlignment="center"
         android:textColor="@color/dark_grey"
-        android:layout_marginTop="150dp"
-        android:text="@string/join_carer_senior"/>
+        android:textSize="25sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,35 +34,77 @@
         android:layout_gravity="center_horizontal"
         android:orientation="horizontal">
 
-        <com.google.android.material.button.MaterialButton
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:id="@+id/btnPickCarer"
+        <ImageButton
+            android:id="@+id/ibPickCarer"
+            android:focusable="true"
+            android:clickable="true"
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             android:layout_weight="1"
             android:layout_margin="20dp"
-            app:cornerRadius="10dp"
-            android:textAlignment="center"
-            app:backgroundTint="@color/et_bgTint"
-            app:strokeColor="@color/et_stroke"
-            app:strokeWidth="3dp"
-            android:textColor="@color/dark_grey"
-            android:text="@string/carer"/>
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:background="@drawable/rounded_button_pick_role"
+            android:src="@drawable/ic_carer_profilepic_whitebg"
+            android:contentDescription="@string/pick_carer" />
 
-        <com.google.android.material.button.MaterialButton
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:id="@+id/btnPickSenior"
+        <ImageButton
+            android:id="@+id/ibPickSenior"
+            android:focusable="true"
+            android:clickable="true"
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             android:layout_weight="1"
             android:layout_margin="20dp"
-            app:cornerRadius="10dp"
-            android:textAlignment="center"
-            app:backgroundTint="@color/et_bgTint"
-            app:strokeColor="@color/et_stroke"
-            app:strokeWidth="3dp"
-            android:textColor="@color/dark_grey"
-            android:text="@string/senior_citizen"/>
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:background="@drawable/rounded_button_pick_role"
+            android:src="@drawable/ic_senior_profilepic_whitebg"
+            android:contentDescription="@string/pick_carer" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:padding="20dp"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:fontFamily="@font/redhatdisplay_semibold"
+            android:textSize="20sp"
+            android:text="@string/tvCarer"
+            android:textColor="@color/dark_grey"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:padding="20dp"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:fontFamily="@font/redhatdisplay_semibold"
+            android:textSize="20sp"
+            android:text="@string/tvSenior"
+            android:textColor="@color/dark_grey"/>
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/finishBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_button"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:fontFamily="@font/redhatdisplay_bold"
+        android:text="@string/btnContinue"
+        android:textSize="15sp"
+        app:icon="@drawable/ic_right_arrow"
+        app:iconGravity="textEnd"
+        app:iconSize="30dp"
+        app:iconTint="@color/white" />
 
 </LinearLayout>
