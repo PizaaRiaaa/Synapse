@@ -72,20 +72,16 @@ public class Login extends AppCompatActivity {
 
         // proceed to register screen
         TextView tvSwitchToPickRole = findViewById(R.id.btnRegister);
-        tvSwitchToPickRole.setOnClickListener(view -> switchToPickRole());
+        tvSwitchToPickRole.setOnClickListener(view -> startActivity(new Intent(Login.this, PickRole.class)));
 
 
         // CHANGE SUBSTRING COLOR
         @SuppressLint("CutPasteId") TextView tvRegister = findViewById(R.id.btnRegister);
         String text = "Don't have an account? Register!";
-
         SpannableStringBuilder ssb = new SpannableStringBuilder(text);
-
         ForegroundColorSpan light_green = new ForegroundColorSpan(ContextCompat.getColor(this, R.color.light_green));
-
         ssb.setSpan(light_green, 23, 32, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         tvRegister.setText(ssb);
-
 
 
         // show status bar
@@ -174,10 +170,5 @@ public class Login extends AppCompatActivity {
         }else{
             Toast.makeText(Login.this, "You can Login now!", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private void switchToPickRole(){
-        Intent intent = new Intent(this, PickRole.class);
-        startActivity(intent);
     }
  }

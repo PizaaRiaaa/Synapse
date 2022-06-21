@@ -27,5 +27,6 @@
     <string name="tvSenior">SENIOR</string>
     <string name="btnContinue">CONTINUE</string>
     <string name="back">back</string>
+    <string name="already_have_account">Already have an account?</string>
 
 </resources>
