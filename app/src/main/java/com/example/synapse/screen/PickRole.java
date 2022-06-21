@@ -62,7 +62,7 @@ public class PickRole extends AppCompatActivity {
         ibCarer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                btnContinue.setClickable(true);
+                btnContinue.setEnabled(true);
                 ibCarer.setBackground(AppCompatResources.getDrawable(PickRole.this, R.drawable.rounded_button_pick_role));
                 ibSenior.setBackground(AppCompatResources.getDrawable(PickRole.this, R.drawable.custom_button_selector));
                 btnContinue.setOnClickListener(view -> startActivity(new Intent(PickRole.this, RegisterCarer.class)));
@@ -73,7 +73,7 @@ public class PickRole extends AppCompatActivity {
         ibSenior.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnContinue.setClickable(true);
+                btnContinue.setEnabled(true);
                 ibSenior.setBackground(AppCompatResources.getDrawable(PickRole.this, R.drawable.rounded_button_pick_role));
                 ibCarer.setBackground(AppCompatResources.getDrawable(PickRole.this, R.drawable.custom_button_selector));
                 btnContinue.setOnClickListener(view -> startActivity(new Intent(PickRole.this, RegisterSenior.class)));

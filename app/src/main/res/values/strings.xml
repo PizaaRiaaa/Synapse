@@ -28,5 +28,11 @@
     <string name="btnContinue">CONTINUE</string>
     <string name="back">back</string>
     <string name="already_have_account">Already have an account?</string>
+    <string name="tvRegisterCarer">CARER</string>
+    <string name="carer_info">Carer\'s info</string>
+    <string name="full_name">Full Name</string>
+    <string name="email_address">Email Address</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="signup">SIGNUP</string>
 
 </resources>
