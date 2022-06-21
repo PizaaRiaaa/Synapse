@@ -69,11 +69,9 @@ public class Login extends AppCompatActivity {
             }
      });
 
-
         // proceed to register screen
         TextView tvSwitchToPickRole = findViewById(R.id.btnRegister);
         tvSwitchToPickRole.setOnClickListener(view -> startActivity(new Intent(Login.this, PickRole.class)));
-
 
         // CHANGE SUBSTRING COLOR
         @SuppressLint("CutPasteId") TextView tvRegister = findViewById(R.id.btnRegister);
@@ -82,7 +80,6 @@ public class Login extends AppCompatActivity {
         ForegroundColorSpan light_green = new ForegroundColorSpan(ContextCompat.getColor(this, R.color.light_green));
         ssb.setSpan(light_green, 23, 32, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         tvRegister.setText(ssb);
-
 
         // show status bar
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);

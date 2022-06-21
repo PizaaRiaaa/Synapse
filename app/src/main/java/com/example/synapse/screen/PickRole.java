@@ -1,26 +1,41 @@
 package com.example.synapse.screen;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
-
 import com.example.synapse.R;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.ContextParams;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class PickRole extends AppCompatActivity {
+    public boolean isPressedCarer = false;
+    public boolean isPressedSenior = false;
 
-    public ImageButton ivBack;
-    public TextView tvBack;
+    @SuppressLint("CutPasteId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick_role);
+
+        ImageButton ivBack;
+        TextView tvBack;
+
+        Button btnContinue;
+
+        ImageView ibCarer;
+        ImageView ibSenior;
 
 
         // (back arrow) bring user back to login screen
@@ -30,6 +45,40 @@ public class PickRole extends AppCompatActivity {
         // (textview) bring back user to login screen
         tvBack = findViewById(R.id.tvAlreadyHaveAnAccount);
         tvBack.setOnClickListener(view -> startActivity(new Intent(PickRole.this, Login.class)));
+
+
+
+       /*  if ibCarer was pressed, then bring
+           user to carer registration screen
+
+           ibSenior was pressed, then bring
+           user to senior registration screen*/
+
+        btnContinue = findViewById(R.id.btnContinue);
+        ibCarer = findViewById(R.id.ibPickCarer);
+        ibSenior = findViewById(R.id.ibPickSenior);
+
+        // check if carer ImageButton was pressed
+        ibCarer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                btnContinue.setClickable(true);
+                ibCarer.setBackground(AppCompatResources.getDrawable(PickRole.this, R.drawable.rounded_button_pick_role));
+                ibSenior.setBackground(AppCompatResources.getDrawable(PickRole.this, R.drawable.custom_button_selector));
+                btnContinue.setOnClickListener(view -> startActivity(new Intent(PickRole.this, RegisterCarer.class)));
+            }
+        });
+
+        // check if senior ImageButton was pressed
+        ibSenior.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnContinue.setClickable(true);
+                ibSenior.setBackground(AppCompatResources.getDrawable(PickRole.this, R.drawable.rounded_button_pick_role));
+                ibCarer.setBackground(AppCompatResources.getDrawable(PickRole.this, R.drawable.custom_button_selector));
+                btnContinue.setOnClickListener(view -> startActivity(new Intent(PickRole.this, RegisterSenior.class)));
+            }
+        });
 
 
         // show status bar

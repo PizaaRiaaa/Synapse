@@ -34,7 +34,7 @@
         android:layout_gravity="center_horizontal"
         android:orientation="horizontal">
 
-        <ImageButton
+        <ImageView
             android:id="@+id/ibPickCarer"
             android:focusable="true"
             android:clickable="true"
@@ -44,11 +44,11 @@
             android:layout_margin="20dp"
             android:padding="8dp"
             android:scaleType="fitCenter"
-            android:background="@drawable/rounded_button_pick_role"
+            android:background="@drawable/custom_button_selector"
             android:src="@drawable/ic_carer_profilepic_whitebg"
             android:contentDescription="@string/pick_carer" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/ibPickSenior"
             android:focusable="true"
             android:clickable="true"
@@ -58,7 +58,7 @@
             android:layout_margin="20dp"
             android:padding="8dp"
             android:scaleType="fitCenter"
-            android:background="@drawable/rounded_button_pick_role"
+            android:background="@drawable/custom_button_selector"
             android:src="@drawable/ic_senior_profilepic_whitebg"
             android:contentDescription="@string/pick_carer" />
     </LinearLayout>
@@ -93,7 +93,7 @@
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/finishBtn"
+        android:id="@+id/btnContinue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_button"
@@ -102,6 +102,7 @@
         android:fontFamily="@font/redhatdisplay_bold"
         android:text="@string/btnContinue"
         android:textSize="15sp"
+        android:clickable="false"
         app:icon="@drawable/ic_right_arrow"
         app:iconGravity="textEnd"
         app:iconSize="30dp"
