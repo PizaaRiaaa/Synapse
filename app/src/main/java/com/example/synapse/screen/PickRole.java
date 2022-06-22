@@ -6,8 +6,6 @@ import androidx.core.content.ContextCompat;
 import com.example.synapse.R;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.ContextParams;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
