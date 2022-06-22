@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 import com.example.synapse.R;
+import com.example.synapse.screen.carer.RegisterCarer;
+import com.example.synapse.screen.senior.RegisterSenior;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;

@@ -1,20 +1,7 @@
-package com.example.synapse.screen;
+package com.example.synapse.screen.carer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.synapse.R;
-import com.example.synapse.screen.util.ReadWriteUserDetails;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -27,7 +14,25 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class RegisterSenior extends AppCompatActivity {
+import com.example.synapse.R;
+import com.example.synapse.screen.Login;
+import com.example.synapse.screen.PickRole;
+import com.example.synapse.screen.util.ReadWriteUserDetails;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class RegisterCarer extends AppCompatActivity {
     private EditText etFullName,etEmail, etPassword, etMobileNumber;
     private static final String TAG = "RegisterActivity";
     private String userType;
@@ -35,23 +40,23 @@ public class RegisterSenior extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_senior);
+        setContentView(R.layout.activity_register_carer);
 
 
         // (ImageButton) bring user back to PickRole screen
-        ImageButton ibBack = findViewById(R.id.ibRegisterSeniorBack);
-        ibBack.setOnClickListener(view -> startActivity(new Intent(RegisterSenior.this,PickRole.class)));
+        ImageButton ibBack = findViewById(R.id.ibRegisterCarerBack);
+        ibBack.setOnClickListener(view -> startActivity(new Intent(RegisterCarer.this, PickRole.class)));
 
         // (TextView) bring user back to Login screen
-        TextView tvAlreadyHaveAccount = findViewById(R.id.tvSeniorHaveAccount);
-        tvAlreadyHaveAccount.setOnClickListener(view -> startActivity(new Intent(RegisterSenior.this, Login.class)));
+        TextView tvAlreadyHaveAccount = findViewById(R.id.tvCarerHaveAccount);
+        tvAlreadyHaveAccount.setOnClickListener(view -> startActivity(new Intent(RegisterCarer.this, Login.class)));
 
-        etFullName = findViewById(R.id.etSeniorFullName);
-        etEmail = findViewById(R.id.etSeniorEmail);
-        etPassword = findViewById(R.id.etRegisterSeniorPassword);
-        etMobileNumber = findViewById(R.id.etSeniorMobileNumber);
+        etFullName = findViewById(R.id.etCarerFullName);
+        etEmail = findViewById(R.id.etCarerEmail);
+        etPassword = findViewById(R.id.etRegisterCarerPassword);
+        etMobileNumber = findViewById(R.id.etCarerMobileNumber);
 
-        Button btnSignup = findViewById(R.id.btnSignupSenior);
+        Button btnSignup = findViewById(R.id.btnSignupCarer);
         btnSignup.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -60,25 +65,35 @@ public class RegisterSenior extends AppCompatActivity {
                 String textEmail = etEmail.getText().toString();
                 String textPassword = etPassword.getText().toString();
                 String textMobileNumber = etMobileNumber.getText().toString();
-                userType = "Senior";
+                userType = "Carer";
+
+                // validate mobile number using matcher and regex
+                String mobileRegex = "^(09|\\+639)\\d{9}$"; // first no. can be {09 or +639} and rest 9 no. can be any no.
+                Matcher mobileMatcher;
+                Pattern mobilePattern = Pattern.compile(mobileRegex);
+                mobileMatcher = mobilePattern.matcher(textMobileNumber);
 
 
                 if(TextUtils.isEmpty(textFullName)){
-                    Toast.makeText(RegisterSenior.this, "Please enter your full name", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterCarer.this, "Please enter your full name", Toast.LENGTH_LONG).show();
                     etFullName.requestFocus();
                 }else if(!Patterns.EMAIL_ADDRESS.matcher(textEmail).matches()){
-                    Toast.makeText(RegisterSenior.this, "Please re-enter your email", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterCarer.this, "Please re-enter your email", Toast.LENGTH_LONG).show();
                     etEmail.requestFocus();
                 }else if(TextUtils.isEmpty(textMobileNumber)){
-                    Toast.makeText(RegisterSenior.this, "Please re-enter your mobile number", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterCarer.this, "Please re-enter your mobile number", Toast.LENGTH_LONG).show();
                     etMobileNumber.requestFocus();
                 }else if(textMobileNumber.length() != 11){
-                    Toast.makeText(RegisterSenior.this, "Please re-enter your mobile number", Toast.LENGTH_LONG).show();
-                    etMobileNumber.setError("Mobile no. should be 11 digits");
+                    Toast.makeText(RegisterCarer.this, "Please re-enter your mobile number", Toast.LENGTH_LONG).show();
+                    etMobileNumber.setError("Mobile no. should be 11 digits. e.g 09166882880");
+                    etMobileNumber.requestFocus();
+                }else if(!mobileMatcher.find()){
+                    Toast.makeText(RegisterCarer.this, "Please re-enter your mobile number", Toast.LENGTH_LONG).show();
+                    etMobileNumber.setError("Mobile no. is not valid.");
                     etMobileNumber.requestFocus();
                 }
                 else if(TextUtils.isEmpty(textPassword)){
-                    Toast.makeText(RegisterSenior.this, "Please re-enter your password", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterCarer.this, "Please re-enter your password", Toast.LENGTH_LONG).show();
                     etPassword.requestFocus();
                 }else{
                     signupUser(textFullName,textEmail,textMobileNumber,textPassword,userType);
@@ -92,7 +107,7 @@ public class RegisterSenior extends AppCompatActivity {
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
         // Create UserProfile
-        auth.createUserWithEmailAndPassword(textEmail, textPassword).addOnCompleteListener(RegisterSenior.this,
+        auth.createUserWithEmailAndPassword(textEmail, textPassword).addOnCompleteListener(RegisterCarer.this,
                 new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -115,12 +130,16 @@ public class RegisterSenior extends AppCompatActivity {
                                         // send verification email
                                         firebaseUser.sendEmailVerification();
 
-                                        Toast.makeText(RegisterSenior.this, "Registered successfully. Please Verify your email", Toast.LENGTH_LONG).show();
+                                        // sign out the user to prevent automatic sign in, right after successful register
+                                        auth.signOut();
 
+                                        Toast.makeText(RegisterCarer.this, "Registered successfully. Please verify your email.", Toast.LENGTH_LONG).show();
+                                        startActivity(new Intent(RegisterCarer.this, CarerEmailConfirmation.class));
                                     }else{
-                                        Toast.makeText(RegisterSenior.this, "User registered failed. Please try again",
+                                        Toast.makeText(RegisterCarer.this, "User registered failed. Please try again",
                                                 Toast.LENGTH_LONG).show();
                                     }
+                                    finish();
                                 }
                             });
                         }else{
@@ -137,10 +156,11 @@ public class RegisterSenior extends AppCompatActivity {
                                 etPassword.requestFocus();
                             }catch(Exception e){
                                 Log.e(TAG, e.getMessage());
-                                Toast.makeText(RegisterSenior.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(RegisterCarer.this, e.getMessage(), Toast.LENGTH_LONG).show();
                             }
                         }
                     }
                 });
     }
+
 }

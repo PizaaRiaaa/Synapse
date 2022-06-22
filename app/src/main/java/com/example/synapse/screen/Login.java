@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.example.synapse.R;
+import com.example.synapse.screen.carer.CarerEmailConfirmation;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
@@ -69,11 +70,15 @@ public class Login extends AppCompatActivity {
             }
      });
 
-        // proceed to register screen
+        // proceed to PickRole screen
         TextView tvSwitchToPickRole = findViewById(R.id.btnRegister);
         tvSwitchToPickRole.setOnClickListener(view -> startActivity(new Intent(Login.this, PickRole.class)));
 
-        // CHANGE SUBSTRING COLOR
+        // proceed to ForgotPassword screen
+        TextView tvForgotPass = findViewById(R.id.tvForgotPassword);
+        tvForgotPass.setOnClickListener(view -> startActivity(new Intent(Login.this, CarerEmailConfirmation.class)));
+
+        // change substring color
         @SuppressLint("CutPasteId") TextView tvRegister = findViewById(R.id.btnRegister);
         String text = "Don't have an account? Register!";
         SpannableStringBuilder ssb = new SpannableStringBuilder(text);
@@ -162,7 +167,7 @@ public class Login extends AppCompatActivity {
             Toast.makeText(Login.this, "Already Logged In!", Toast.LENGTH_SHORT).show();
 
             // start the MainActivity
-            startActivity(new Intent(Login.this, UserProfile.class));
+            startActivity(new Intent(Login.this, MainActivity.class));
             finish();
         }else{
             Toast.makeText(Login.this, "You can Login now!", Toast.LENGTH_SHORT).show();

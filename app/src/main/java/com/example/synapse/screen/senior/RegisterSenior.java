@@ -1,20 +1,10 @@
-package com.example.synapse.screen;
+package com.example.synapse.screen.senior;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
-import android.util.Patterns;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.synapse.R;
+import com.example.synapse.screen.Login;
+import com.example.synapse.screen.PickRole;
 import com.example.synapse.screen.util.ReadWriteUserDetails;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,7 +17,19 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class RegisterCarer extends AppCompatActivity {
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
+import android.util.Patterns;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class RegisterSenior extends AppCompatActivity {
     private EditText etFullName,etEmail, etPassword, etMobileNumber;
     private static final String TAG = "RegisterActivity";
     private String userType;
@@ -35,23 +37,23 @@ public class RegisterCarer extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_carer);
+        setContentView(R.layout.activity_register_senior);
 
 
         // (ImageButton) bring user back to PickRole screen
-        ImageButton ibBack = findViewById(R.id.ibRegisterCarerBack);
-        ibBack.setOnClickListener(view -> startActivity(new Intent(RegisterCarer.this,PickRole.class)));
+        ImageButton ibBack = findViewById(R.id.ibRegisterSeniorBack);
+        ibBack.setOnClickListener(view -> startActivity(new Intent(RegisterSenior.this, PickRole.class)));
 
         // (TextView) bring user back to Login screen
-        TextView tvAlreadyHaveAccount = findViewById(R.id.tvCarerHaveAccount);
-        tvAlreadyHaveAccount.setOnClickListener(view -> startActivity(new Intent(RegisterCarer.this, Login.class)));
+        TextView tvAlreadyHaveAccount = findViewById(R.id.tvSeniorHaveAccount);
+        tvAlreadyHaveAccount.setOnClickListener(view -> startActivity(new Intent(RegisterSenior.this, Login.class)));
 
-        etFullName = findViewById(R.id.etCarerFullName);
-        etEmail = findViewById(R.id.etCarerEmail);
-        etPassword = findViewById(R.id.etRegisterCarerPassword);
-        etMobileNumber = findViewById(R.id.etCarerMobileNumber);
+        etFullName = findViewById(R.id.etSeniorFullName);
+        etEmail = findViewById(R.id.etSeniorEmail);
+        etPassword = findViewById(R.id.etRegisterSeniorPassword);
+        etMobileNumber = findViewById(R.id.etSeniorMobileNumber);
 
-        Button btnSignup = findViewById(R.id.btnSignupCarer);
+        Button btnSignup = findViewById(R.id.btnSignupSenior);
         btnSignup.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -60,25 +62,25 @@ public class RegisterCarer extends AppCompatActivity {
                 String textEmail = etEmail.getText().toString();
                 String textPassword = etPassword.getText().toString();
                 String textMobileNumber = etMobileNumber.getText().toString();
-                userType = "Carer";
+                userType = "Senior";
 
 
                 if(TextUtils.isEmpty(textFullName)){
-                    Toast.makeText(RegisterCarer.this, "Please enter your full name", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterSenior.this, "Please enter your full name", Toast.LENGTH_LONG).show();
                     etFullName.requestFocus();
                 }else if(!Patterns.EMAIL_ADDRESS.matcher(textEmail).matches()){
-                    Toast.makeText(RegisterCarer.this, "Please re-enter your email", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterSenior.this, "Please re-enter your email", Toast.LENGTH_LONG).show();
                     etEmail.requestFocus();
                 }else if(TextUtils.isEmpty(textMobileNumber)){
-                    Toast.makeText(RegisterCarer.this, "Please re-enter your mobile number", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterSenior.this, "Please re-enter your mobile number", Toast.LENGTH_LONG).show();
                     etMobileNumber.requestFocus();
                 }else if(textMobileNumber.length() != 11){
-                    Toast.makeText(RegisterCarer.this, "Please re-enter your mobile number", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterSenior.this, "Please re-enter your mobile number", Toast.LENGTH_LONG).show();
                     etMobileNumber.setError("Mobile no. should be 11 digits");
                     etMobileNumber.requestFocus();
                 }
                 else if(TextUtils.isEmpty(textPassword)){
-                    Toast.makeText(RegisterCarer.this, "Please re-enter your password", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterSenior.this, "Please re-enter your password", Toast.LENGTH_LONG).show();
                     etPassword.requestFocus();
                 }else{
                     signupUser(textFullName,textEmail,textMobileNumber,textPassword,userType);
@@ -92,7 +94,7 @@ public class RegisterCarer extends AppCompatActivity {
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
         // Create UserProfile
-        auth.createUserWithEmailAndPassword(textEmail, textPassword).addOnCompleteListener(RegisterCarer.this,
+        auth.createUserWithEmailAndPassword(textEmail, textPassword).addOnCompleteListener(RegisterSenior.this,
                 new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -115,10 +117,10 @@ public class RegisterCarer extends AppCompatActivity {
                                         // send verification email
                                         firebaseUser.sendEmailVerification();
 
-                                        Toast.makeText(RegisterCarer.this, "Registered successfully. Please Verify your email", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(RegisterSenior.this, "Registered successfully. Please Verify your email", Toast.LENGTH_LONG).show();
 
                                     }else{
-                                        Toast.makeText(RegisterCarer.this, "User registered failed. Please try again",
+                                        Toast.makeText(RegisterSenior.this, "User registered failed. Please try again",
                                                 Toast.LENGTH_LONG).show();
                                     }
                                 }
@@ -137,11 +139,10 @@ public class RegisterCarer extends AppCompatActivity {
                                 etPassword.requestFocus();
                             }catch(Exception e){
                                 Log.e(TAG, e.getMessage());
-                                Toast.makeText(RegisterCarer.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(RegisterSenior.this, e.getMessage(), Toast.LENGTH_LONG).show();
                             }
                         }
                     }
                 });
     }
-
 }
