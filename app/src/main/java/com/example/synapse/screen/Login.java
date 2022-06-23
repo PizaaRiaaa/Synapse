@@ -1,6 +1,7 @@
 package com.example.synapse.screen;
 
 import android.annotation.SuppressLint;
+import androidx.annotation.NonNull;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,13 +19,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.example.synapse.R;
-import com.example.synapse.screen.carer.CarerEmailVerify;
+import com.example.synapse.screen.carer.CarerVerifyEmail;
 import com.example.synapse.screen.carer.CarerHome;
 import com.example.synapse.screen.util.ReadWriteUserDetails;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,16 +37,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Objects;
-
 
 public class Login extends AppCompatActivity {
 
+    private static final String TAG = "loginActivity";
     private EditText etEmail, etPassword;
     private FirebaseAuth mAuth;
-    private static final String TAG = "loginActivity";
     private String userType;
-    private String carer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,11 +70,11 @@ public class Login extends AppCompatActivity {
                 Toast.makeText(Login.this, "Please re-enter your email", Toast.LENGTH_LONG).show();
                 etEmail.setError("Valid email is required");
                 etPassword.requestFocus();
-           }else if(TextUtils.isEmpty(textPassword)){
+            }else if(TextUtils.isEmpty(textPassword)){
                 Toast.makeText(Login.this, "Please enter your password", Toast.LENGTH_LONG).show();
                 etPassword.setError("Password is required");
                 etPassword.requestFocus();
-           }else{
+            }else{
                 loginUser(textEmail, textPassword);
             }
      });
@@ -87,7 +85,7 @@ public class Login extends AppCompatActivity {
 
         // proceed to ForgotPassword screen
         TextView tvForgotPass = findViewById(R.id.tvForgotPassword);
-        tvForgotPass.setOnClickListener(view -> startActivity(new Intent(Login.this, CarerEmailVerify.class)));
+        tvForgotPass.setOnClickListener(view -> startActivity(new Intent(Login.this, CarerVerifyEmail.class)));
 
         // change substring color
         @SuppressLint("CutPasteId") TextView tvRegister = findViewById(R.id.btnRegister);
@@ -121,8 +119,7 @@ public class Login extends AppCompatActivity {
                 // get instance of the current user
                 FirebaseUser firebaseUser = mAuth.getCurrentUser();
 
-
-                // check if email is verified before user can access the CarerHome Activity
+                // check if email is verified
                 if(firebaseUser.isEmailVerified()){
 
                     String userID = firebaseUser.getUid();
@@ -130,10 +127,8 @@ public class Login extends AppCompatActivity {
                     // extracting userType reference from the db for "Registered Users"
                     DatabaseReference referenceCarerUser = FirebaseDatabase.getInstance().getReference("Registered Users");
                     referenceCarerUser.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
-
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            ReadWriteUserDetails readWriteUserDetails = snapshot.getValue(ReadWriteUserDetails.class);
                             userType = snapshot.child("userType").getValue().toString();
 
                             if(userType.equals("Carer")){
@@ -146,8 +141,6 @@ public class Login extends AppCompatActivity {
                         public void onCancelled(@NonNull DatabaseError error) {
                         }
                     });
-
-
                 }else{
                     firebaseUser.sendEmailVerification();
                     mAuth.signOut();
@@ -185,13 +178,9 @@ public class Login extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // create the AlertDialog
         AlertDialog alertDialog = builder.create();
-
-        // show the AlertDialog
         alertDialog.show();
     }
-
     // check if User is already logged in, then direct to the MainActivity
     @Override
     protected void onStart(){

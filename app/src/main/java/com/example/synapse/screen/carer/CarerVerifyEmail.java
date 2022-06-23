@@ -7,15 +7,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
-public class CarerEmailVerify extends AppCompatActivity {
+public class CarerVerifyEmail extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_carer_email_confirmation);
+        setContentView(R.layout.activity_carer_verify_email);
 
         Button btnLogin = findViewById(R.id.btnLoginNow);
-        btnLogin.setOnClickListener(view -> startActivity(new Intent(CarerEmailVerify.this, Login.class)));
+        btnLogin.setOnClickListener(view -> startActivity(new Intent(CarerVerifyEmail.this, Login.class)));
 
     }
 }

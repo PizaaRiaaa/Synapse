@@ -191,7 +191,7 @@ public class RegisterCarer extends AppCompatActivity {
                                         auth.signOut();
 
                                         Toast.makeText(RegisterCarer.this, "Registered successfully. Please verify your email.", Toast.LENGTH_LONG).show();
-                                        startActivity(new Intent(RegisterCarer.this, CarerEmailVerify.class));
+                                        startActivity(new Intent(RegisterCarer.this, CarerVerifyEmail.class));
                                     }else{
                                         Toast.makeText(RegisterCarer.this, "User registered failed. Please try again",
                                                 Toast.LENGTH_LONG).show();
