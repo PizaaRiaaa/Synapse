@@ -18,16 +18,26 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.example.synapse.R;
-import com.example.synapse.screen.carer.CarerEmailConfirmation;
+import com.example.synapse.screen.carer.CarerEmailVerify;
+import com.example.synapse.screen.carer.CarerHome;
+import com.example.synapse.screen.util.ReadWriteUserDetails;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 
 public class Login extends AppCompatActivity {
@@ -35,7 +45,8 @@ public class Login extends AppCompatActivity {
     private EditText etEmail, etPassword;
     private FirebaseAuth mAuth;
     private static final String TAG = "loginActivity";
-
+    private String userType;
+    private String carer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +87,7 @@ public class Login extends AppCompatActivity {
 
         // proceed to ForgotPassword screen
         TextView tvForgotPass = findViewById(R.id.tvForgotPassword);
-        tvForgotPass.setOnClickListener(view -> startActivity(new Intent(Login.this, CarerEmailConfirmation.class)));
+        tvForgotPass.setOnClickListener(view -> startActivity(new Intent(Login.this, CarerEmailVerify.class)));
 
         // change substring color
         @SuppressLint("CutPasteId") TextView tvRegister = findViewById(R.id.btnRegister);
@@ -110,12 +121,33 @@ public class Login extends AppCompatActivity {
                 // get instance of the current user
                 FirebaseUser firebaseUser = mAuth.getCurrentUser();
 
-                // check if email is verified before user can access the MainActivity
-                if(firebaseUser.isEmailVerified()){
-                    Toast.makeText(Login.this, "You are logged in now", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(Login.this, MainActivity.class));
 
-                    // open user's MainActivity
+                // check if email is verified before user can access the CarerHome Activity
+                if(firebaseUser.isEmailVerified()){
+
+                    String userID = firebaseUser.getUid();
+
+                    // extracting userType reference from the db for "Registered Users"
+                    DatabaseReference referenceCarerUser = FirebaseDatabase.getInstance().getReference("Registered Users");
+                    referenceCarerUser.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            ReadWriteUserDetails readWriteUserDetails = snapshot.getValue(ReadWriteUserDetails.class);
+                            userType = snapshot.child("userType").getValue().toString();
+
+                            if(userType.equals("Carer")){
+                                Toast.makeText(Login.this, "You are logged in now", Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(Login.this, CarerHome.class));
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+
+
                 }else{
                     firebaseUser.sendEmailVerification();
                     mAuth.signOut();
@@ -168,7 +200,7 @@ public class Login extends AppCompatActivity {
             Toast.makeText(Login.this, "Already Logged In!", Toast.LENGTH_SHORT).show();
 
             // start the MainActivity
-            startActivity(new Intent(Login.this, MainActivity.class));
+            startActivity(new Intent(Login.this, CarerHome.class));
             finish();
         }else{
             Toast.makeText(Login.this, "You can Login now!", Toast.LENGTH_SHORT).show();

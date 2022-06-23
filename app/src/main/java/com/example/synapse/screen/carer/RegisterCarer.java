@@ -12,8 +12,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -45,8 +43,6 @@ import com.google.firebase.storage.UploadTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import io.grpc.Context;
-
 public class RegisterCarer extends AppCompatActivity {
     private EditText etFullName,etEmail, etPassword, etMobileNumber;
     private static final String TAG = "RegisterActivity";
@@ -58,12 +54,10 @@ public class RegisterCarer extends AppCompatActivity {
     private StorageReference storageReference;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_carer);
-
 
         // (ImageButton) bring user back to PickRole screen
         ImageButton ibBack = findViewById(R.id.ibRegisterCarerBack);
@@ -74,7 +68,7 @@ public class RegisterCarer extends AppCompatActivity {
         tvAlreadyHaveAccount.setOnClickListener(view -> startActivity(new Intent(RegisterCarer.this, Login.class)));
 
 
-        // upload profile picture
+        // open file dialog for profile pic
         ivProfilePic = findViewById(R.id.ivProfilePic);
         chooseProfilePic = findViewById(R.id.ic_choose_profile_pic);
         chooseProfilePic.setOnClickListener(new View.OnClickListener() {
@@ -136,7 +130,7 @@ public class RegisterCarer extends AppCompatActivity {
         });
     }
 
-    // register User using the credentials given
+    // register user using the credentials given
     private void signupUser(String textFullName, String textEmail, String textMobileNumber, String textPassword, String userType){
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
@@ -155,25 +149,19 @@ public class RegisterCarer extends AppCompatActivity {
                             // extracting user reference from database for "registered user"
                             DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference("Registered Users");
 
-                            // UPLOAD PROFILE PIC
-
+                            // store profile picture of carer
                             storageReference = FirebaseStorage.getInstance().getReference("DisplayPics");
-                            //Uri uri = firebaseUser.getPhotoUrl();
-                            // set user's current dp in ImageView (if uploaded already).
-                            //Picasso.get().load(uri).into(ivProfilePic);
-
 
                             referenceProfile.child(firebaseUser.getUid()).setValue(writeUserDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
 
+                                    // If user change upload profile pic
                                     if(uriImage != null){
                                         // save the image
                                         StorageReference fileReference = storageReference.child(auth.getCurrentUser().getUid() + "."
                                                 + getFileExtension(uriImage));
 
-
-                                        // Upload image to Storage
                                         fileReference.putFile(uriImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                             @Override
                                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -194,6 +182,7 @@ public class RegisterCarer extends AppCompatActivity {
                                         });
                                     }
 
+                                    // if all inputs are valid
                                     if(task.isSuccessful()){
                                         // send verification email
                                         firebaseUser.sendEmailVerification();
@@ -202,7 +191,7 @@ public class RegisterCarer extends AppCompatActivity {
                                         auth.signOut();
 
                                         Toast.makeText(RegisterCarer.this, "Registered successfully. Please verify your email.", Toast.LENGTH_LONG).show();
-                                        startActivity(new Intent(RegisterCarer.this, CarerEmailConfirmation.class));
+                                        startActivity(new Intent(RegisterCarer.this, CarerEmailVerify.class));
                                     }else{
                                         Toast.makeText(RegisterCarer.this, "User registered failed. Please try again",
                                                 Toast.LENGTH_LONG).show();
