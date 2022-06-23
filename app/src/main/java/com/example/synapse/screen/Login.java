@@ -113,6 +113,7 @@ public class Login extends AppCompatActivity {
                 // check if email is verified before user can access the MainActivity
                 if(firebaseUser.isEmailVerified()){
                     Toast.makeText(Login.this, "You are logged in now", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(Login.this, MainActivity.class));
 
                     // open user's MainActivity
                 }else{

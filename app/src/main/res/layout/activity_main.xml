@@ -5,12 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
     tools:context=".screen.MainActivity">
 
-    <TextView
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:minHeight="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:text="Hello World"/>
+        app:titleTextColor="@android:color/white"
+        android:background="?attr/colorPrimary">
+    </com.google.android.material.appbar.MaterialToolbar>
+
 </LinearLayout>
