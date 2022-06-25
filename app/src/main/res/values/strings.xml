@@ -6,5 +6,40 @@
     <string name="subtitle">Heading</string>
     <string name="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel libero hendrerit, euismod ligula non, pharetra nisi. In hac habitasse platea dictumst. Mauris elementum non dui et pulvinar.</string>
     <string name="btnFinish">GET STARTED</string>
+    <string name="tvWelcome">Welcome to Synapse</string>
+
+    <!-- LOGIN SCREEN -->
+    <string name="login">Login</string>
+    <string name="login_email">Phone, email or username</string>
+    <string name="login_password">Password</string>
+    <string name="forgot_password">Forgot your password?</string>
+    <string name="btnLogin">LOGIN</string>
+    <string name="btnRegister">Create new account</string>
+    <string name="tvDontHaveAccount">Don\'t have an account? Register!</string>
+    <string name="tvSub_header">Notify your senior loved ones</string>
+
+    <!-- PICK ROLE SCREEN -->
+    <string name="join_carer_senior">Join as carer or \n senior citizen</string>
+    <string name="carer">Carer</string>
+    <string name="senior_citizen">Senior</string>
+    <string name="pick_carer">Carer</string>
+    <string name="tvCarer">CARER</string>
+    <string name="tvSenior">SENIOR</string>
+    <string name="btnContinue">CONTINUE</string>
+    <string name="back">back</string>
+    <string name="already_have_account">Already have an account?</string>
+    <string name="tvRegisterCarer">CARER</string>
+
+    <!-- REGISTER -->
+    <string name="carer_info">Carer\'s info</string>
+    <string name="full_name">Full Name</string>
+    <string name="email_address">Email Address</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="signup">SIGNUP</string>
+    <string name="senior_s_info">Senior\'s info</string>
+    <string name="thank_you_for_signing_up">Thank you for \n signing up!</string>
+    <string name="sent_email">We\'re glad yo\'re here! \n Before you start exploring, we \n just sent you the email \n confirmation</string>
+    <string name="resend_email">RESEND EMAIL</string>
+    <string name="email_verficationi_login">LOGIN</string>
 
 </resources>

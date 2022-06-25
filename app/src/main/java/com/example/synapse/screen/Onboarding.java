@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.synapse.R;
+import com.example.synapse.screen.util.SliderAdapter;
 
 public class Onboarding extends AppCompatActivity {
 
@@ -38,7 +39,7 @@ public class Onboarding extends AppCompatActivity {
 
         mSlideViewPager.addOnPageChangeListener(viewListener);
 
-        // PROCEED TO LOGIN SCREEN
+        // proceed to login screen
         mFinishBtn.setOnClickListener(view -> {
             startActivity(new Intent(Onboarding.this, Login.class));
             finish();
@@ -48,7 +49,7 @@ public class Onboarding extends AppCompatActivity {
 
     }
 
-    // DISPLAY THREE DOTS NAVIGATION
+    // display three dots navigation
     public void addDotsIndicator(int position) {
         mDots = new TextView[3];
         mDotLayout.removeAllViews();
@@ -64,7 +65,7 @@ public class Onboarding extends AppCompatActivity {
             mDotLayout.addView(mDots[i]);
         }
 
-        // DISPLAY DARK GREY INDICATOR FOR CURRENT SCREEN
+        // display dark grey indicator for current screen
         if (mDots.length > 0) {
             mDots[position].setTextColor(ContextCompat.getColor(this, R.color.dark_grey));
         }
