@@ -50,9 +50,6 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-<<<<<<< HEAD
-t
-=======
 
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etLoginPassword);
@@ -204,6 +201,5 @@ t
         }else{
             Toast.makeText(Login.this, "You can Login now!", Toast.LENGTH_SHORT).show();
         }
->>>>>>> synapse-v3
     }
  }
