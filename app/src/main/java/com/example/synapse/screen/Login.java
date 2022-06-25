@@ -26,6 +26,7 @@ import androidx.core.content.ContextCompat;
 import com.example.synapse.R;
 import com.example.synapse.screen.carer.CarerVerifyEmail;
 import com.example.synapse.screen.carer.CarerHome;
+import com.example.synapse.screen.senior.SeniorHome;
 import com.example.synapse.screen.util.ReadWriteUserDetails;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -126,6 +127,7 @@ public class Login extends AppCompatActivity {
 
                     // extracting userType reference from the db for "Registered Users"
                     DatabaseReference referenceCarerUser = FirebaseDatabase.getInstance().getReference("Registered Users");
+
                     referenceCarerUser.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -134,6 +136,9 @@ public class Login extends AppCompatActivity {
                             if(userType.equals("Carer")){
                                 Toast.makeText(Login.this, "You are logged in now", Toast.LENGTH_LONG).show();
                                 startActivity(new Intent(Login.this, CarerHome.class));
+                            }else if(userType.equals("Senior")){
+                                Toast.makeText(Login.this, "You are logged in now", Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(Login.this, SeniorHome.class));
                             }
                         }
 
@@ -181,6 +186,8 @@ public class Login extends AppCompatActivity {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+
+
     // check if User is already logged in, then direct to the MainActivity
     @Override
     protected void onStart(){

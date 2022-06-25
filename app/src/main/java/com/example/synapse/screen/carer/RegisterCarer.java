@@ -48,7 +48,6 @@ public class RegisterCarer extends AppCompatActivity {
     private static final String TAG = "RegisterActivity";
     private String userType;
     private ImageView ivProfilePic;
-    private AppCompatImageView chooseProfilePic;
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri uriImage;
     private StorageReference storageReference;
@@ -69,8 +68,8 @@ public class RegisterCarer extends AppCompatActivity {
 
 
         // open file dialog for profile pic
-        ivProfilePic = findViewById(R.id.ivProfilePic);
-        chooseProfilePic = findViewById(R.id.ic_choose_profile_pic);
+        ivProfilePic = findViewById(R.id.ivCarerProfilePic);
+        AppCompatImageView chooseProfilePic = findViewById(R.id.ic_carer_choose_profile_pic);
         chooseProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){

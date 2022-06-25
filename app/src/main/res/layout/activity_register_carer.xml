@@ -22,7 +22,7 @@
         android:layout_gravity="center">
 
         <ImageView
-            android:id="@+id/ivProfilePic"
+            android:id="@+id/ivCarerProfilePic"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="bottom|center_horizontal"
@@ -33,7 +33,7 @@
             android:src="@drawable/ic_carer_profilepic" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ic_choose_profile_pic"
+            android:id="@+id/ic_carer_choose_profile_pic"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_gravity="bottom|end"
