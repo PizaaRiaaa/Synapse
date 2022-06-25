@@ -27,7 +27,6 @@ import com.example.synapse.R;
 import com.example.synapse.screen.carer.CarerVerifyEmail;
 import com.example.synapse.screen.carer.CarerHome;
 import com.example.synapse.screen.senior.SeniorHome;
-import com.example.synapse.screen.util.ReadWriteUserDetails;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
