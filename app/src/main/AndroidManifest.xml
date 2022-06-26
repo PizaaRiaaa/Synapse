@@ -14,6 +14,12 @@
         android:theme="@style/Theme.Synapse"
         tools:targetApi="31">
         <activity
+            android:name=".screen.senior.games.BrainTrainer"
+            android:exported="false" />
+        <activity
+            android:name=".screen.senior.GameDashboard"
+            android:exported="false" />
+        <activity
             android:name=".screen.senior.SeniorHome"
             android:exported="false" />
         <activity
