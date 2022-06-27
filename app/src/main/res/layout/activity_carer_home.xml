@@ -80,7 +80,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="4dp"
                 android:orientation="vertical">
 
             <TextView
@@ -118,15 +119,14 @@
                     android:textColor="@color/dark_grey"
                     android:textSize="15sp" />
 
+
             </LinearLayout>
 
         </LinearLayout>
-
         <com.google.android.material.imageview.ShapeableImageView
             android:layout_width="80dp"
             android:layout_height="30dp"
             android:layout_gravity="bottom|end"
-            android:layout_marginEnd="1dp"
             android:background="@color/light_grey"
             app:shapeAppearanceOverlay="@style/roundedImageView"
             app:srcCompat="@drawable/ic_right_arrow" />
@@ -169,25 +169,70 @@
         android:layout_gravity="center_horizontal"
         android:orientation="horizontal">
 
+        <!-- medication module -->
         <com.google.android.material.card.MaterialCardView
             app:cardBackgroundColor="@color/medications_bg"
             android:layout_width="0dp"
             android:layout_height="140dp"
             android:layout_weight="1"
             android:layout_margin="10dp"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="3dp">
+            app:cardCornerRadius="20dp">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/ic_medications"
+                android:contentDescription="@string/pick_carer"
+                android:scaleType="fitCenter"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="bottom">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/redhatdisplay_bold"
+                android:textColor="@color/medication_title"
+                android:text="@string/tvMedication"/>
+
+            <TextView
+                android:id="@+id/tvMedicationsTasks"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="@string/tvMedicationTasks"/>
+
+            </LinearLayout>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="60dp"
+                android:layout_height="35dp"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="1dp"
+                android:background="@color/medication_add_button"
+                android:clickable="true"
+                app:shapeAppearanceOverlay="@style/roundedImageView"
+                app:contentPadding="9dp"
+                app:srcCompat="@drawable/ic_plus"
+                android:focusable="true" />
+
 
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- physical activity module -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             android:layout_height="140dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
             app:cardBackgroundColor="@color/physical_activity_bg"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="3dp">
+            app:cardCornerRadius="20dp">
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -205,8 +250,7 @@
             android:layout_height="140dp"
             android:layout_weight="1"
             android:layout_margin="10dp"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="3dp">
+            app:cardCornerRadius="20dp">
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -216,8 +260,7 @@
             android:layout_height="140dp"
             android:layout_weight="1"
             android:layout_margin="10dp"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="3dp">
+            app:cardCornerRadius="20dp">
 
         </com.google.android.material.card.MaterialCardView>
 

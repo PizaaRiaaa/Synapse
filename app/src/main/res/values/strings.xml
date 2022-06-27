@@ -52,5 +52,7 @@
     <string name="tvAssignedSenior">Assingned Senior</string>
     <string name="tvNotify">Notify</string>
     <string name="tvScheduleNotifications">Schedule notifications for your senior loved ones</string>
+    <string name="tvMedication">Medication</string>
+    <string name="tvMedicationTasks">tasks</string>
 
 </resources>
