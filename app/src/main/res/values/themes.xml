@@ -53,4 +53,10 @@
         <item name="android:textColor">@color/mid_grey</item>
     </style>
 
+    <!-- rounded imageview right arrow and plus arrow -->
+    <style name="roundedImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">30dp</item>
+    </style>
+
 </resources>

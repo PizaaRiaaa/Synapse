@@ -14,7 +14,7 @@
     <color name="mid_violet">#9673F7</color>
     <color name="dark_violet">#9B5BFA</color>
 
-    <!-- green -->
+
     <color name="light_green">#3edadd</color>
 
     <!-- gray -->
@@ -38,4 +38,26 @@
     <color name="bg_home_screen">#F8F9FC</color>
     <color name="search_view_stroke">#E9ECF5</color>
     <color name="carer_profile_pic">#E7E7E7</color>
+
+    <!-- reminder modules -->
+    <color name="medications_bg">#DDFFF9</color>
+    <color name="medication_add_button">#3edadd</color>
+    <color name="medication_title">#049599</color>
+    <color name="medication_subtitle">#22B6BA</color>
+
+    <color name="physical_activity_bg">#E7E8FF</color>
+   <color name="physical_activity_add_button">#9673F7</color>
+    <color name="physical_title">#A787FF</color>
+    <color name="physical_subtitle">#B297FB</color>
+
+    <color name="appointment_bg">#FFDADA</color>
+    <color name="appointment_add_button">#F39494</color>
+    <color name="appointment_title">#CF6868</color>
+    <color name="appointment_subtitle">#E98D8D</color>
+
+    <color name="games_bg">#FFE0CF</color>
+    <color name="games_add_button">#D09370</color>
+    <color name="games_title">#D0855A</color>
+    <color name="games_subtitle">#D0916E</color>
+
 </resources>

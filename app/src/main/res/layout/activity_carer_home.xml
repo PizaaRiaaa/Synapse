@@ -29,8 +29,8 @@
 
         <ImageView
             android:id="@+id/ivCarerProfilePic"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="bottom|center_horizontal"
             android:layout_marginEnd="20dp"
             android:background="@drawable/carer_profile_pic"
@@ -40,15 +40,25 @@
 
     </LinearLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="textStart"
+        android:layout_marginTop="20dp"
+        android:text="@string/tvAssignedSenior"
+        android:layout_marginStart="30dp"
+        android:textSize="15sp"
+        android:textColor="@color/dark_grey"
+        android:fontFamily="@font/redhatdisplay_bold"/>
 
     <com.google.android.material.card.MaterialCardView
         app:shapeAppearanceOverlay="@style/ShapeAppearanceCarer.CardView"
         app:cardBackgroundColor="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="120dp"
         android:layout_marginTop="40dp"
         android:layout_margin="20dp"
-        app:cardElevation="20dp">
+        app:cardElevation="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,10 +68,10 @@
 
             <ImageView
                 android:id="@+id/ivAssignedSeniorProfile"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_gravity="center"
-                android:layout_marginStart="60dp"
+                android:layout_marginStart="40dp"
                 android:background="@drawable/ic_senior_profilepic"
                 android:contentDescription="@string/pick_carer"
                 android:scaleType="fitCenter" />
@@ -70,13 +80,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="40dp"
+                android:layout_marginStart="20dp"
                 android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvSeniorFullName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/redhatdisplay_semibold"
+                android:textColor="@color/dark_grey"
+                android:textSize="18sp"
                 android:text="@string/assigned_senior_fullname"/>
 
             <TextView
@@ -86,17 +100,127 @@
                 android:layout_gravity="center_vertical"
                 android:text="@string/tv_senior_barangay"/>
 
+            <TextView
+                android:id="@+id/tvSeniorCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/tv_senior_city"/>
+
                 <TextView
-                    android:id="@+id/tvSeniorCity"
+                    android:id="@+id/tvSeniorAge"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="@string/tv_senior_city"/>
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/redhatdisplay_medium"
+                    android:text="@string/tvSeniorAge"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="15sp" />
 
             </LinearLayout>
 
         </LinearLayout>
 
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="1dp"
+            android:background="@color/light_grey"
+            app:shapeAppearanceOverlay="@style/roundedImageView"
+            app:srcCompat="@drawable/ic_right_arrow" />
+
     </com.google.android.material.card.MaterialCardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/redhatdisplay_bold"
+            android:text="@string/tvNotify"
+            android:textColor="@color/mid_grey"
+            android:textSize="23sp"
+            android:drawablePadding="10dp"
+            app:drawableRightCompat="@drawable/ic_bell" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="7dp"
+            android:fontFamily="@font/redhatdisplay_regular"
+            android:textSize="14sp"
+            android:text="@string/tvScheduleNotifications"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <com.google.android.material.card.MaterialCardView
+            app:cardBackgroundColor="@color/medications_bg"
+            android:layout_width="0dp"
+            android:layout_height="140dp"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="3dp">
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="140dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            app:cardBackgroundColor="@color/physical_activity_bg"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="3dp">
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <com.google.android.material.card.MaterialCardView
+            app:cardBackgroundColor="@color/appointment_bg"
+            android:layout_width="0dp"
+            android:layout_height="140dp"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="3dp">
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            app:cardBackgroundColor="@color/games_bg"
+            android:layout_width="0dp"
+            android:layout_height="140dp"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="3dp">
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
 
 </LinearLayout>

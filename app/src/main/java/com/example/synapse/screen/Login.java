@@ -195,7 +195,7 @@ public class Login extends AppCompatActivity {
             Toast.makeText(Login.this, "Already Logged In!", Toast.LENGTH_SHORT).show();
 
             // start the MainActivity
-            startActivity(new Intent(Login.this, SeniorHome.class));
+            startActivity(new Intent(Login.this, CarerHome.class));
             finish();
         }else{
             Toast.makeText(Login.this, "You can Login now!", Toast.LENGTH_SHORT).show();
