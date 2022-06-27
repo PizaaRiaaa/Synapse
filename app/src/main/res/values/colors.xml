@@ -32,6 +32,10 @@
     <color name="mid_grey">#7E7E7E</color>
     <color name="dark_grey">#565555</color>
     <color name="light_grey_input">#F3F3F3</color>
-
     <color name="mtrl_textinput_default_box_stroke_color">#fff</color>
+
+    <!-- carer home screen -->
+    <color name="bg_home_screen">#F8F9FC</color>
+    <color name="search_view_stroke">#E9ECF5</color>
+    <color name="carer_profile_pic">#E7E7E7</color>
 </resources>

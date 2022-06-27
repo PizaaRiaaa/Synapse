@@ -31,6 +31,18 @@
         <item name="shapeAppearanceOverlay">@style/ShapeAppearance_custom_corners</item>
     </style>
 
+    <!-- carer custom material card -->
+    <style name="ShapeAppearanceCarer.CardView" parent="">
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+        <item name="cornerSizeBottomLeft">20%</item>
+        <item name="cornerSizeBottomRight">20%</item>
+        <item name="cornerSizeTopLeft">20%</item>
+        <item name="cornerSizeTopRight">20%</item>
+    </style>
+
     <style name="ShapeAppearance_custom_corners" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopLeft">59dp</item>
@@ -40,4 +52,5 @@
     <style name="login_text_color">
         <item name="android:textColor">@color/mid_grey</item>
     </style>
+
 </resources>

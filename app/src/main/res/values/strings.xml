@@ -42,4 +42,11 @@
     <string name="resend_email">RESEND EMAIL</string>
     <string name="email_verficationi_login">LOGIN</string>
 
+    <!-- CARER HOME SCREEN -->
+    <string name="tvCarer_home_screen">Carer</string>
+    <string name="edit_carer_profile">edit profile</string>
+    <string name="assigned_senior_fullname">Full Name</string>
+    <string name="tv_senior_barangay">barangay</string>
+    <string name="tv_senior_city">City</string>
+
 </resources>
