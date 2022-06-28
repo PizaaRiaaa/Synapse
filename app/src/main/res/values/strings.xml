@@ -53,6 +53,13 @@
     <string name="tvNotify">Notify</string>
     <string name="tvScheduleNotifications">Schedule notifications for your senior loved ones</string>
     <string name="tvMedication">Medication</string>
-    <string name="tvMedicationTasks">tasks</string>
-
+    <string name="tvPhysicalActivity">Physical Activity</string>
+    <string name="tvAppointment">Appointment</string>
+    <string name="tvGames">Games</string>
+    <string name="tvTasks">Tasks</string>
+    <string name="cdLocateSenior">Locate Senior</string>
+    <string name="menuHome">Home</string>
+    <string name="menuChat">Chat</string>
+    <string name="menuProfile">Profile</string>
+    <string name="menuSettings">Settings</string>
 </resources>
