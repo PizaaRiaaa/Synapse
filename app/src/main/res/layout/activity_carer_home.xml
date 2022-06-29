@@ -18,7 +18,7 @@
         <SearchView
             android:id="@+id/searchViewCarer"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginHorizontal="16dp"
             android:background="@drawable/search_view"
             android:iconifiedByDefault="false"
@@ -45,20 +45,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="textStart"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="@string/tvAssignedSenior"
         android:layout_marginStart="30dp"
         android:textSize="15sp"
-        android:textColor="@color/dark_grey"
+        android:textColor="@color/mid_grey"
         android:fontFamily="@font/redhatdisplay_bold"/>
 
     <com.google.android.material.card.MaterialCardView
         app:shapeAppearanceOverlay="@style/ShapeAppearanceCarer.CardView"
         app:cardBackgroundColor="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_marginTop="40dp"
-        android:layout_margin="20dp"
+        android:layout_height="110dp"
+        android:layout_margin="15dp"
         app:cardElevation="8dp">
 
         <LinearLayout
@@ -82,7 +81,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="4dp"
                 android:orientation="vertical">
 
             <TextView
@@ -138,6 +136,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
+        android:layout_marginBottom="10dp"
         android:orientation="vertical">
 
         <TextView
@@ -145,11 +144,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:layout_marginStart="20dp"
+            android:drawablePadding="10dp"
             android:fontFamily="@font/redhatdisplay_bold"
             android:text="@string/tvNotify"
             android:textColor="@color/mid_grey"
-            android:textSize="23sp"
-            android:drawablePadding="10dp"
+            android:textSize="20sp"
             app:drawableRightCompat="@drawable/ic_bell" />
 
         <TextView
@@ -172,11 +171,11 @@
 
         <!-- medication module -->
         <com.google.android.material.card.MaterialCardView
-            app:cardBackgroundColor="@color/medications_bg"
             android:layout_width="0dp"
             android:layout_height="140dp"
-            android:layout_weight="1"
             android:layout_margin="10dp"
+            android:layout_weight="1"
+            app:cardBackgroundColor="@color/medications_bg"
             app:cardCornerRadius="20dp">
 
             <ImageView
@@ -186,31 +185,31 @@
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/ic_medications"
                 android:contentDescription="@string/pick_carer"
-                android:scaleType="fitCenter"/>
+                android:scaleType="fitCenter" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="15dp"
+                android:layout_gravity="bottom"
                 android:layout_marginStart="10dp"
-                android:layout_gravity="bottom">
+                android:layout_marginBottom="15dp"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/redhatdisplay_bold"
-                android:textColor="@color/medication_title"
-                android:text="@string/tvMedication"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/redhatdisplay_bold"
+                    android:text="@string/tvMedication"
+                    android:textColor="@color/medication_title" />
 
-            <TextView
-                android:id="@+id/tvMedicationsTasks"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-                android:textColor="@color/medication_subtitle"
-               android:text="@string/tvTasks"/>
+                <TextView
+                    android:id="@+id/tvMedicationsTasks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tvTasks"
+                    android:textColor="@color/medication_subtitle" />
 
-   </LinearLayout>
+            </LinearLayout>
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:layout_width="60dp"
@@ -218,10 +217,10 @@
                 android:layout_gravity="bottom|end"
                 android:background="@color/medication_add_button"
                 android:clickable="true"
-                app:shapeAppearanceOverlay="@style/roundedImageView"
+                android:focusable="true"
                 app:contentPadding="9dp"
-                app:srcCompat="@drawable/ic_plus"
-                android:focusable="true" />
+                app:shapeAppearanceOverlay="@style/roundedImageView"
+                app:srcCompat="@drawable/ic_plus" />
 
 
         </com.google.android.material.card.MaterialCardView>
@@ -284,7 +283,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="152dp"
         android:layout_gravity="center_horizontal"
         android:orientation="horizontal">
 
@@ -294,7 +293,7 @@
             android:layout_width="0dp"
             android:layout_height="140dp"
             android:layout_weight="1"
-            android:layout_margin="10dp"
+            android:layout_margin="12dp"
             app:cardCornerRadius="20dp">
 
             <ImageView
@@ -406,14 +405,14 @@
          android:id="@+id/bottomAppBar"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
-         app:fabCradleMargin="15dp"
+         app:fabCradleMargin="10dp"
          app:fabCradleRoundedCornerRadius="20dp"
          android:layout_gravity="bottom">
 
              <com.google.android.material.bottomnavigation.BottomNavigationView
                  android:id="@+id/bottomNavigationView"
                  android:layout_width="match_parent"
-                 android:layout_height="match_parent"
+                 android:layout_height="wrap_content"
                  android:layout_marginEnd="16dp"
                  android:background="@android:color/transparent"
                  app:menu="@menu/bottom_nav_menu"/>
