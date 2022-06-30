@@ -37,6 +37,7 @@ public class SearchSenior extends AppCompatActivity {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
+        // set layout for recyclerview
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -45,8 +46,8 @@ public class SearchSenior extends AppCompatActivity {
         bottomNavigationView.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent));
 
         // search senior user
-        androidx.appcompat.widget.SearchView searchview = (androidx.appcompat.widget.SearchView)findViewById(R.id.search_field);
-        searchview.setOnQueryTextListener(new  androidx.appcompat.widget.SearchView.OnQueryTextListener() {
+        SearchView searchview = (SearchView)findViewById(R.id.search_field);
+        searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
@@ -58,26 +59,22 @@ public class SearchSenior extends AppCompatActivity {
             }
         });
 
-
-
-        // load all senior users
+        // invoke to display all senior users
         LoadUsers("");
 
   }
-
 
     // display all senior users in find senior recycle view
     private void LoadUsers(String s){
        Query query = mUserRef.orderByChild("fullName").startAt(s).endAt(s+"\uf8ff");
        FirebaseRecyclerOptions<User> options = new FirebaseRecyclerOptions.Builder<User>().setQuery(query, User.class).build();
-        // TODO we need to display senior user only in recycle view
-        // prevent current login user to display in recycle view
-        FirebaseRecyclerAdapter<User, SendRequestViewHolder> adapter = new FirebaseRecyclerAdapter<User, SendRequestViewHolder>(options) {
 
+        // TODO WE NEED TO ONLY DISPLAY SENIOR USERS IN RECYCLER VIEW
+
+        FirebaseRecyclerAdapter<User, SendRequestViewHolder> adapter = new FirebaseRecyclerAdapter<User, SendRequestViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull SendRequestViewHolder holder, int position, @NonNull User model) {
 
-                // TODO we need to display senior user only in recycle view
                 // prevent current login user to display in recycle view
                 if (!mUser.getUid().equals(getRef(position).getKey().toString())) {
                     holder.fullname.setText(model.getFullName());
@@ -97,5 +94,4 @@ public class SearchSenior extends AppCompatActivity {
        adapter.startListening();
        recyclerView.setAdapter(adapter);
     }
-
 }
