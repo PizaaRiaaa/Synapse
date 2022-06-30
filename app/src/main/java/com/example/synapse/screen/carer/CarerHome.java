@@ -3,10 +3,8 @@ package com.example.synapse.screen.carer;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
 import com.example.synapse.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,7 +36,7 @@ public class CarerHome extends AppCompatActivity {
 
         // open email app if user clicks/taps continue
         builder.setPositiveButton("Continue", (dialog, which) -> {
-            startActivity(new Intent(CarerHome.this, SendRequest.class));
+            startActivity(new Intent(CarerHome.this, SearchSenior.class));
             finish();
         });
 
