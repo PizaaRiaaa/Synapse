@@ -31,11 +31,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
+
 public class CarerHome extends AppCompatActivity {
 
     private ImageView ivProfilePic;
     private TextView tvFullName;
-    private String fullName;
     private BottomNavigationView bottomNavigationView;
 
     private String userID;
@@ -59,47 +60,48 @@ public class CarerHome extends AppCompatActivity {
         // set bottomNavigationView to transparent
         bottomNavigationView.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent));
 
-        // showAlertDialog();
+        showAlertDialog();
 
-            showUserProfile(userID);
-
-
-
+        showUserProfile(userID);
     }
 
     // new registered carer needs to send request to senior user to start push notifications
- //   private void showAlertDialog(){
+   private void showAlertDialog(){
 
- //       // setup the alert builder
- //       AlertDialog.Builder builder = new AlertDialog.Builder(CarerHome.this);
- //       builder.setTitle("Welcome! Thank you for signing up.");
- //       builder.setMessage("Please send request to your senior loved ones to start sending notification reminders.");
+       // setup the alert builder
+       AlertDialog.Builder builder = new AlertDialog.Builder(CarerHome.this);
+       builder.setTitle("Welcome! Thank you for signing up.");
+       builder.setMessage("Please send request to your senior loved ones to start sending notification reminders.");
 
- //       // open email app if user clicks/taps continue
- //       builder.setPositiveButton("Continue", (dialog, which) -> {
- //           startActivity(new Intent(CarerHome.this, SearchSenior.class));
- //           finish();
- //       });
+       // open email app if user clicks/taps continue
+       builder.setPositiveButton("Continue", (dialog, which) -> {
+           startActivity(new Intent(CarerHome.this, SearchSenior.class));
+       });
 
- //       AlertDialog alertDialog = builder.create();
- //       alertDialog.show();
+       AlertDialog alertDialog = builder.create();
+       alertDialog.show();
 
- //   }
+   }
 
    // display carer profile pic
     private void showUserProfile(String firebaseUser){
+
         referenceProfile.child(firebaseUser).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ReadWriteUserDetails userProfile = snapshot.getValue(ReadWriteUserDetails.class);
 
                 if(userProfile != null){
-                        String fullName = userProfile.fullName;
-                        tvFullName.setText(fullName);
+
+                    // String fullName = userProfile.fullName;
+                    // tvFullName.setText(fullName);
 
                         Uri uri = user.getPhotoUrl();
                         //ImageView setImagerURI() should not be used with regular URIs. so we are using picasso
-                        Picasso.get().load(uri).transform(new CircleTransform()).into(ivProfilePic);
+                        Picasso.get()
+                               .load(uri)
+                               .transform(new CropCircleTransformation())
+                               .into(ivProfilePic);
                 }
             }
             @Override
@@ -109,39 +111,4 @@ public class CarerHome extends AppCompatActivity {
         });
    }
 
-    // circular image with picasso
-    public class CircleTransform implements Transformation {
-        @Override
-        public Bitmap transform(Bitmap source) {
-            int size = Math.min(source.getWidth(), source.getHeight());
-
-            int x = (source.getWidth() - size) / 2;
-            int y = (source.getHeight() - size) / 2;
-
-            Bitmap squaredBitmap = Bitmap.createBitmap(source, x, y, size, size);
-            if (squaredBitmap != source) {
-                source.recycle();
-            }
-
-            Bitmap bitmap = Bitmap.createBitmap(size, size, source.getConfig());
-
-            Canvas canvas = new Canvas(bitmap);
-            Paint paint = new Paint();
-            BitmapShader shader = new BitmapShader(squaredBitmap,
-                    Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
-            paint.setShader(shader);
-            paint.setAntiAlias(true);
-
-            float r = size / 2f;
-            canvas.drawCircle(r, r, r, paint);
-
-            squaredBitmap.recycle();
-            return bitmap;
-        }
-
-        @Override
-        public String key() {
-            return "circle";
-        }
-    }
 }

@@ -4,14 +4,16 @@ public class User {
     public String fullName;
     public String phoneNumber;
     public String email;
+    public String profileImage;
     public String userType;
 
     public User() { } // dont remove
 
-    public User(String fullName, String phoneNumber, String email, String userType) {
+    public User(String fullName, String phoneNumber, String email, String profileImage, String userType) {
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.profileImage = profileImage;
         this.userType = userType;
     }
 
@@ -34,5 +36,8 @@ public class User {
 
     public String getUserType() { return userType; }
     public void setUserType(String userType) { this.userType = userType; }
+
+    public String getProfileImage() { return profileImage; }
+    public void setProfileImage(String profileImage) { this.profileImage = profileImage; }
 }
 

@@ -40,18 +40,20 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegisterCarer extends AppCompatActivity {
+
     private EditText etFullName,etEmail, etPassword, etMobileNumber;
-    private static final String TAG = "RegisterActivity";
     private String userType;
+    private static final String TAG = "RegisterActivity";
+    private final String profilePic = "";
     private ImageView ivProfilePic;
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri uriImage;
     private StorageReference storageReference;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +102,6 @@ public class RegisterCarer extends AppCompatActivity {
                 Pattern mobilePattern = Pattern.compile(mobileRegex);
                 mobileMatcher = mobilePattern.matcher(textMobileNumber);
 
-
                 if(TextUtils.isEmpty(textFullName)){
                     Toast.makeText(RegisterCarer.this, "Please enter your full name", Toast.LENGTH_LONG).show();
                     etFullName.requestFocus();
@@ -122,15 +123,18 @@ public class RegisterCarer extends AppCompatActivity {
                 else if(TextUtils.isEmpty(textPassword)){
                     Toast.makeText(RegisterCarer.this, "Please re-enter your password", Toast.LENGTH_LONG).show();
                     etPassword.requestFocus();
-                }else{
-                    signupUser(textFullName,textEmail,textMobileNumber,textPassword,userType);
+                }else if(uriImage == null){
+                    Toast.makeText(RegisterCarer.this, "Please select your profile picture", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    signupUser(textFullName,textEmail,textMobileNumber,textPassword,userType, profilePic);
                 }
             }
         });
     }
 
     // register user using the credentials given
-    private void signupUser(String textFullName, String textEmail, String textMobileNumber, String textPassword, String userType){
+    private void signupUser(String textFullName, String textEmail, String textMobileNumber, String textPassword, String userType, String profilePic){
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
         // Create UserProfile
@@ -143,21 +147,24 @@ public class RegisterCarer extends AppCompatActivity {
                             FirebaseUser firebaseUser = auth.getCurrentUser();
 
                             // enter user data into the firebase realtime database
-                            ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails(textFullName, textEmail, textMobileNumber, textPassword, userType);
+                            ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails(textFullName, textEmail, textMobileNumber, textPassword, userType, profilePic);
 
                             // extracting user reference from database for "registered user"
+                            // TODO RENAME DB TO "Users"
                             DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference("Registered Users");
 
                             // store profile picture of carer
+                            // TODO RENAME DB TO "Profile Pictures"
                             storageReference = FirebaseStorage.getInstance().getReference("DisplayPics");
 
                             referenceProfile.child(firebaseUser.getUid()).setValue(writeUserDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
 
-                                    // If user change upload profile pic
+                                    // user upload profile pic
                                     if(uriImage != null){
-                                        // save the image
+
+                                        // save profile pic with userid filename
                                         StorageReference fileReference = storageReference.child(auth.getCurrentUser().getUid() + "."
                                                 + getFileExtension(uriImage));
 
@@ -167,11 +174,15 @@ public class RegisterCarer extends AppCompatActivity {
                                                 fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                                     @Override
                                                     public void onSuccess(Uri uri) {
-                                                        Uri downloadUri = uri;
+
+                                                        Log.d(TAG, "Download URL = "+ uri.toString());
+
+                                                        //Adding that URL to Realtime database
+                                                        referenceProfile.child(firebaseUser.getUid()).child("imageURL").setValue(uri.toString());
 
                                                         // finally set the display image of the user after upload
                                                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                                                .setPhotoUri(downloadUri).build();
+                                                                .setPhotoUri(uri).build();
                                                         firebaseUser.updateProfile(profileUpdates);
                                                     }
                                                 });

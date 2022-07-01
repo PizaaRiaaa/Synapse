@@ -15,8 +15,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.squareup.picasso.Picasso;
 
 import android.annotation.SuppressLint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -25,6 +27,8 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 
 import java.util.Locale;
+
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class SearchSenior extends AppCompatActivity {
 
@@ -38,7 +42,7 @@ public class SearchSenior extends AppCompatActivity {
         setContentView(R.layout.activity_search_senior);
 
         // retrieve database Registered Users
-        mUserRef = FirebaseDatabase.getInstance().getReference().child("Registered Users");
+        mUserRef = FirebaseDatabase.getInstance().getReference().child("Register Users");
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
@@ -83,7 +87,18 @@ public class SearchSenior extends AppCompatActivity {
 
                 // prevent current login user to display in recycle view
                 if (!mUser.getUid().equals(getRef(position).getKey().toString())) {
-                   holder.fullname.setText(model.getFullName());
+
+                    Uri uri = mUser.getPhotoUrl();
+                    //ImageView setImagerURI() should not be used with regular URIs. so we are using picasso
+                  //  Picasso.get()
+                  //          .load(uri)
+                  //          .transform(new CropCircleTransformation())
+                  //          .into(ivProfilePic);
+
+                    Picasso.get()
+                           .load(model.getProfileImage())
+                           .into(holder.profileImage);
+                    holder.fullname.setText(model.getFullName());
                 } else {
                     holder.itemView.setVisibility(View.GONE);
                     holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
