@@ -173,7 +173,6 @@ public class RegisterCarer extends AppCompatActivity {
                                                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                                                 .setPhotoUri(downloadUri).build();
                                                         firebaseUser.updateProfile(profileUpdates);
-
                                                     }
                                                 });
 

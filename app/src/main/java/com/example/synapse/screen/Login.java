@@ -27,6 +27,9 @@ import com.example.synapse.R;
 import com.example.synapse.screen.carer.CarerVerifyEmail;
 import com.example.synapse.screen.carer.CarerHome;
 import com.example.synapse.screen.senior.SeniorHome;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
@@ -50,14 +53,14 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        Button btnLogin = findViewById(R.id.btnLogin);
+        TextView tvSwitchToPickRole = findViewById(R.id.btnRegister);
+        TextView tvForgotPass = findViewById(R.id.tvForgotPassword);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etLoginPassword);
-
-        //  initialize firebase auth
         mAuth = FirebaseAuth.getInstance();
 
         // login user
-        Button btnLogin = findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(view -> {
             String textEmail = etEmail.getText().toString();
             String textPassword = etPassword.getText().toString();
@@ -80,11 +83,9 @@ public class Login extends AppCompatActivity {
      });
 
         // proceed to PickRole screen
-        TextView tvSwitchToPickRole = findViewById(R.id.btnRegister);
         tvSwitchToPickRole.setOnClickListener(view -> startActivity(new Intent(Login.this, PickRole.class)));
 
         // proceed to ForgotPassword screen
-        TextView tvForgotPass = findViewById(R.id.tvForgotPassword);
         tvForgotPass.setOnClickListener(view -> startActivity(new Intent(Login.this, CarerVerifyEmail.class)));
 
         // change substring color
@@ -113,9 +114,10 @@ public class Login extends AppCompatActivity {
     }
 
     private void loginUser(String email, String password){
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(Login.this, task -> {
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
             if(task.isSuccessful()){
-
                 // get instance of the current user
                 FirebaseUser firebaseUser = mAuth.getCurrentUser();
 
@@ -151,19 +153,20 @@ public class Login extends AppCompatActivity {
                     showAlertDialog();
                 }
 
-            }else{
-                try{
-                     throw task.getException();
-                }catch(FirebaseAuthInvalidUserException e){
-                     etEmail.setError("User does not exists or is not longer valid. Please register again.");
-                     etEmail.requestFocus();
-                }catch(FirebaseAuthInvalidCredentialsException e){
+            }else {
+                try {
+                    throw task.getException();
+                } catch (FirebaseAuthInvalidUserException e) {
+                    etEmail.setError("User does not exists or is not longer valid. Please register again.");
+                    etEmail.requestFocus();
+                } catch (FirebaseAuthInvalidCredentialsException e) {
                     etPassword.setError("Invalid credentials. Kindly, check and re-enter.");
                     etPassword.requestFocus();
-                }catch(Exception e){
+                } catch (Exception e) {
                     Log.e(TAG, e.getMessage());
                     Toast.makeText(Login.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
+              }
             }
         });
     }

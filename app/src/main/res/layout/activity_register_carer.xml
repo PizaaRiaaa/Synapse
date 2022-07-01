@@ -72,7 +72,7 @@
                 android:id="@+id/etCarerFullName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textVisiblePassword"
+                android:inputType="textCapWords"
                 android:background="@drawable/rounded_text_login"
                 android:fontFamily="@font/redhatdisplay_regular"
                 android:hint="@string/full_name"

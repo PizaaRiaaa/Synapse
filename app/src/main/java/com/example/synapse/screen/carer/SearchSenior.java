@@ -15,11 +15,16 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+
+import java.util.Locale;
 
 public class SearchSenior extends AppCompatActivity {
 
@@ -54,6 +59,7 @@ public class SearchSenior extends AppCompatActivity {
             }
             @Override
             public boolean onQueryTextChange(String newText) {
+                // TODO BE ABLE TO SEARCH WITH LOWERCASE AND UPPERCASE
                 LoadUsers(newText);
                 return false;
             }
@@ -69,7 +75,7 @@ public class SearchSenior extends AppCompatActivity {
        Query query = mUserRef.orderByChild("fullName").startAt(s).endAt(s+"\uf8ff");
        FirebaseRecyclerOptions<User> options = new FirebaseRecyclerOptions.Builder<User>().setQuery(query, User.class).build();
 
-        // TODO WE NEED TO ONLY DISPLAY SENIOR USERS IN RECYCLER VIEW
+        // TODO WE NEED DISPLAY ONLY SENIOR USERS IN RECYCLER VIEW
 
         FirebaseRecyclerAdapter<User, SendRequestViewHolder> adapter = new FirebaseRecyclerAdapter<User, SendRequestViewHolder>(options) {
             @Override
@@ -77,7 +83,7 @@ public class SearchSenior extends AppCompatActivity {
 
                 // prevent current login user to display in recycle view
                 if (!mUser.getUid().equals(getRef(position).getKey().toString())) {
-                    holder.fullname.setText(model.getFullName());
+                   holder.fullname.setText(model.getFullName());
                 } else {
                     holder.itemView.setVisibility(View.GONE);
                     holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
@@ -93,5 +99,13 @@ public class SearchSenior extends AppCompatActivity {
         };
        adapter.startListening();
        recyclerView.setAdapter(adapter);
+    }
+
+    public static String capitalizeString(String str) {
+        String retStr = str;
+        try { // We can face index out of bound exception if the string is null
+            retStr = str.substring(0, 1).toUpperCase() + str.substring(1);
+        }catch (Exception ignored){}
+        return retStr;
     }
 }
