@@ -54,7 +54,7 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         Button btnLogin = findViewById(R.id.btnLogin);
-        TextView tvSwitchToPickRole = findViewById(R.id.btnRegister);
+        TextView tvSwitchToPickRole = findViewById(R.id.tvRegister);
         TextView tvForgotPass = findViewById(R.id.tvForgotPassword);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etLoginPassword);
@@ -89,7 +89,7 @@ public class Login extends AppCompatActivity {
         tvForgotPass.setOnClickListener(view -> startActivity(new Intent(Login.this, CarerVerifyEmail.class)));
 
         // change substring color
-        @SuppressLint("CutPasteId") TextView tvRegister = findViewById(R.id.btnRegister);
+        @SuppressLint("CutPasteId") TextView tvRegister = findViewById(R.id.tvRegister);
         String text = "Don't have an account? Register!";
         SpannableStringBuilder ssb = new SpannableStringBuilder(text);
         ForegroundColorSpan light_green = new ForegroundColorSpan(ContextCompat.getColor(this, R.color.light_green));

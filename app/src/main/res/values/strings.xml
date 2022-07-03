@@ -62,4 +62,8 @@
     <string name="menuChat">Chat</string>
     <string name="menuProfile">Profile</string>
     <string name="menuSettings">Settings</string>
+    <string name="tvFullName">Full name</string>
+    <string name="tvAddress">Address</string>
+    <string name="tvSendRequest">Send request</string>
+    <string name="tvDeclineRequest">Decline request</string>
 </resources>

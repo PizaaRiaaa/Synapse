@@ -38,6 +38,8 @@
     <color name="bg_home_screen">#F8F9FC</color>
     <color name="search_view_stroke">#E9ECF5</color>
     <color name="carer_profile_pic">#E7E7E7</color>
+    <color name="green_send_request">#3EDD4E</color>
+    <color name="red_decline_request">#D85240</color>
 
     <!-- reminder modules -->
     <color name="medications_bg">#DDFFF9</color>
@@ -46,7 +48,8 @@
     <color name="medication_subtitle">#22B6BA</color>
 
     <color name="physical_activity_bg">#E7E8FF</color>
-   <color name="physical_activity_add_button">#9673F7</color>
+    <color name="physical_activity_add_button">#9673F7</color>
+
     <color name="physical_title">#A787FF</color>
     <color name="physical_subtitle">#B297FB</color>
 

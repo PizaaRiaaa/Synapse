@@ -49,9 +49,11 @@ public class RegisterCarer extends AppCompatActivity {
     private EditText etFullName,etEmail, etPassword, etMobileNumber;
     private String userType;
     private static final String TAG = "RegisterActivity";
-    private final String profilePic = "";
+
+    private final String imageURL = "";
     private ImageView ivProfilePic;
     private static final int PICK_IMAGE_REQUEST = 1;
+
     private Uri uriImage;
     private StorageReference storageReference;
 
@@ -127,14 +129,14 @@ public class RegisterCarer extends AppCompatActivity {
                     Toast.makeText(RegisterCarer.this, "Please select your profile picture", Toast.LENGTH_LONG).show();
                 }
                 else{
-                    signupUser(textFullName,textEmail,textMobileNumber,textPassword,userType, profilePic);
+                    signupUser(textFullName,textEmail,textMobileNumber,textPassword,userType, imageURL);
                 }
             }
         });
     }
 
     // register user using the credentials given
-    private void signupUser(String textFullName, String textEmail, String textMobileNumber, String textPassword, String userType, String profilePic){
+    private void signupUser(String textFullName, String textEmail, String textMobileNumber, String textPassword, String userType, String imageURL){
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
         // Create UserProfile
@@ -147,9 +149,9 @@ public class RegisterCarer extends AppCompatActivity {
                             FirebaseUser firebaseUser = auth.getCurrentUser();
 
                             // enter user data into the firebase realtime database
-                            ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails(textFullName, textEmail, textMobileNumber, textPassword, userType, profilePic);
+                            ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails(textFullName, textEmail, textMobileNumber, textPassword, userType, imageURL);
 
-                            // extracting user reference from database for "registered user"
+                            // extracting user reference from database for "Registered Users"
                             // TODO RENAME DB TO "Users"
                             DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference("Registered Users");
 

@@ -18,11 +18,10 @@ import com.google.firebase.auth.FirebaseAuth;
 public class Splashscreen extends AppCompatActivity {
 
     // animation variables
-    Animation topAnim;
-    ImageView image;
+    private Animation topAnim;
+    private ImageView image;
 
     // initialize firebase auth
-
     private FirebaseAuth mAuth;
 
     @Override
@@ -59,7 +58,3 @@ public class Splashscreen extends AppCompatActivity {
         }, 3500); // splash screen duration
     }
 }
-//else if (mAuth.getCurrentUser() != null) { // if user is currently login, direct to MainActivity
-  //      Intent intent = new Intent(Splashscreen.this, MainActivity.class);
-   //     startActivity(intent);
-    //    finish();

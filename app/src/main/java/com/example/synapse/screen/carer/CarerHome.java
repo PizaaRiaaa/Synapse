@@ -73,7 +73,7 @@ public class CarerHome extends AppCompatActivity {
        builder.setTitle("Welcome! Thank you for signing up.");
        builder.setMessage("Please send request to your senior loved ones to start sending notification reminders.");
 
-       // open email app if user clicks/taps continue
+       // open email app if user taps continue
        builder.setPositiveButton("Continue", (dialog, which) -> {
            startActivity(new Intent(CarerHome.this, SearchSenior.class));
        });
