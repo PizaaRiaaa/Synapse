@@ -76,6 +76,25 @@ public class ViewSenior extends AppCompatActivity {
 
         // invoke to display user info
         LoadUser();
+
+        checkUserExistence(userID);
+    }
+
+    // prevent display request button if it is alarady clicked/tap
+    private void checkUserExistence(String userID){
+        assignedCompanionRef.child(mUser.getUid()).child(userID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        })
     }
 
     // display user info
