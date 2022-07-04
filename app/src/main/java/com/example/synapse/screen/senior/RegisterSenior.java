@@ -9,6 +9,7 @@ import com.example.synapse.R;
 import com.example.synapse.screen.Login;
 import com.example.synapse.screen.PickRole;
 import com.example.synapse.screen.carer.CarerVerifyEmail;
+import com.example.synapse.screen.carer.RegisterCarer;
 import com.example.synapse.screen.util.ReadWriteUserDetails;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -42,15 +44,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
+
 public class RegisterSenior extends AppCompatActivity {
+
     private EditText etFullName,etEmail, etPassword, etMobileNumber;
     private static final String TAG = "RegisterActivity";
     private String userType;
 
+    private final String imageURL = "";
     private ImageView ivProfilePic;
     private AppCompatImageView chooseProfilePic;
     private static final int PICK_IMAGE_REQUEST = 1;
-    private String profilePic;
     private Uri uriImage;
 
     private StorageReference storageReference;
@@ -109,19 +114,20 @@ public class RegisterSenior extends AppCompatActivity {
                     Toast.makeText(RegisterSenior.this, "Please re-enter your mobile number", Toast.LENGTH_LONG).show();
                     etMobileNumber.setError("Mobile no. should be 11 digits");
                     etMobileNumber.requestFocus();
-                }
-                else if(TextUtils.isEmpty(textPassword)){
+                }else if(TextUtils.isEmpty(textPassword)){
                     Toast.makeText(RegisterSenior.this, "Please re-enter your password", Toast.LENGTH_LONG).show();
                     etPassword.requestFocus();
+                }else if(uriImage == null){
+                    Toast.makeText(RegisterSenior.this, "Please select your profile picture", Toast.LENGTH_LONG).show();
                 }else{
-                    signupUser(textFullName,textEmail,textMobileNumber,textPassword,userType, profilePic);
+                    signupUser(textFullName,textEmail,textMobileNumber,textPassword,userType, imageURL);
                 }
             }
         });
     }
 
     // register User using the credentials given
-    private void signupUser(String textFullName, String textEmail, String textMobileNumber, String textPassword, String userType, String profilePic){
+    private void signupUser(String textFullName, String textEmail, String textMobileNumber, String textPassword, String userType, String imageURL){
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
         // Create UserProfile
@@ -134,7 +140,7 @@ public class RegisterSenior extends AppCompatActivity {
                             FirebaseUser firebaseUser = auth.getCurrentUser();
 
                             // enter user data into the firebase realtime database
-                            ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails(textFullName, textEmail, textMobileNumber, textPassword, userType, profilePic);
+                            ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails(textFullName, textEmail, textMobileNumber, textPassword, userType, imageURL);
 
                             // extracting user reference from database for "registered user"
                             DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference("Registered Users");
@@ -158,11 +164,15 @@ public class RegisterSenior extends AppCompatActivity {
                                                 fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                                     @Override
                                                     public void onSuccess(Uri uri) {
-                                                        Uri downloadUri = uri;
+
+                                                        Log.d(TAG, "Download URL = "+ uri.toString());
+
+                                                        //Adding that URL to Realtime database
+                                                        referenceProfile.child(firebaseUser.getUid()).child("imageURL").setValue(uri.toString());
 
                                                         // finally set the display image of the user after upload
                                                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                                                .setPhotoUri(downloadUri).build();
+                                                                .setPhotoUri(uri).build();
                                                         firebaseUser.updateProfile(profileUpdates);
 
                                                     }
@@ -223,10 +233,13 @@ public class RegisterSenior extends AppCompatActivity {
 
         if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null & data.getData() != null){
             uriImage = data.getData();
-            ivProfilePic.setImageURI(uriImage);
+            Picasso.get()
+                    .load(uriImage)
+                    .fit()
+                    .transform(new CropCircleTransformation())
+                    .into(ivProfilePic);
         }
     }
-
 
     // obtain file extension of the image
     private String getFileExtension(Uri uri){

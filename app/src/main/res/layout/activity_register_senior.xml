@@ -23,12 +23,11 @@
 
         <ImageView
             android:id="@+id/ibSeniorProfilePic"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="bottom|center_horizontal"
-            android:background="@drawable/custom_button_selector"
+            android:background="@drawable/carer_profile_pic"
             android:contentDescription="@string/pick_carer"
-            android:focusable="true"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_senior_profilepic" />
 

@@ -39,10 +39,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
+import jp.wasabeef.picasso.transformations.CropSquareTransformation;
 
 public class RegisterCarer extends AppCompatActivity {
 
@@ -121,8 +125,7 @@ public class RegisterCarer extends AppCompatActivity {
                     Toast.makeText(RegisterCarer.this, "Please re-enter your mobile number", Toast.LENGTH_LONG).show();
                     etMobileNumber.setError("Mobile no. is not valid.");
                     etMobileNumber.requestFocus();
-                }
-                else if(TextUtils.isEmpty(textPassword)){
+                }else if(TextUtils.isEmpty(textPassword)){
                     Toast.makeText(RegisterCarer.this, "Please re-enter your password", Toast.LENGTH_LONG).show();
                     etPassword.requestFocus();
                 }else if(uriImage == null){
@@ -244,7 +247,11 @@ public class RegisterCarer extends AppCompatActivity {
 
         if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null & data.getData() != null){
             uriImage = data.getData();
-            ivProfilePic.setImageURI(uriImage);
+            Picasso.get()
+                    .load(uriImage)
+                    .fit()
+                    .transform(new CropCircleTransformation())
+                    .into(ivProfilePic);
         }
     }
 

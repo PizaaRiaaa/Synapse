@@ -41,6 +41,8 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class SearchSenior extends AppCompatActivity {
@@ -48,6 +50,7 @@ public class SearchSenior extends AppCompatActivity {
     private DatabaseReference mUserRef;
     private FirebaseUser mUser;
     private RecyclerView recyclerView;
+    private TextView tvSeniorResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,20 +62,15 @@ public class SearchSenior extends AppCompatActivity {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
-       // change substring color
-       TextView tvSeniorResults = findViewById(R.id.tvSeniorResults);
-       // String text = "senior citizen results";
-       // SpannableStringBuilder ssb = new SpannableStringBuilder(text);
-       // ForegroundColorSpan light_green = new ForegroundColorSpan(ContextCompat.getColor(this, R.color.light_green));
-       // ssb.setSpan(light_green, 23, 32, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-       // tvSeniorResults.setText(ssb);
+        tvSeniorResults = findViewById(R.id.tvSeniorResults);
 
         // set layout for recyclerview
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // set bottomNavigationView to transparent
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView); bottomNavigationView.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent));
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent));
 
         // count all senior users
         Query query =  mUserRef.orderByChild("userType").equalTo("Senior");
@@ -90,9 +88,8 @@ public class SearchSenior extends AppCompatActivity {
                 String str1 = " About " + seniorCounter;
                 String str2 = " senior citizen";
                 String str3 = " results";
-                tvSeniorResults.setText(Html.fromHtml(str1 + "<font color=\"#049599\">" + str2 +  "</font> " + str3));
+                tvSeniorResults.setText(Html.fromHtml(str1 + "<font color=\"#049599\">" + str2 +  "</font> " + str3, Html.FROM_HTML_MODE_COMPACT));
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 throw error.toException();
