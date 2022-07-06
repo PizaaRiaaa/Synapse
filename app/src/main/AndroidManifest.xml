@@ -14,10 +14,16 @@
         android:theme="@style/Theme.Synapse"
         tools:targetApi="31">
         <activity
-            android:name=".screen.carer.ViewSenior"
+            android:name=".screen.senior.SearchPeople"
             android:exported="false" />
         <activity
-            android:name=".screen.carer.SearchSenior"
+            android:name=".screen.senior.ViewPeople"
+            android:exported="false" />
+        <activity
+            android:name=".screen.carer.ViewPeople"
+            android:exported="false" />
+        <activity
+            android:name=".screen.carer.SearchPeople"
             android:exported="false" />
         <activity
             android:name=".screen.senior.games.BrainTrainer"
@@ -60,6 +66,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

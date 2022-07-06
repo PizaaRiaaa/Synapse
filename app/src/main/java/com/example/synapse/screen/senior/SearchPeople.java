@@ -1,4 +1,4 @@
-package com.example.synapse.screen.carer;
+package com.example.synapse.screen.senior;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,13 +6,12 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.synapse.R;
 import com.example.synapse.screen.util.ReadWriteUserDetails;
 import com.example.synapse.screen.util.SearchSeniorViewHolder;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.example.synapse.R;
-
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,28 +24,18 @@ import com.squareup.picasso.Picasso;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
-public class SearchSenior extends AppCompatActivity {
-
+public class SearchPeople extends AppCompatActivity {
     private DatabaseReference mUserRef;
     private FirebaseUser mUser;
     private RecyclerView recyclerView;
@@ -55,7 +44,7 @@ public class SearchSenior extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_senior);
+        setContentView(R.layout.activity_senior_search_people);
 
         // extracting user reference from database "Registered Users"
         mUserRef = FirebaseDatabase.getInstance().getReference().child("Registered Users");
@@ -66,7 +55,7 @@ public class SearchSenior extends AppCompatActivity {
 
         // set layout for recyclerview
         recyclerView = findViewById(R.id.recyclerview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(SearchPeople.this));
 
         // set bottomNavigationView to transparent
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -97,7 +86,7 @@ public class SearchSenior extends AppCompatActivity {
         });
 
         // search senior user
-        SearchView searchview = (SearchView)findViewById(R.id.search_field);
+        SearchView searchview = findViewById(R.id.search_field);
         searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -113,15 +102,15 @@ public class SearchSenior extends AppCompatActivity {
 
         // invoke to display all senior users
         LoadUsers("");
-  }
+    }
 
     // display all senior users in recycle view
     private void LoadUsers(String s){
 
-       // display all users that is senior
-       Query query = mUserRef.orderByChild("userType").equalTo("Senior");
+        // display all users that is senior
+        Query query = mUserRef.orderByChild("fullName").startAt(s).endAt(s+"\uf8ff");
 
-       FirebaseRecyclerOptions<ReadWriteUserDetails> options = new FirebaseRecyclerOptions.Builder<ReadWriteUserDetails>().setQuery(query, ReadWriteUserDetails.class).build();
+        FirebaseRecyclerOptions<ReadWriteUserDetails> options = new FirebaseRecyclerOptions.Builder<ReadWriteUserDetails>().setQuery(query, ReadWriteUserDetails.class).build();
 
         // TODO WE NEED DISPLAY ONLY SENIOR USERS IN RECYCLER VIEW
 
@@ -129,18 +118,18 @@ public class SearchSenior extends AppCompatActivity {
             @Override
             protected void onBindViewHolder(@NonNull SearchSeniorViewHolder holder, @SuppressLint("RecyclerView") int position, @NonNull ReadWriteUserDetails model) {
 
-                if (!mUser.getUid().equals(getRef(position).getKey().toString())) { // prevent current login user to display in recycler view
-
+                if (!mUser.getUid().equals(getRef(position).getKey())) { // prevent current login user to display in recycler view
                     // display profile pic of every user
-                     Log.i("success",model.getImageURL());
-                     Picasso.get()
+                    Log.i("success",model.getImageURL());
+                    Picasso.get()
                             .load(model.getImageURL())
                             .fit()
                             .transform(new CropCircleTransformation())
                             .into(holder.profileImage);
 
-                     // display details of user
+                    // display details of user
                     holder.fullName.setText(model.getFullName());
+                    holder.userType.setText(model.getUserType());
 
                 } else {
                     holder.itemView.setVisibility(View.GONE);
@@ -149,7 +138,7 @@ public class SearchSenior extends AppCompatActivity {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(SearchSenior.this, ViewSenior.class);
+                        Intent intent = new Intent(SearchPeople.this, ViewPeople.class); // TODO SEARCH PEOPLE NALANG TAS ETO NABALIK SA USERTYPE KASI VIEWSENIOR.CLASS NAKALAGAY GAWAN NG ACTIVITY SA SENIOR MISMO
                         intent.putExtra("userKey",getRef(position).getKey().toString());
                         startActivity(intent);
                     }
@@ -163,8 +152,7 @@ public class SearchSenior extends AppCompatActivity {
                 return new SearchSeniorViewHolder(view);
             }
         };
-       adapter.startListening();
-       recyclerView.setAdapter(adapter);
+        adapter.startListening();
+        recyclerView.setAdapter(adapter);
     }
-
 }

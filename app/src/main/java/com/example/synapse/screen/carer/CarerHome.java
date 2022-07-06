@@ -67,7 +67,7 @@ public class CarerHome extends AppCompatActivity {
 
        // open email app if user taps continue
        builder.setPositiveButton("Continue", (dialog, which) -> {
-           startActivity(new Intent(CarerHome.this, SearchSenior.class));
+           startActivity(new Intent(CarerHome.this, SearchPeople.class));
        });
 
        AlertDialog alertDialog = builder.create();

@@ -16,6 +16,7 @@
 
 
     <color name="light_green">#3edadd</color>
+    <color name="dark_green">#049599</color>
 
     <!-- gray -->
     <color name="horizontal_line_grey">#ECEBEB</color>

@@ -44,6 +44,7 @@ import com.google.firebase.database.ValueEventListener;
 public class Login extends AppCompatActivity {
 
     private static final String TAG = "loginActivity";
+    private DatabaseReference referenceUser;
     private EditText etEmail, etPassword;
     private FirebaseAuth mAuth;
     private String userType;
@@ -60,7 +61,9 @@ public class Login extends AppCompatActivity {
         etPassword = findViewById(R.id.etLoginPassword);
         mAuth = FirebaseAuth.getInstance();
 
-        // login user
+        referenceUser = FirebaseDatabase.getInstance().getReference("Registered Users");
+
+        // authenticate user
         btnLogin.setOnClickListener(view -> {
             String textEmail = etEmail.getText().toString();
             String textPassword = etPassword.getText().toString();
@@ -113,6 +116,41 @@ public class Login extends AppCompatActivity {
         }
     }
 
+    // check if User is already logged in, then direct to their respective home screen
+    @Override
+    protected void onStart(){
+        super.onStart();
+
+        if (mAuth.getCurrentUser() != null) {
+
+            referenceUser.child(mAuth.getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        userType = snapshot.child("userType").getValue().toString();
+
+                        if(userType.equals("Senior")){
+                            Toast.makeText(Login.this, "Already Logged In!", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(Login.this, SeniorHome.class));
+                            finish();
+
+                        }else if(userType.equals("Carer")) {
+                            Toast.makeText(Login.this, "Already Logged In!", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(Login.this, CarerHome.class));
+                            finish();
+                        }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(Login.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Toast.makeText(Login.this, "You can Login now!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // login user
     private void loginUser(String email, String password){
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -126,20 +164,21 @@ public class Login extends AppCompatActivity {
 
                     String userID = firebaseUser.getUid();
 
-                    // extracting userType reference from the db for "Registered Users"
-                    DatabaseReference referenceCarerUser = FirebaseDatabase.getInstance().getReference("Registered Users");
-
-                    referenceCarerUser.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+                    referenceUser.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                            // extracting userType reference from the db for "Registered Users"
                             userType = snapshot.child("userType").getValue().toString();
 
                             if(userType.equals("Carer")){
                                 Toast.makeText(Login.this, "You are logged in now", Toast.LENGTH_LONG).show();
                                 startActivity(new Intent(Login.this, CarerHome.class));
+                                finish();
                             }else if(userType.equals("Senior")){
                                 Toast.makeText(Login.this, "You are logged in now", Toast.LENGTH_LONG).show();
                                 startActivity(new Intent(Login.this, SeniorHome.class));
+                                finish();
                             }
                         }
 
@@ -187,21 +226,5 @@ public class Login extends AppCompatActivity {
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
-    }
-
-
-    // check if User is already logged in, then direct to the MainActivity
-    @Override
-    protected void onStart(){
-        super.onStart();
-        if(mAuth.getCurrentUser() != null){
-            Toast.makeText(Login.this, "Already Logged In!", Toast.LENGTH_SHORT).show();
-
-            // start the MainActivity
-            startActivity(new Intent(Login.this, CarerHome.class));
-            finish();
-        }else{
-            Toast.makeText(Login.this, "You can Login now!", Toast.LENGTH_SHORT).show();
-        }
     }
  }

@@ -11,6 +11,7 @@ public class SeniorHome extends AppCompatActivity {
 
     // initialize game button
     Button gameBtn;
+    Button btnSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,13 +20,16 @@ public class SeniorHome extends AppCompatActivity {
 
         // game button id reference
         gameBtn = findViewById(R.id.gameBtn);
-
         // onclick listener for game button
         gameBtn.setOnClickListener(view -> {
             // open game dashboard where all the games reside
             Intent intent = new Intent(this, GameDashboard.class);
             startActivity(intent);
         });
+
+        btnSearch = findViewById(R.id.searchBtn);
+
+        btnSearch.setOnClickListener(view -> startActivity(new Intent(SeniorHome.this, SearchPeople.class)));
 
 
     }

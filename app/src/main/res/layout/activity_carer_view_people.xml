@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".screen.carer.ViewSenior">
+    tools:context=".screen.carer.ViewPeople">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
         android:gravity="center">
 
         <ImageView
-            android:id="@+id/ivRequestSeniorProfilePic"
+            android:id="@+id/ivViewProfilePic"
             android:layout_width="125dp"
             android:layout_height="125dp"
             android:background="@drawable/carer_profile_pic"
@@ -39,7 +39,7 @@
             android:src="@drawable/ic_senior_profilepic" />
 
         <TextView
-            android:id="@+id/tvSearchSeniorFulName"
+            android:id="@+id/tvViewFullName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/tvFullName"
