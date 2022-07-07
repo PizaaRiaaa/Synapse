@@ -13,8 +13,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,17 +22,15 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.HashMap;
-
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class ViewPeople extends AppCompatActivity {
+
     DatabaseReference mUserRef, requestRef, assignedCompanionRef;
     FirebaseAuth mAuth;
     FirebaseUser mUser;
     ImageButton ibBack;
-
     String imageURL,fullName;
     ImageView ivProfilePic;
     TextView tvFullName;
@@ -60,7 +58,6 @@ public class ViewPeople extends AppCompatActivity {
 
         ivProfilePic = findViewById(R.id.ivViewProfilePic);
         tvFullName = findViewById(R.id.tvViewFullName);
-
         btnRequest = findViewById(R.id.btnSendRequest);
         btnDecline = findViewById(R.id.btnDeclineRequest);
 
@@ -74,12 +71,10 @@ public class ViewPeople extends AppCompatActivity {
 
         // invoke to display user info
         LoadUser();
-
         checkUserExistence(userID);
-
     }
 
-    // prevent display request button if it is alarady clicked/tap
+    // if carer sent request
     private void checkUserExistence(String userID){
         assignedCompanionRef.child(mUser.getUid()).child(userID).addValueEventListener(new ValueEventListener() {
             @Override
@@ -89,7 +84,6 @@ public class ViewPeople extends AppCompatActivity {
                     btnRequest.setText("Send SMS");
                     btnDecline.setText("Decline");
                     btnDecline.setVisibility(View.VISIBLE);
-
                 }
             }
 
@@ -98,13 +92,14 @@ public class ViewPeople extends AppCompatActivity {
 
             }
         });
+        // if senior accepted the request
         assignedCompanionRef.child(userID).child(mUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
                     currentState = "Companion";
                     btnRequest.setText("Send SMS");
-                    btnDecline.setText("Remove Companion");
+                    btnDecline.setText("Remove Carer");
                     btnDecline.setVisibility(View.VISIBLE);
                 }
             }
@@ -114,24 +109,24 @@ public class ViewPeople extends AppCompatActivity {
 
             }
         });
+        // if senior sent request
         requestRef.child(mUser.getUid()).child(userID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
                     if(snapshot.child("status").getValue().toString().equals("pending")){
                         currentState = "I_sent_pending";
-                        btnRequest.setText("Cancel companion request");
+                        btnRequest.setText("Cancel Request");
                         btnDecline.setVisibility(View.GONE);
-
                     }
+                    // if senior tap decline
                     if(snapshot.child("status").getValue().toString().equals("Decline")){
                         currentState = "I_sent_decline";
-                        btnRequest.setText("Cancel companion request");
+                        btnRequest.setText("Cancel Request");
                         btnDecline.setVisibility(View.GONE);
 
                     }
                 }
-
             }
 
             @Override
@@ -139,14 +134,15 @@ public class ViewPeople extends AppCompatActivity {
 
             }
         });
+        // if carer sent request
         requestRef.child(userID).child(mUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
                     if(snapshot.child("status").getValue().toString().equals("pending")){
                         currentState = "he_sent_pending";
-                        btnRequest.setText("Accept companion request");
-                        btnDecline.setText("Decline companion request");
+                        btnRequest.setText("Accept Request");
+                        btnDecline.setText("Decline Request");
                         btnDecline.setVisibility(View.VISIBLE);
                     }
                 }
@@ -157,9 +153,10 @@ public class ViewPeople extends AppCompatActivity {
 
             }
         });
+        // if nothing happen
         if(currentState.equals("nothing_happen")){
             currentState = "nothing_happen";
-            btnRequest.setText("Send companion request");
+            btnRequest.setText("Add Carer");
             btnDecline.setVisibility(View.GONE);
         }
     }
@@ -184,7 +181,6 @@ public class ViewPeople extends AppCompatActivity {
                 }else{
                     Toast.makeText(ViewPeople.this, "Data not found", Toast.LENGTH_SHORT).show();
                 }
-
             }
 
             @Override
@@ -205,10 +201,10 @@ public class ViewPeople extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task task) {
                     if(task.isSuccessful()){
-                        Toast.makeText(ViewPeople.this, "You have send friend request", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ViewPeople.this, "You have sent request", Toast.LENGTH_SHORT).show();
                         btnDecline.setVisibility(View.GONE);
                         currentState = "I_sent_pending";
-                        btnRequest.setText("Cancel request");
+                        btnRequest.setText("Cancel Request");
                     }else{
                         Toast.makeText(ViewPeople.this, "" + task.getException().toString(), Toast.LENGTH_SHORT).show();
                     }
@@ -222,7 +218,7 @@ public class ViewPeople extends AppCompatActivity {
                     if(task.isSuccessful()){
                         Toast.makeText(ViewPeople.this, "You have cancelled request", Toast.LENGTH_SHORT).show();
                         currentState = "nothing_happen";
-                        btnRequest.setText("Send request");
+                        btnRequest.setText("Add Carer");
                         btnDecline.setVisibility(View.GONE);
                     }else{
                         Toast.makeText(ViewPeople.this, "" + task.getException().toString(), Toast.LENGTH_SHORT).show();
@@ -247,10 +243,10 @@ public class ViewPeople extends AppCompatActivity {
                                     assignedCompanionRef.child(userID).child(mUser.getUid()).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
                                         @Override
                                         public void onComplete(@NonNull Task task) {
-                                            Toast.makeText(ViewPeople.this, "You added your senior companion", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(ViewPeople.this, "You added your carer", Toast.LENGTH_SHORT).show();
                                             currentState = "Companion";
                                             btnRequest.setText("Send SMS");
-                                            btnDecline.setText("remove as a companion");
+                                            btnDecline.setText("Remove Carer");
                                             btnDecline.setVisibility(View.VISIBLE);
                                         }
                                     });

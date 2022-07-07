@@ -76,11 +76,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- recycle view for all senior users -->
+        <!-- recycle view for all carer users -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_marginTop="10dp"/>
 
         <com.google.android.material.bottomappbar.BottomAppBar

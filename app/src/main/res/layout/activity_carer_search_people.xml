@@ -78,6 +78,7 @@
 
         <!-- recycle view for all senior users -->
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginBottom="?actionBarSize"
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -88,9 +89,8 @@
             android:id="@+id/bottomAppBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:fabCradleMargin="8dp"
-            app:hideOnScroll="true"
-            app:fabCradleRoundedCornerRadius="5dp"
+            app:fabCradleMargin="10dp"
+            app:fabCradleRoundedCornerRadius="20dp"
             android:layout_gravity="bottom">
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -110,7 +110,6 @@
             android:src="@drawable/ic_location"
             app:layout_anchor="@id/bottomAppBar"
             android:backgroundTint="@color/white"
-            app:hideOnScroll="true"
             app:borderWidth="0dp"
             android:contentDescription="@string/cdLocateSenior" />
 

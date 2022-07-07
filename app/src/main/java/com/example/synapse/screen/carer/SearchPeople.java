@@ -116,19 +116,23 @@ public class SearchPeople extends AppCompatActivity {
     // display all senior users in recycle view
     private void LoadUsers(String s){
 
-       // display all users that is senior
-
+        // search users by fullName
        Query query = mUserRef.orderByChild("fullName").startAt(s).endAt(s+"\uf8ff");
 
        FirebaseRecyclerOptions<ReadWriteUserDetails> options = new FirebaseRecyclerOptions.Builder<ReadWriteUserDetails>().setQuery(query, ReadWriteUserDetails.class).build();
 
-        // TODO WE NEED DISPLAY ONLY SENIOR USERS IN RECYCLER VIEW
-        FirebaseRecyclerAdapter<ReadWriteUserDetails, SearchSeniorViewHolder> adapter = new FirebaseRecyclerAdapter<ReadWriteUserDetails, SearchSeniorViewHolder>(options) {
+       FirebaseRecyclerAdapter<ReadWriteUserDetails, SearchSeniorViewHolder> adapter = new FirebaseRecyclerAdapter<ReadWriteUserDetails, SearchSeniorViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull SearchSeniorViewHolder holder, @SuppressLint("RecyclerView") int position, @NonNull ReadWriteUserDetails model) {
 
+                // prevent current login user to display in recycler view
+                if (!mUser.getUid().equals(getRef(position).getKey())) {
 
-                if (!mUser.getUid().equals(getRef(position).getKey())) { // prevent current login user to display in recycler view
+                    // hide carer users
+                    if(model.getUserType().toString().equals("Carer")){
+                        holder.itemView.setVisibility(View.GONE);
+                        holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
+                    }
 
                     // display profile pic of every user
                      Log.i("success",model.getImageURL());
@@ -137,12 +141,6 @@ public class SearchPeople extends AppCompatActivity {
                             .fit()
                             .transform(new CropCircleTransformation())
                             .into(holder.profileImage);
-
-                     // hide carer users, and display all senior users
-                     if(model.getUserType().toString().equals("Carer")){
-                         holder.itemView.setVisibility(View.GONE);
-                         holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
-                     }
 
                      // display details of user
                     holder.fullName.setText(model.getFullName());

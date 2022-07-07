@@ -61,8 +61,8 @@ public class SearchPeople extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent));
 
-        // count all senior users
-        Query query =  mUserRef.orderByChild("userType").equalTo("Senior");
+        // count all carer users
+        Query query =  mUserRef.orderByChild("userType").equalTo("Carer");
         query.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -71,11 +71,11 @@ public class SearchPeople extends AppCompatActivity {
                 int counter = (int) snapshot.getChildrenCount();
 
                 // convert counter to string
-                String seniorCounter = String.valueOf(counter);
+                String carerCounter = String.valueOf(counter);
 
                 // change substring color
-                String str1 = " About " + seniorCounter;
-                String str2 = " senior citizen";
+                String str1 = " About " + carerCounter;
+                String str2 = " carer";
                 String str3 = " results";
                 tvSeniorResults.setText(Html.fromHtml(str1 + "<font color=\"#049599\">" + str2 +  "</font> " + str3, Html.FROM_HTML_MODE_COMPACT));
             }
@@ -94,7 +94,9 @@ public class SearchPeople extends AppCompatActivity {
             }
             @Override
             public boolean onQueryTextChange(String newText) {
-                // TODO BE ABLE TO SEARCH WITH LOWERCASE AND UPPERCASE
+
+                // TODO BE ABLE TO SEARCH WITH IGNORECASE
+
                 LoadUsers(newText);
                 return false;
             }
@@ -107,18 +109,24 @@ public class SearchPeople extends AppCompatActivity {
     // display all senior users in recycle view
     private void LoadUsers(String s){
 
-        // display all users that is senior
+        // search users by fullName
         Query query = mUserRef.orderByChild("fullName").startAt(s).endAt(s+"\uf8ff");
 
         FirebaseRecyclerOptions<ReadWriteUserDetails> options = new FirebaseRecyclerOptions.Builder<ReadWriteUserDetails>().setQuery(query, ReadWriteUserDetails.class).build();
-
-        // TODO WE NEED DISPLAY ONLY SENIOR USERS IN RECYCLER VIEW
 
         FirebaseRecyclerAdapter<ReadWriteUserDetails, SearchSeniorViewHolder> adapter = new FirebaseRecyclerAdapter<ReadWriteUserDetails, SearchSeniorViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull SearchSeniorViewHolder holder, @SuppressLint("RecyclerView") int position, @NonNull ReadWriteUserDetails model) {
 
-                if (!mUser.getUid().equals(getRef(position).getKey())) { // prevent current login user to display in recycler view
+                // prevent current login user to display in recycler view
+                if (!mUser.getUid().equals(getRef(position).getKey())) {
+
+                    // hide senior users
+                    if(model.getUserType().equals("Senior")){
+                        holder.itemView.setVisibility(View.GONE);
+                        holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
+                    }
+
                     // display profile pic of every user
                     Log.i("success",model.getImageURL());
                     Picasso.get()
@@ -135,13 +143,10 @@ public class SearchPeople extends AppCompatActivity {
                     holder.itemView.setVisibility(View.GONE);
                     holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
                 }
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(SearchPeople.this, ViewPeople.class); // TODO SEARCH PEOPLE NALANG TAS ETO NABALIK SA USERTYPE KASI VIEWSENIOR.CLASS NAKALAGAY GAWAN NG ACTIVITY SA SENIOR MISMO
-                        intent.putExtra("userKey",getRef(position).getKey().toString());
-                        startActivity(intent);
-                    }
+                holder.itemView.setOnClickListener(v -> {
+                    Intent intent = new Intent(SearchPeople.this, ViewPeople.class);
+                    intent.putExtra("userKey", getRef(position).getKey());
+                    startActivity(intent);
                 });
             }
 

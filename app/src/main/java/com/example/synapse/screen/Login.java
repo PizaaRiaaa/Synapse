@@ -16,6 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 
 public class Login extends AppCompatActivity {
@@ -103,7 +106,6 @@ public class Login extends AppCompatActivity {
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         // transparent status bar
-        if (Build.VERSION.SDK_INT >= 21) {
             Window window = getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
                     | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
@@ -113,42 +115,41 @@ public class Login extends AppCompatActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(ContextCompat.getColor(this, R.color.mid_grey));
             window.setNavigationBarColor(ContextCompat.getColor(this, R.color.mid_grey));
-        }
     }
 
     // check if User is already logged in, then direct to their respective home screen
-    @Override
-    protected void onStart(){
-        super.onStart();
+   // @Override
+   // protected void onStart(){
+   //     super.onStart();
 
-        if (mAuth.getCurrentUser() != null) {
+   //     if (mAuth.getCurrentUser() != null) {
+   //             referenceUser.child(Objects.requireNonNull(mAuth.getUid())).addValueEventListener(new ValueEventListener() {
+   //             @Override
+   //             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-            referenceUser.child(mAuth.getUid()).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
+   //                     userType = snapshot.child("userType").getValue().toString();
 
-                        userType = snapshot.child("userType").getValue().toString();
+   //                     if(userType.equals("Senior")){
+   //                       Toast.makeText(Login.this, "Already Logged In!", Toast.LENGTH_SHORT).show();
+   //                       startActivity(new Intent(Login.this, SeniorHome.class));
+   //                       finish();
 
-                        if(userType.equals("Senior")){
-                            Toast.makeText(Login.this, "Already Logged In!", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(Login.this, SeniorHome.class));
-                            finish();
-
-                        }else if(userType.equals("Carer")) {
-                            Toast.makeText(Login.this, "Already Logged In!", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(Login.this, CarerHome.class));
-                            finish();
-                        }
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Toast.makeText(Login.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
-                }
-            });
-        } else {
-            Toast.makeText(Login.this, "You can Login now!", Toast.LENGTH_SHORT).show();
-        }
-    }
+   //                     }else if(userType.equals("Carer")) {
+   //                         Toast.makeText(Login.this, "Already Logged In!", Toast.LENGTH_SHORT).show();
+   //                         startActivity(new Intent(Login.this, CarerHome.class));
+   //                         finish();
+   //                     }
+   //             }
+   //             @Override
+   //             public void onCancelled(@NonNull DatabaseError error) {
+   //                  Toast.makeText(Login.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+   //             }
+   //         });
+   //     }
+   //    // else {
+   //    //     Toast.makeText(Login.this, "You can Login now!", Toast.LENGTH_SHORT).show();
+   //    // }
+   // }
 
     // login user
     private void loginUser(String email, String password){
@@ -196,7 +197,7 @@ public class Login extends AppCompatActivity {
                 try {
                     throw task.getException();
                 } catch (FirebaseAuthInvalidUserException e) {
-                    etEmail.setError("User does not exists or is not longer valid. Please register again.");
+                    etEmail.setError("User does not exists. Please register again.");
                     etEmail.requestFocus();
                 } catch (FirebaseAuthInvalidCredentialsException e) {
                     etPassword.setError("Invalid credentials. Kindly, check and re-enter.");

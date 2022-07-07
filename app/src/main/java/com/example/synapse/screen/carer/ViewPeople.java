@@ -34,7 +34,6 @@ public class ViewPeople extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseUser mUser;
     ImageButton ibBack;
-
     String imageURL,fullName;
     ImageView ivProfilePic;
     TextView tvFullName;
@@ -105,7 +104,7 @@ public class ViewPeople extends AppCompatActivity {
                 if(snapshot.exists()){
                     currentState = "Companion";
                     btnRequest.setText("Send SMS");
-                    btnDecline.setText("Remove care recipient");
+                    btnDecline.setText("Remove Care Recipient");
                     btnDecline.setVisibility(View.VISIBLE);
                 }
             }
