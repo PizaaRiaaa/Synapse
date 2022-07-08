@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.synapse.screen.Login;
 import com.example.synapse.screen.Onboarding;
 import com.example.synapse.screen.carer.CarerHome;
+import com.example.synapse.screen.carer.SendRequest;
 import com.example.synapse.screen.senior.SeniorHome;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -31,7 +32,7 @@ public class Splashscreen extends AppCompatActivity {
 
     // firebase reference
     private FirebaseAuth mAuth;
-    private DatabaseReference referenceUser;
+    private DatabaseReference referenceUser, referenceRequest;
     private String userType;
 
     @Override
@@ -43,6 +44,7 @@ public class Splashscreen extends AppCompatActivity {
         setContentView(R.layout.splash_screen);
 
         referenceUser = FirebaseDatabase.getInstance().getReference("Registered Users");
+        referenceRequest = FirebaseDatabase.getInstance().getReference("Request");
         mAuth = FirebaseAuth.getInstance();
 
         // initialize animation variables
@@ -64,7 +66,7 @@ public class Splashscreen extends AppCompatActivity {
                     editor.apply();
                     startActivity(new Intent(Splashscreen.this, Onboarding.class));
                     finish();
-                } else {  // prevent display on-boarding screen
+                }else if(mAuth.getCurrentUser() == null) {  // prevent display on-boarding screen
                     startActivity(new Intent(Splashscreen.this, Login.class));
                     finish();
                 }
@@ -91,9 +93,26 @@ public class Splashscreen extends AppCompatActivity {
                         finish();
 
                     }else if(userType.equals("Carer")) {
-                        Toast.makeText(Splashscreen.this, "Already Logged In!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Splashscreen.this, CarerHome.class));
-                        finish();
+
+                        referenceRequest.child(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                               if(snapshot.exists()){
+                                   Toast.makeText(Splashscreen.this, "Already Logged In!", Toast.LENGTH_SHORT).show();
+                                   startActivity(new Intent(Splashscreen.this, CarerHome.class));
+                                   finish();
+                               }else{
+                                   startActivity(new Intent(Splashscreen.this, SendRequest.class));
+                                   finish();
+                               }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
                     }
                 }
 

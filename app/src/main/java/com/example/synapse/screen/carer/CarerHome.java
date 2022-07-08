@@ -52,28 +52,10 @@ public class CarerHome extends AppCompatActivity {
         // set bottomNavigationView to transparent
         bottomNavigationView.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent));
 
-        showAlertDialog();
+       // showAlertDialog();
 
         showUserProfile(userID);
     }
-
-    // new registered carer needs to send request to senior user to start push notifications
-   private void showAlertDialog(){
-
-       // setup the alert builder
-       AlertDialog.Builder builder = new AlertDialog.Builder(CarerHome.this);
-       builder.setTitle("Welcome! Thank you for signing up.");
-       builder.setMessage("Please send request to your senior loved ones to start sending notification reminders.");
-
-       // open email app if user taps continue
-       builder.setPositiveButton("Continue", (dialog, which) -> {
-           startActivity(new Intent(CarerHome.this, SearchPeople.class));
-       });
-
-       AlertDialog alertDialog = builder.create();
-       alertDialog.show();
-
-   }
 
    // display carer profile pic
     private void showUserProfile(String firebaseUser){
@@ -102,5 +84,23 @@ public class CarerHome extends AppCompatActivity {
             }
         });
    }
+
+    // new registered carer needs to send request to senior user to start push notifications
+  //  private void showAlertDialog(){
+
+  //      // setup the alert builder
+  //      AlertDialog.Builder builder = new AlertDialog.Builder(CarerHome.this);
+  //      builder.setTitle("Welcome! Thank you for signing up.");
+  //      builder.setMessage("Please send request to your senior loved ones to start sending notification reminders.");
+
+  //      // open email app if user taps continue
+  //      builder.setPositiveButton("Continue", (dialog, which) -> {
+  //          startActivity(new Intent(CarerHome.this, SearchPeople.class));
+  //      });
+
+  //      AlertDialog alertDialog = builder.create();
+  //      alertDialog.show();
+
+  //  }
 
 }

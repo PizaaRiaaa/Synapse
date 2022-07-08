@@ -123,6 +123,7 @@
             </LinearLayout>
 
         </LinearLayout>
+
         <com.google.android.material.imageview.ShapeableImageView
             android:layout_width="80dp"
             android:layout_height="30dp"
@@ -433,8 +434,5 @@
             android:contentDescription="@string/cdLocateSenior" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-
-
 
 </LinearLayout>

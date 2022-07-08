@@ -22,6 +22,7 @@
     <color name="horizontal_line_grey">#ECEBEB</color>
     <color name="et_bgTint">#FCFCFC</color>
     <color name="bg_light_grey">#F8F8F8</color>
+    <color name="grey_shade4">#EEEEEE</color>
 
     <color name="et_stroke">#D1D1D1</color>
     <color name="bt_stroke">#ECEBEB</color>

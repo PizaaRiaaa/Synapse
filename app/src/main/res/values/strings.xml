@@ -71,4 +71,7 @@
     <string name="tvAddress">Address</string>
     <string name="tvSendRequest">Send request</string>
     <string name="tvDeclineRequest">Decline request</string>
+
+    <!-- SEND REQUEST SCREEN -->
+    <string name="tvSubHeading">to get started send request to your \n senior loved ones and start scheduling \n reminders..</string>
 </resources>
