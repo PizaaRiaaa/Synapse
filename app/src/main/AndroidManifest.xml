@@ -56,9 +56,6 @@
             android:name=".screen.carer.CarerVerifyEmail"
             android:exported="false" />
         <activity
-            android:name=".screen.MainActivity"
-            android:exported="false" />
-        <activity
             android:name=".screen.Login"
             android:exported="false" />
         <activity

@@ -1,7 +1,6 @@
 package com.example.synapse.screen.carer;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import com.example.synapse.R;
@@ -15,14 +14,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class CarerHome extends AppCompatActivity {
@@ -52,8 +48,6 @@ public class CarerHome extends AppCompatActivity {
         // set bottomNavigationView to transparent
         bottomNavigationView.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent));
 
-       // showAlertDialog();
-
         showUserProfile(userID);
     }
 
@@ -78,29 +72,11 @@ public class CarerHome extends AppCompatActivity {
                                .into(ivProfilePic);
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(CarerHome.this, "Something went wrong! Please login again.", Toast.LENGTH_LONG).show();
             }
         });
    }
-
-    // new registered carer needs to send request to senior user to start push notifications
-  //  private void showAlertDialog(){
-
-  //      // setup the alert builder
-  //      AlertDialog.Builder builder = new AlertDialog.Builder(CarerHome.this);
-  //      builder.setTitle("Welcome! Thank you for signing up.");
-  //      builder.setMessage("Please send request to your senior loved ones to start sending notification reminders.");
-
-  //      // open email app if user taps continue
-  //      builder.setPositiveButton("Continue", (dialog, which) -> {
-  //          startActivity(new Intent(CarerHome.this, SearchPeople.class));
-  //      });
-
-  //      AlertDialog alertDialog = builder.create();
-  //      alertDialog.show();
-
-  //  }
-
 }

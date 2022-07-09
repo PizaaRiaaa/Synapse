@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.synapse.R;
 import com.example.synapse.screen.util.ReadWriteUserDetails;
 import com.example.synapse.screen.util.SendRequestSeniorViewHolder;
@@ -19,10 +18,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.squareup.picasso.Picasso;
-
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,8 +32,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.SearchView;
 import android.widget.Toast;
+import android.widget.VideoView;
 import java.util.HashMap;
-
+import java.util.Objects;
+import com.squareup.picasso.Picasso;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class SendRequest extends AppCompatActivity {
@@ -42,10 +44,12 @@ public class SendRequest extends AppCompatActivity {
     private DatabaseReference requestRef;
     private FirebaseUser mUser;
     private RecyclerView recyclerView;
-    public MaterialButton btnSendRequest;
+    public MaterialButton btnSendRequest, btnOk;
     private String currentState = "nothing_happen";
     private String seniorUserID;
+    Dialog dialog;
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +74,16 @@ public class SendRequest extends AppCompatActivity {
         mUser = mAuth.getCurrentUser();
 
         btnSendRequest = findViewById(R.id.btnSendRequest);
+
+        dialog = new Dialog(SendRequest.this);
+        dialog.setContentView(R.layout.custom_dialog_box);
+        dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialog_background));
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setCancelable(false);
+        dialog.getWindow().getAttributes().windowAnimations = R.style.animation;
+
+        btnOk = dialog.findViewById(R.id.btnOk);
+        btnOk.setOnClickListener(view -> startActivity(new Intent(SendRequest.this, CarerHome.class)));
 
         // set layout for recyclerview
         recyclerView = findViewById(R.id.recyclerview_sendRequest);
@@ -107,17 +121,15 @@ public class SendRequest extends AppCompatActivity {
         FirebaseRecyclerAdapter<ReadWriteUserDetails, SendRequestSeniorViewHolder> adapter = new FirebaseRecyclerAdapter<ReadWriteUserDetails, SendRequestSeniorViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull SendRequestSeniorViewHolder holder, @SuppressLint("RecyclerView") int position, @NonNull ReadWriteUserDetails model) {
-
                 // prevent current login user display in recycler view
                 if (!mUser.getUid().equals(getRef(position).getKey())) {
 
                     // hide carer users
-                    if(model.getUserType().toString().equals("Carer")){
+                    if(model.getUserType().equals("Carer")){
                         holder.itemView.setVisibility(View.GONE);
                         holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
                     }
-
-                    // display profile pic of every user
+                    // display profile pic of every senior users
                     Log.i("success",model.getImageURL());
                     Picasso.get()
                             .load(model.getImageURL())
@@ -125,19 +137,20 @@ public class SendRequest extends AppCompatActivity {
                             .transform(new CropCircleTransformation())
                             .into(holder.profileImage);
 
-                    // display details of user
+                    // display details of every senior users
                     holder.fullName.setText(model.getFullName());
 
+                    // send request
                     holder.btnSendRequest.setOnClickListener(v -> {
-                          seniorUserID = getRef(position).getKey().toString();
-                          PerformAction(seniorUserID);
-                        startActivity(new Intent(SendRequest.this, CarerHome.class));
+                           seniorUserID = getRef(position).getKey();
+                           PerformAction(seniorUserID);
+                           dialog.show();
                      });
                 } else {
+                    // hide recyclerview
                     holder.itemView.setVisibility(View.GONE);
                     holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
                 }
-
             }
 
             @NonNull
@@ -147,11 +160,12 @@ public class SendRequest extends AppCompatActivity {
                 return new SendRequestSeniorViewHolder(view);
             }
         };
+
         adapter.startListening();
         recyclerView.setAdapter(adapter);
     }
 
-    // perform send action
+    // perform send request action
     private void PerformAction(String userID){
         if(currentState.equals("nothing_happen")){
             HashMap hashMap = new HashMap();
@@ -162,9 +176,8 @@ public class SendRequest extends AppCompatActivity {
                     if(task.isSuccessful()){
                         Toast.makeText(SendRequest.this, "You have send request", Toast.LENGTH_SHORT).show();
                         currentState = "I_sent_pending";
-
                     }else{
-                        Toast.makeText(SendRequest.this, "" + task.getException().toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SendRequest.this, "" + Objects.requireNonNull(task.getException()), Toast.LENGTH_SHORT).show();
                     }
                 }
             });

@@ -5,12 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.synapse.screen.util.ReadWriteUserDetails;
 import com.example.synapse.screen.util.SearchSeniorViewHolder;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.synapse.R;
-
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,7 +20,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,11 +30,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.List;
-import java.util.Objects;
-
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class SearchPeople extends AppCompatActivity {
@@ -54,11 +46,8 @@ public class SearchPeople extends AppCompatActivity {
 
         // extracting user reference from database "Registered Users"
         mUserRef = FirebaseDatabase.getInstance().getReference().child("Registered Users");
-
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
-
-        tvSeniorResults = findViewById(R.id.tvSeniorResults);
 
         // set layout for recyclerview
         recyclerView = findViewById(R.id.recyclerview);
@@ -69,6 +58,7 @@ public class SearchPeople extends AppCompatActivity {
         bottomNavigationView.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent));
 
         // count all senior users
+        tvSeniorResults = findViewById(R.id.tvSeniorResults);
         Query query =  mUserRef.orderByChild("userType").equalTo("Senior");
         query.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
@@ -84,7 +74,8 @@ public class SearchPeople extends AppCompatActivity {
                 String str1 = " About " + seniorCounter;
                 String str2 = " senior citizen";
                 String str3 = " results";
-                tvSeniorResults.setText(Html.fromHtml(str1 + "<font color=\"#049599\">" + str2 +  "</font> " + str3, Html.FROM_HTML_MODE_COMPACT));
+                tvSeniorResults.setText(Html.fromHtml(str1 + "<font color=\"#049599\">" + str2
+                        +  "</font> " + str3, Html.FROM_HTML_MODE_COMPACT));
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -111,11 +102,10 @@ public class SearchPeople extends AppCompatActivity {
         LoadUsers("");
   }
 
-
     // display all senior users in recycle view
     private void LoadUsers(String s){
 
-        // search users by fullName
+       // search users by fullName
        Query query = mUserRef.orderByChild("fullName").startAt(s).endAt(s+"\uf8ff");
 
        FirebaseRecyclerOptions<ReadWriteUserDetails> options = new FirebaseRecyclerOptions.Builder<ReadWriteUserDetails>().setQuery(query, ReadWriteUserDetails.class).build();
@@ -128,12 +118,12 @@ public class SearchPeople extends AppCompatActivity {
                 if (!mUser.getUid().equals(getRef(position).getKey())) {
 
                     // hide carer users
-                    if(model.getUserType().toString().equals("Carer")){
+                    if(model.getUserType().equals("Carer")){
                         holder.itemView.setVisibility(View.GONE);
                         holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
                     }
 
-                    // display profile pic of every user
+                    // display profile pic of every senior users
                      Log.i("success",model.getImageURL());
                      Picasso.get()
                             .load(model.getImageURL())
@@ -141,18 +131,22 @@ public class SearchPeople extends AppCompatActivity {
                             .transform(new CropCircleTransformation())
                             .into(holder.profileImage);
 
-                     // display details of user
+                     // display every details of senior users
                     holder.fullName.setText(model.getFullName());
                     holder.userType.setText(model.getUserType());
+
                 } else {
+                    // hide recyclerview
                     holder.itemView.setVisibility(View.GONE);
                     holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
                 }
+
+                // open user's profile and send user's userKey to another activity
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(SearchPeople.this, ViewPeople.class);
-                        intent.putExtra("userKey",getRef(position).getKey().toString());
+                        intent.putExtra("userKey", getRef(position).getKey());
                         startActivity(intent);
                     }
                 });

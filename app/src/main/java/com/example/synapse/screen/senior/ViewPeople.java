@@ -14,7 +14,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.HashMap;
+import java.util.Objects;
+
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class ViewPeople extends AppCompatActivity {
@@ -50,6 +51,7 @@ public class ViewPeople extends AppCompatActivity {
         final String userID = getIntent().getStringExtra( "userKey");
         Toast.makeText(this,"" + userID, Toast.LENGTH_SHORT).show();
 
+        // extract reference to database "Registered Users", "Request", and "Companion" nodes
         mUserRef = FirebaseDatabase.getInstance().getReference().child("Registered Users").child(userID);
         requestRef = FirebaseDatabase.getInstance().getReference().child("Request");
         assignedCompanionRef = FirebaseDatabase.getInstance().getReference().child("Companion");
@@ -62,12 +64,7 @@ public class ViewPeople extends AppCompatActivity {
         btnDecline = findViewById(R.id.btnDeclineRequest);
 
         // send request to senior
-        btnRequest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PerformAction(userID);
-            }
-        });
+        btnRequest.setOnClickListener(v -> PerformAction(userID));
 
         // invoke to display user info
         LoadUser();
@@ -139,7 +136,7 @@ public class ViewPeople extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
-                    if(snapshot.child("status").getValue().toString().equals("pending")){
+                    if(Objects.requireNonNull(snapshot.child("status").getValue()).toString().equals("pending")){
                         currentState = "he_sent_pending";
                         btnRequest.setText("Accept Request");
                         btnDecline.setText("Decline Request");
@@ -194,6 +191,7 @@ public class ViewPeople extends AppCompatActivity {
 
     // send request
     private void PerformAction(String userID){
+
         if(currentState.equals("nothing_happen")){
             HashMap hashMap = new HashMap();
             hashMap.put("status","pending");
@@ -211,6 +209,7 @@ public class ViewPeople extends AppCompatActivity {
                 }
             });
         }
+
         if(currentState.equals("I_sent_pending") || currentState.equals("I_sent_decline")){
             requestRef.child(mUser.getUid()).child(userID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
@@ -226,10 +225,13 @@ public class ViewPeople extends AppCompatActivity {
                 }
             });
         }
+
+        // remove request if status is companion
         if(currentState.equals("he_sent_pending")){
             requestRef.child(userID).child(mUser.getUid()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
+                    // if status request is accepted, then store info in "Companion" node
                     if(task.isSuccessful()){
                         HashMap hashMap = new HashMap();
                         hashMap.put("status","companion");
