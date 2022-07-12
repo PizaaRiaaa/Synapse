@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".screen.carer.modules.Medication">
+
+   <!--
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/etInputSms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter text.."/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="send"/>
+    -->
+
+   <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:layout_gravity="center_vertical">
+
+
+        <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="60dp"
+           android:orientation="horizontal"
+           android:layout_marginTop="20dp"
+           android:layout_gravity="center_horizontal">
+
+           <ImageButton
+               android:id="@+id/ibBack"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="20dp"
+               android:layout_marginTop="3dp"
+               android:background="@color/white"
+               android:contentDescription="@string/back"
+               android:src="@drawable/ic_back_button" />
+
+               <TextView
+                 android:layout_width="0dp"
+                 android:layout_margin="15dp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:layout_gravity="start"
+                 android:text="Set Medicine"
+                 android:textSize="22sp"/>
+
+               <ImageView
+                   android:id="@+id/ivCarerProfilePic"
+                   android:layout_width="40dp"
+                   android:layout_height="40dp"
+                   android:layout_gravity="end"
+                   android:layout_margin="30dp"
+                   android:background="@drawable/carer_profile_pic"
+                   android:backgroundTint="@color/carer_profile_pic"
+                   android:contentDescription="@string/pick_carer"
+                   android:scaleType="fitCenter"
+                   android:src="@drawable/ic_carer_profilepic" />
+
+        </LinearLayout>
+
+       <View
+           android:layout_width="match_parent"
+           android:layout_height="2dp"
+           android:background="@color/et_stroke"/>
+
+   </LinearLayout>
+
+   <!-- bottom navigation -->
+   <androidx.coordinatorlayout.widget.CoordinatorLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+      <!-- recycle view for all carer users -->
+      <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/recyclerview"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          app:layout_behavior="@string/appbar_scrolling_view_behavior"
+          android:layout_marginTop="10dp"/>
+
+      <!-- floating plus icon -->
+      <com.google.android.material.floatingactionbutton.FloatingActionButton
+          android:id="@+id/btnAddMedicine"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom|end"
+          android:layout_marginEnd="30dp"
+          android:layout_marginBottom="80dp"
+          android:src="@drawable/ic_plus"
+          app:tint="@android:color/white"/>
+
+      <com.google.android.material.bottomappbar.BottomAppBar
+          android:id="@+id/bottomAppBar"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:fabCradleMargin="10dp"
+          app:fabCradleRoundedCornerRadius="20dp"
+          android:layout_gravity="bottom">
+
+         <com.google.android.material.bottomnavigation.BottomNavigationView
+             android:id="@+id/bottomNavigationView"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginEnd="16dp"
+             android:background="@android:color/transparent"
+             app:menu="@menu/bottom_nav_menu"/>
+
+      </com.google.android.material.bottomappbar.BottomAppBar>
+
+      <com.google.android.material.floatingactionbutton.FloatingActionButton
+          android:id="@+id/fabLocateSenior"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:src="@drawable/ic_location"
+          app:layout_anchor="@id/bottomAppBar"
+          android:backgroundTint="@color/white"
+          app:borderWidth="0dp"
+          android:contentDescription="@string/cdLocateSenior" />
+
+   </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+</LinearLayout>

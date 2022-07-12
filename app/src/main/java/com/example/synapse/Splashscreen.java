@@ -30,8 +30,8 @@ public class Splashscreen extends AppCompatActivity {
 
     // firebase reference
     private FirebaseAuth mAuth;
-    private DatabaseReference referenceUser, referenceRequest;
-    private String userType;
+    private DatabaseReference referenceUser, referenceRequest, referenceCompanion;
+    private String userType, checkStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +41,11 @@ public class Splashscreen extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.splash_screen);
 
-        // extracting user reference from database "Registered Users" and "Request" nodes
+        // extracting user reference from database "Registered Users", "Request" and "Companion" nodes
+        mAuth = FirebaseAuth.getInstance();
         referenceUser = FirebaseDatabase.getInstance().getReference("Registered Users");
         referenceRequest = FirebaseDatabase.getInstance().getReference("Request");
-        mAuth = FirebaseAuth.getInstance();
+        referenceCompanion = FirebaseDatabase.getInstance().getReference("Companion");
 
         // initialize animation variables
         Animation topAnim = AnimationUtils.loadAnimation(this, R.anim.top_animation);
@@ -76,7 +77,6 @@ public class Splashscreen extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
-
         if (mAuth.getCurrentUser() != null) {
             referenceUser.child(Objects.requireNonNull(mAuth.getUid())).addValueEventListener(new ValueEventListener() {
                 @Override
@@ -92,18 +92,49 @@ public class Splashscreen extends AppCompatActivity {
                         finish();
 
                     }else if(userType.equals("Carer")) {
+                        // check if carer send request to senior
                         referenceRequest.child(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                                if(snapshot.exists()){
-                                   Toast.makeText(Splashscreen.this, "Already Logged In!", Toast.LENGTH_SHORT).show();
-                                   startActivity(new Intent(Splashscreen.this, CarerHome.class));
+                                   for(DataSnapshot ds : snapshot.getChildren()){
 
+                                       // retrieve current request status
+                                       checkStatus = ds.child("status").getValue().toString();
+
+                                       if(checkStatus.equals("pending")){
+                                           Toast.makeText(Splashscreen.this, "Already Logged In!", Toast.LENGTH_SHORT).show();
+                                           startActivity(new Intent(Splashscreen.this, CarerHome.class));
+                                           finish();
+                                       }else{ // it means senior decline the carer request
+                                           Toast.makeText(Splashscreen.this, "Sorry but senior decline your request." +
+                                                   " Please send a request again.", Toast.LENGTH_LONG).show();
+                                           startActivity(new Intent(Splashscreen.this, SendRequest.class));
+                                           finish();
+                                       }
+                                   }
                                }else{ // if carer doesn't send request to senior, then redirect carer to SendRequest screen
                                    startActivity(new Intent(Splashscreen.this, SendRequest.class));
                                }
                                 finish();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Toast.makeText(Splashscreen.this, "Something went wrong! Please try again.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        // check if carer and senior already companion
+                        referenceCompanion.child(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if(snapshot.exists()){
+                                    Toast.makeText(Splashscreen.this, "Already Logged In!", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(Splashscreen.this, CarerHome.class));
+                                    finish();
+                                }
                             }
 
                             @Override

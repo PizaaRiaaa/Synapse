@@ -65,10 +65,52 @@ public class ViewPeople extends AppCompatActivity {
 
         // send request to senior
         btnRequest.setOnClickListener(v -> PerformAction(userID));
+        btnDecline.setOnClickListener(v -> {
+            removeCarer(userID);
+        });
 
         // invoke to display user info
         LoadUser();
         checkUserExistence(userID);
+    }
+
+    private void removeCarer(String userID){
+        if(currentState.equals("Companion")){
+            assignedCompanionRef.child(mUser.getUid()).child(userID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        assignedCompanionRef.child(userID).child(mUser.getUid()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    Toast.makeText(ViewPeople.this, "You have successfully remove carer", Toast.LENGTH_SHORT).show();
+                                    currentState = "nothing_happen";
+                                    btnRequest.setText("Send Request");
+                                    btnDecline.setVisibility(View.GONE);
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+        if(currentState.equals("he_sent_pending")){
+            HashMap hashMap = new HashMap();
+            hashMap.put("status","decline");
+            requestRef.child(userID).child(mUser.getUid()).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
+                @Override
+                public void onComplete(@NonNull Task task) {
+                    if(task.isSuccessful()){
+                        Toast.makeText(ViewPeople.this, "You have successfully decline request", Toast.LENGTH_SHORT).show();
+                        currentState = "he_sent_decline";
+                        btnRequest.setVisibility(View.GONE);
+                        btnDecline.setVisibility(View.GONE);
+                    }
+                }
+            });
+        }
     }
 
     // if carer sent request
@@ -89,6 +131,7 @@ public class ViewPeople extends AppCompatActivity {
 
             }
         });
+
         // if senior accepted the request
         assignedCompanionRef.child(userID).child(mUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override

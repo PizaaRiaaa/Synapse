@@ -2,13 +2,13 @@
     <string name="app_name">Synapse</string>
     <string name="logo">logo</string>
 
-    <!-- ONBOARDING -->
+    <!-- on-boarding screen -->
     <string name="subtitle">Heading</string>
     <string name="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel libero hendrerit, euismod ligula non, pharetra nisi. In hac habitasse platea dictumst. Mauris elementum non dui et pulvinar.</string>
     <string name="btnFinish">GET STARTED</string>
     <string name="tvWelcome">Welcome to Synapse</string>
 
-    <!-- LOGIN SCREEN -->
+    <!-- login screen -->
     <string name="login">Login</string>
     <string name="login_email">Phone, email or username</string>
     <string name="login_password">Password</string>
@@ -18,7 +18,7 @@
     <string name="tvDontHaveAccount">Don\'t have an account? Register!</string>
     <string name="tvSub_header">Notify your senior loved ones</string>
 
-    <!-- PICK ROLE SCREEN -->
+    <!-- pick role screen -->
     <string name="join_carer_senior">Join as carer or \n senior citizen</string>
     <string name="carer">Carer</string>
     <string name="senior_citizen">Senior</string>
@@ -30,7 +30,7 @@
     <string name="already_have_account">Already have an account?</string>
     <string name="tvRegisterCarer">CARER</string>
 
-    <!-- REGISTER -->
+    <!-- register screen -->
     <string name="carer_info">Carer\'s info</string>
     <string name="full_name">Full Name</string>
     <string name="email_address">Email Address</string>
@@ -39,22 +39,20 @@
     <string name="senior_s_info">Senior\'s info</string>
     <string name="thank_you_for_signing_up">Thank you for \n signing up!</string>
     <string name="sent_email">We\'re glad yo\'re here! \n Before you start exploring, we \n just sent you the email \n confirmation</string>
-    <string name="resend_email">RESEND EMAIL</string>
-    <string name="email_verficationi_login">LOGIN</string>
+    <string name="mbLogin">LOGIN</string>
 
-    <!-- CARER HOME SCREEN -->
+    <!-- carer home screen -->
     <string name="tvCarer_home_screen">Carer</string>
     <string name="edit_carer_profile">edit profile</string>
-    <string name="assigned_senior_fullname">Full Name</string>
+    <string name="care_recipient_fullname">Full Name</string>
     <string name="tv_senior_barangay_city">Barangay, City</string>
-
 
     <string name="tv_senior_barangay">Barangay</string>
     <string name="tv_senior_city">City</string>
 
     <string name="tv_userType">UserType</string>
     <string name="tvSeniorAge">Age</string>
-    <string name="tvAssignedSenior">Assigned Senior</string>
+    <string name="tvCareRecipient">Care Recipient</string>
     <string name="tvNotify">Notify</string>
     <string name="tvScheduleNotifications">Schedule notifications for your senior loved ones</string>
     <string name="tvMedication">Medication</string>
@@ -69,9 +67,9 @@
     <string name="menuSettings">Settings</string>
     <string name="tvFullName">Full name</string>
     <string name="tvAddress">Address</string>
+
+    <!-- send request screen -->
     <string name="tvSendRequest">Send request</string>
     <string name="tvDeclineRequest">Decline request</string>
-
-    <!-- SEND REQUEST SCREEN -->
     <string name="tvSubHeading">to get started send request to your \n senior loved ones and start scheduling \n reminders..</string>
 </resources>

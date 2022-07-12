@@ -44,7 +44,7 @@
             android:elevation="10dp"
             android:background="@drawable/rounded_button"
             android:fontFamily="@font/redhatdisplay_bold"
-            android:text="@string/email_verficationi_login"
+            android:text="@string/mbLogin"
             android:textSize="15sp"/>
 
 
