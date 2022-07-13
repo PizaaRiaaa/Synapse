@@ -10,6 +10,7 @@ import com.example.synapse.screen.carer.CarerHome;
 import com.example.synapse.screen.carer.RegisterCarer;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import android.annotation.SuppressLint;
@@ -21,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Medication extends AppCompatActivity{
@@ -44,6 +46,8 @@ public class Medication extends AppCompatActivity{
         BottomNavigationView bottomNavigationView;
         ImageButton ibBack, btnClose, ibMinus, ibAdd;
         ImageView pill1, pill2, pill3, pill4;
+        ShapeableImageView color1, color2, color3, color4, color5, color6;
+        TextView tv1,tv2,tv3,tv4,tv5,tv6;
 
         dialog = new Dialog(Medication.this);
         dialog.setContentView(R.layout.custom_dialog_box_add_medication);
@@ -53,17 +57,31 @@ public class Medication extends AppCompatActivity{
         dialog.getWindow().getAttributes().gravity = Gravity.BOTTOM;
         dialog.getWindow().getAttributes().windowAnimations = R.style.animation1;
 
-
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         fabAddMedicine = findViewById(R.id.btnAddMedicine);
         btnClose = dialog.findViewById(R.id.btnClose);
         ibMinus = dialog.findViewById(R.id.ibMinus);
         ibAdd = dialog.findViewById(R.id.ibAdd);
         etDose = dialog.findViewById(R.id.etDose);
+
         pill1 = dialog.findViewById(R.id.ivPill1);
         pill2 = dialog.findViewById(R.id.ivPill2);
         pill3 = dialog.findViewById(R.id.ivPill3);
         pill4 = dialog.findViewById(R.id.ivPill4);
+
+        color1 = dialog.findViewById(R.id.color1);
+        color2 = dialog.findViewById(R.id.color2);
+        color3 = dialog.findViewById(R.id.color3);
+        color4 = dialog.findViewById(R.id.color4);
+        color5 = dialog.findViewById(R.id.color5);
+        color6 = dialog.findViewById(R.id.color6);
+
+        tv1 = dialog.findViewById(R.id.tvGreen);
+        tv2 = dialog.findViewById(R.id.tvRed);
+        tv3 = dialog.findViewById(R.id.tvBrown);
+        tv4 = dialog.findViewById(R.id.tvPink);
+        tv5 = dialog.findViewById(R.id.tvBlue);
+        tv6 = dialog.findViewById(R.id.tvWhite);
 
         // set bottomNavigationView to transparent
         bottomNavigationView.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent));
@@ -118,7 +136,59 @@ public class Medication extends AppCompatActivity{
             pill3.setBackground(null);
         });
 
-       // referenceProfile = FirebaseDatabase.getInstance().getReference("Registered Users");
+
+        // check what color was clicked
+        color1.setOnClickListener(v -> {
+            tv1.setTextColor(getColor(R.color.dark_grey));
+            tv2.setTextColor(getColor(R.color.et_stroke));
+            tv3.setTextColor(getColor(R.color.et_stroke));
+            tv4.setTextColor(getColor(R.color.et_stroke));
+            tv5.setTextColor(getColor(R.color.et_stroke));
+            tv6.setTextColor(getColor(R.color.et_stroke));
+        });
+        color2.setOnClickListener(v -> {
+            tv2.setTextColor(getColor(R.color.dark_grey));
+            tv1.setTextColor(getColor(R.color.et_stroke));
+            tv3.setTextColor(getColor(R.color.et_stroke));
+            tv4.setTextColor(getColor(R.color.et_stroke));
+            tv5.setTextColor(getColor(R.color.et_stroke));
+            tv6.setTextColor(getColor(R.color.et_stroke));
+        });
+        color3.setOnClickListener(v -> {
+            tv3.setTextColor(getColor(R.color.dark_grey));
+            tv1.setTextColor(getColor(R.color.et_stroke));
+            tv2.setTextColor(getColor(R.color.et_stroke));
+            tv4.setTextColor(getColor(R.color.et_stroke));
+            tv5.setTextColor(getColor(R.color.et_stroke));
+            tv6.setTextColor(getColor(R.color.et_stroke));
+        });
+        color4.setOnClickListener(v -> {
+            tv4.setTextColor(getColor(R.color.dark_grey));
+            tv1.setTextColor(getColor(R.color.et_stroke));
+            tv2.setTextColor(getColor(R.color.et_stroke));
+            tv3.setTextColor(getColor(R.color.et_stroke));
+            tv5.setTextColor(getColor(R.color.et_stroke));
+            tv6.setTextColor(getColor(R.color.et_stroke));
+        });
+        color5.setOnClickListener(v -> {
+            tv5.setTextColor(getColor(R.color.dark_grey));
+            tv1.setTextColor(getColor(R.color.et_stroke));
+            tv2.setTextColor(getColor(R.color.et_stroke));
+            tv3.setTextColor(getColor(R.color.et_stroke));
+            tv4.setTextColor(getColor(R.color.et_stroke));
+            tv6.setTextColor(getColor(R.color.et_stroke));
+        });
+        color6.setOnClickListener(v -> {
+            tv6.setTextColor(getColor(R.color.dark_grey));
+            tv1.setTextColor(getColor(R.color.et_stroke));
+            tv2.setTextColor(getColor(R.color.et_stroke));
+            tv3.setTextColor(getColor(R.color.et_stroke));
+            tv4.setTextColor(getColor(R.color.et_stroke));
+            tv5.setTextColor(getColor(R.color.et_stroke));
+        });
+
+
+        // referenceProfile = FirebaseDatabase.getInstance().getReference("Registered Users");
        // referenceCompanion = FirebaseDatabase.getInstance().getReference().child("Companion");
        // referenceSMS = FirebaseDatabase.getInstance().getReference().child("Reminders");
        // mUser = FirebaseAuth.getInstance().getCurrentUser();

@@ -65,4 +65,12 @@
     <color name="games_title">#D0855A</color>
     <color name="games_subtitle">#D0916E</color>
 
+    <!-- shape color -->
+    <color name="color1">#37E23E</color>
+    <color name="color2">#F26969</color>
+    <color name="color3">#ECC53C</color>
+    <color name="color4">#E479F5</color>
+    <color name="color5">#5E94FF</color>
+    <color name="color6">#EAEDE0</color>
+
 </resources>

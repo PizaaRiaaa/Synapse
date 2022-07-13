@@ -91,7 +91,8 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:src="@drawable/ic_minus_green"
-            android:background="@drawable/rounded_pick_number"/>
+            android:background="@drawable/rounded_pick_number"
+            android:contentDescription="@string/description_decrement" />
 
          <androidx.appcompat.widget.AppCompatEditText
              android:id="@+id/etDose"
@@ -108,7 +109,8 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:src="@drawable/ic_plus_green"
-            android:background="@drawable/rounded_pick_number"/>
+            android:background="@drawable/rounded_pick_number"
+            android:contentDescription="@string/description_increment" />
 
     </LinearLayout>
 
@@ -196,67 +198,72 @@
         android:layout_gravity="center_horizontal">
 
         <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/color1"
             android:focusable="true"
             android:clickable="true"
             android:layout_width="0dp"
             android:layout_height="20dp"
             android:layout_margin="15dp"
-            android:background="#37E23E"
+            android:background="@color/color1"
             android:layout_weight="1"
             app:shapeAppearance="@style/shape_color"
             android:contentDescription="@string/description_pill1" />
 
         <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/color2"
             android:clickable="true"
             android:layout_width="0dp"
             android:layout_height="20dp"
             android:layout_margin="15dp"
-            android:background="#F26969"
+            android:background="@color/color2"
             android:contentDescription="@string/description_pill1"
             android:layout_weight="1"
             app:shapeAppearance="@style/shape_color"
             android:focusable="true" />
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:clickable="true"
+            android:id="@+id/color3"
             android:layout_width="0dp"
             android:layout_height="20dp"
             android:layout_margin="15dp"
-            android:background="#ECC53C"
+            android:layout_weight="1"
+            android:background="@color/color3"
+            android:clickable="true"
+            android:contentDescription="@string/description_pill1"
+            android:focusable="true"
+            app:shapeAppearance="@style/shape_color" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/color4"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_margin="15dp"
+            android:background="@color/color4"
             android:contentDescription="@string/description_pill1"
             android:layout_weight="1"
             app:shapeAppearance="@style/shape_color"
             android:focusable="true" />
 
         <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/color5"
             android:clickable="true"
             android:layout_width="0dp"
             android:layout_height="20dp"
             android:layout_margin="15dp"
-            android:background="#E479F5"
+            android:background="@color/color5"
             android:contentDescription="@string/description_pill1"
             android:layout_weight="1"
             app:shapeAppearance="@style/shape_color"
             android:focusable="true" />
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:clickable="true"
-            android:layout_width="0dp"
-            android:layout_height="20dp"
-            android:layout_margin="15dp"
-            android:background="#5E94FF"
-            android:contentDescription="@string/description_pill1"
-            android:layout_weight="1"
-            app:shapeAppearance="@style/shape_color"
-            android:focusable="true" />
-
-        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/color6"
             android:focusable="true"
             android:clickable="true"
             android:layout_width="0dp"
             android:layout_height="20dp"
             android:layout_margin="15dp"
-            android:background="#EAEDE0"
+            android:background="@color/color6"
             android:layout_weight="1"
             app:shapeAppearance="@style/shape_color"
             android:contentDescription="@string/description_pill1" />
@@ -269,6 +276,7 @@
         android:layout_gravity="center_horizontal">
 
         <TextView
+            android:id="@+id/tvGreen"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:text="@string/tv_sub1"
@@ -280,6 +288,7 @@
             android:layout_margin="12dp"/>
 
         <TextView
+            android:id="@+id/tvRed"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:text="@string/tv_sub2"
@@ -291,6 +300,7 @@
             android:layout_margin="12dp"/>
 
         <TextView
+            android:id="@+id/tvBrown"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:text="@string/tv_sub3"
@@ -302,6 +312,7 @@
             android:layout_margin="12dp"/>
 
         <TextView
+            android:id="@+id/tvPink"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:text="@string/tv_sub4"
@@ -313,6 +324,7 @@
             android:layout_margin="12dp"/>
 
         <TextView
+            android:id="@+id/tvBlue"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:text="@string/tv_sub5"
@@ -324,6 +336,7 @@
             android:layout_margin="12dp"/>
 
         <TextView
+            android:id="@+id/tvWhite"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:text="@string/tv_sub6"
@@ -333,6 +346,37 @@
             android:textColor="@color/et_stroke"
             android:layout_weight="1"
             android:layout_margin="12dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
+
+       <androidx.appcompat.widget.AppCompatImageButton
+           android:layout_width="0dp"
+           android:layout_height="50dp"
+           android:src="@drawable/ic_clock"
+           android:background="@drawable/rounded_set_time"
+           android:elevation="3dp"
+           android:contentDescription="@string/description_set_time"
+           android:layout_margin="10dp"
+           android:layout_weight="1"/>
+        
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:text="@string/text_addSchedule"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:fontFamily="@font/redhat_display_bold"
+            android:textColor="@color/white"
+            android:background="@drawable/rounded_button_login"
+            android:backgroundTint="@color/light_green"
+            android:layout_margin="10dp"
+            android:layout_weight="2.7"/>
 
     </LinearLayout>
 

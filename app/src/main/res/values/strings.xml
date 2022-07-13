@@ -90,4 +90,8 @@
     <string name="tv_sub4">Pink</string>
     <string name="tv_sub5">Blue</string>
     <string name="tv_sub6">White</string>
+    <string name="description_set_time">Set Time</string>
+    <string name="text_addSchedule">Add Schedule</string>
+    <string name="description_increment">Increment</string>
+    <string name="description_decrement">Decrement</string>
 </resources>
