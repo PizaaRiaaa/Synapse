@@ -56,14 +56,14 @@
             android:text="Find people"
             android:textSize="18sp"
             android:textColor="@color/dark_grey"
-            android:fontFamily="@font/redhatdisplay_medium"/>
+            android:fontFamily="@font/redhat_display_medium"/>
 
         <TextView
             android:id="@+id/tvSeniorResults"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:fontFamily="@font/redhatdisplay_regular"
+            android:fontFamily="@font/redhat_display_regular"
             android:text="About 451 senior citizens results"
             android:textAlignment="textStart"
             android:textColor="@color/dark_grey"

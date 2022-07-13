@@ -22,7 +22,7 @@
         android:textAlignment="center"
         android:text="@string/thank_you_for_signing_up"
         android:textColor="@color/light_green"
-        android:fontFamily="@font/redhatdisplay_semibold"
+        android:fontFamily="@font/redhat_display_semibold"
         android:textSize="28sp"/>
 
     <TextView
@@ -32,7 +32,7 @@
         android:layout_margin="13dp"
         android:text="@string/sent_email"
         android:textColor="@color/light_grey"
-        android:fontFamily="@font/redhatdisplay_regular"
+        android:fontFamily="@font/redhat_display_regular"
         android:textSize="18sp"/>
 
 
@@ -43,7 +43,7 @@
             android:layout_marginTop="10dp"
             android:elevation="10dp"
             android:background="@drawable/rounded_button"
-            android:fontFamily="@font/redhatdisplay_bold"
+            android:fontFamily="@font/redhat_display_bold"
             android:text="@string/mbLogin"
             android:textSize="15sp"/>
 

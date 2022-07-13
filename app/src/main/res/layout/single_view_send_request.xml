@@ -41,7 +41,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:fontFamily="@font/redhatdisplay_semibold"
+                    android:fontFamily="@font/redhat_display_semibold"
                     android:text="@string/care_recipient_fullname"
                     android:textColor="@color/dark_grey"
                     android:textSize="14sp" />
@@ -59,7 +59,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:fontFamily="@font/redhatdisplay_medium"
+                    android:fontFamily="@font/redhat_display_medium"
                     android:text="@string/tv_userType"
                     android:textColor="@color/dark_green"
                     android:textSize="14sp" />
@@ -70,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="4dp"
-                    android:fontFamily="@font/redhatdisplay_medium"
+                    android:fontFamily="@font/redhat_display_medium"
                     android:text="@string/tvSeniorAge"
                     android:textColor="@color/dark_grey"
                     android:textSize="14sp"/>

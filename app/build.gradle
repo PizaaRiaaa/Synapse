@@ -66,4 +66,5 @@ dependencies {
 
     // picasso transformation for circular image
     implementation 'jp.wasabeef:picasso-transformations:2.4.0'
+
 }

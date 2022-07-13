@@ -14,7 +14,7 @@
         android:layout_margin="20dp"
         android:background="@color/white"
         android:contentDescription="@string/back"
-        android:src="@drawable/ic_back_button" />
+        android:src="@drawable/ic_back" />
 
     <FrameLayout
         android:layout_width="120dp"
@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="textStart"
-            android:fontFamily="@font/redhatdisplay_semibold"
+            android:fontFamily="@font/redhat_display_semibold"
             android:text="@string/senior_s_info"
             android:textColor="@color/dark_grey"
             android:textSize="20sp" />
@@ -73,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textCapWords"
                 android:background="@drawable/rounded_text_login"
-                android:fontFamily="@font/redhatdisplay_regular"
+                android:fontFamily="@font/redhat_display_regular"
                 android:hint="@string/full_name"
                 app:boxStrokeWidthFocused="0dp"
                 android:padding="20dp"
@@ -97,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textVisiblePassword"
                 android:background="@drawable/rounded_text_login"
-                android:fontFamily="@font/redhatdisplay_regular"
+                android:fontFamily="@font/redhat_display_regular"
                 android:hint="@string/email_address"
                 app:boxStrokeWidthFocused="0dp"
                 android:padding="20dp"
@@ -121,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textVisiblePassword"
                 android:background="@drawable/rounded_text_login"
-                android:fontFamily="@font/redhatdisplay_regular"
+                android:fontFamily="@font/redhat_display_regular"
                 android:hint="@string/mobile_number"
                 app:boxStrokeWidthFocused="0dp"
                 android:padding="20dp"
@@ -147,7 +147,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:background="@drawable/rounded_text_login"
-                android:fontFamily="@font/redhatdisplay_regular"
+                android:fontFamily="@font/redhat_display_regular"
                 android:hint="@string/login_password"
                 app:boxStrokeWidthFocused="0dp"
                 android:padding="20dp"
@@ -161,7 +161,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:background="@drawable/rounded_button_login"
-            android:fontFamily="@font/redhatdisplay_bold"
+            android:fontFamily="@font/redhat_display_bold"
             android:text="@string/signup"
             android:textSize="14sp" />
 
@@ -178,7 +178,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
-            android:fontFamily="@font/redhatdisplay_semibold"
+            android:fontFamily="@font/redhat_display_semibold"
             android:text="@string/already_have_account"
             android:textAlignment="center"
             android:textColor="@color/light_grey"

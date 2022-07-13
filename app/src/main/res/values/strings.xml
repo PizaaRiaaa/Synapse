@@ -72,4 +72,22 @@
     <string name="tvSendRequest">Send request</string>
     <string name="tvDeclineRequest">Decline request</string>
     <string name="tvSubHeading">to get started send request to your \n senior loved ones and start scheduling \n reminders..</string>
+
+    <!-- Set Medicine -->
+    <string name="tv_heading1">Add New Medicine</string>
+    <string name="tv_heading2">Name</string>
+    <string name="tv_heading3">Dose</string>
+    <string name="tv_heading4">Shape</string>
+    <string name="description_close">close</string>
+    <string name="description_pill1">Pill 1</string>
+    <string name="description_pill2">Pill2</string>
+    <string name="description_pill3">Pill3</string>
+    <string name="description_pill4">Pill4</string>
+    <string name="tv_heading5">Color</string>
+    <string name="tv_sub1">Green</string>
+    <string name="tv_sub2">Red</string>
+    <string name="tv_sub3">Brown</string>
+    <string name="tv_sub4">Pink</string>
+    <string name="tv_sub5">Blue</string>
+    <string name="tv_sub6">White</string>
 </resources>

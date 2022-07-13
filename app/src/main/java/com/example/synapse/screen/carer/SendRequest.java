@@ -21,8 +21,6 @@ import com.google.firebase.database.Query;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,7 +30,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.SearchView;
 import android.widget.Toast;
-import android.widget.VideoView;
+
 import java.util.HashMap;
 import java.util.Objects;
 import com.squareup.picasso.Picasso;
@@ -76,11 +74,11 @@ public class SendRequest extends AppCompatActivity {
         btnSendRequest = findViewById(R.id.btnSendRequest);
 
         dialog = new Dialog(SendRequest.this);
-        dialog.setContentView(R.layout.custom_dialog_box);
-        dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialog_background));
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setContentView(R.layout.custom_dialog_box_send_request);
+        dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialog_background1));
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.setCancelable(false);
-        dialog.getWindow().getAttributes().windowAnimations = R.style.animation;
+        dialog.getWindow().getAttributes().windowAnimations = R.style.animation1;
 
         btnOk = dialog.findViewById(R.id.btnOk);
         btnOk.setOnClickListener(view -> startActivity(new Intent(SendRequest.this, CarerHome.class)));

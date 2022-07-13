@@ -25,7 +25,8 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="vertical"
-      android:layout_gravity="center_vertical">
+       android:background="#3EDADD"
+       android:layout_gravity="center_vertical">
 
 
         <LinearLayout
@@ -41,9 +42,10 @@
                android:layout_height="wrap_content"
                android:layout_marginStart="20dp"
                android:layout_marginTop="3dp"
-               android:background="@color/white"
+               android:background="@color/light_green"
+               app:tint="@android:color/white"
                android:contentDescription="@string/back"
-               android:src="@drawable/ic_back_button" />
+               android:src="@drawable/ic_back" />
 
                <TextView
                  android:layout_width="0dp"
@@ -52,26 +54,30 @@
                  android:layout_weight="1"
                  android:layout_gravity="start"
                  android:text="Set Medicine"
+                 android:textColor="@color/white"
+                 android:fontFamily="@font/redhat_display_bold"
                  android:textSize="22sp"/>
 
-               <ImageView
-                   android:id="@+id/ivCarerProfilePic"
-                   android:layout_width="40dp"
-                   android:layout_height="40dp"
-                   android:layout_gravity="end"
-                   android:layout_margin="30dp"
-                   android:background="@drawable/carer_profile_pic"
-                   android:backgroundTint="@color/carer_profile_pic"
-                   android:contentDescription="@string/pick_carer"
-                   android:scaleType="fitCenter"
-                   android:src="@drawable/ic_carer_profilepic" />
+            <ImageView
+                android:id="@+id/ivCarerProfilePic"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="end"
+                android:layout_margin="30dp"
+                android:background="@drawable/carer_profile_pic"
+                android:backgroundTint="@color/carer_profile_pic"
+                android:contentDescription="@string/pick_carer"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_carer_profilepic" />
 
         </LinearLayout>
 
+       <!--
        <View
            android:layout_width="match_parent"
            android:layout_height="2dp"
            android:background="@color/et_stroke"/>
+           -->
 
    </LinearLayout>
 
@@ -97,8 +103,9 @@
           android:layout_gravity="bottom|end"
           android:layout_marginEnd="30dp"
           android:layout_marginBottom="80dp"
-          android:src="@drawable/ic_plus"
-          app:tint="@android:color/white"/>
+          android:src="@drawable/ic_plus_white"
+          app:tint="@android:color/white"
+          android:contentDescription="Add medicine" />
 
       <com.google.android.material.bottomappbar.BottomAppBar
           android:id="@+id/bottomAppBar"
