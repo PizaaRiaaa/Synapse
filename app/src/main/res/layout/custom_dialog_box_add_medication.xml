@@ -13,6 +13,7 @@
         android:layout_gravity="center_horizontal">
 
         <TextView
+            android:id="@+id/tvTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tv_heading1"
@@ -356,6 +357,7 @@
         android:layout_gravity="center_horizontal">
 
        <androidx.appcompat.widget.AppCompatImageButton
+           android:id="@+id/ibTimePicker"
            android:layout_width="0dp"
            android:layout_height="50dp"
            android:src="@drawable/ic_clock"
@@ -366,6 +368,7 @@
            android:layout_weight="1"/>
         
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAddSchedule"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:text="@string/text_addSchedule"
