@@ -8,6 +8,7 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -99,7 +100,7 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
 
         // set layout for recyclerview
         recyclerView = findViewById(R.id.recyclerview_medication);
-        recyclerView.setLayoutManager(new LinearLayoutManager(Medication.this));
+        recyclerView.setLayoutManager(new GridLayoutManager(Medication.this,2));
 
         dialog = new Dialog(Medication.this);
         dialog.setContentView(R.layout.custom_dialog_box_add_medication);
@@ -120,33 +121,22 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
         buttonTimePicker = dialog.findViewById(R.id.ibTimePicker);
         btnAddSchedule = dialog.findViewById(R.id.btnAddSchedule);
 
-        pill1 = dialog.findViewById(R.id.ivPill1);
-        pill2 = dialog.findViewById(R.id.ivPill2);
-        pill3 = dialog.findViewById(R.id.ivPill3);
-        pill4 = dialog.findViewById(R.id.ivPill4);
+        pill1 = dialog.findViewById(R.id.ivPill1); pill2 = dialog.findViewById(R.id.ivPill2);
+        pill3 = dialog.findViewById(R.id.ivPill3); pill4 = dialog.findViewById(R.id.ivPill4);
 
-        color1 = dialog.findViewById(R.id.color1);
-        color2 = dialog.findViewById(R.id.color2);
-        color3 = dialog.findViewById(R.id.color3);
-        color4 = dialog.findViewById(R.id.color4);
-        color5 = dialog.findViewById(R.id.color5);
-        color6 = dialog.findViewById(R.id.color6);
+        color1 = dialog.findViewById(R.id.color1); color2 = dialog.findViewById(R.id.color2);
+        color3 = dialog.findViewById(R.id.color3); color4 = dialog.findViewById(R.id.color4);
+        color5 = dialog.findViewById(R.id.color5); color6 = dialog.findViewById(R.id.color6);
 
-        tv1 = dialog.findViewById(R.id.tvGreen);
-        tv2 = dialog.findViewById(R.id.tvRed);
-        tv3 = dialog.findViewById(R.id.tvBrown);
-        tv4 = dialog.findViewById(R.id.tvPink);
-        tv5 = dialog.findViewById(R.id.tvBlue);
-        tv6 = dialog.findViewById(R.id.tvWhite);
+        tv1 = dialog.findViewById(R.id.tvGreen); tv2 = dialog.findViewById(R.id.tvRed);
+        tv3 = dialog.findViewById(R.id.tvBrown); tv4 = dialog.findViewById(R.id.tvPink);
+        tv5 = dialog.findViewById(R.id.tvBlue); tv6 = dialog.findViewById(R.id.tvWhite);
 
         // set bottomNavigationView to transparent
         bottomNavigationView.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent));
 
         // Show status bar
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        // etSMS = findViewById(R.id.etInputSms);
-        // btnSend = findViewById(R.id.btnSend);
 
         // direct user to CareHome screen
         ibBack = findViewById(R.id.ibBack);
@@ -267,6 +257,7 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
          });
 
          LoadScheduleForMedication();
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -288,7 +279,6 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
             c.set(Calendar.HOUR_OF_DAY, hourOfDay);
             c.set(Calendar.MINUTE, minute);
             c.set(Calendar.SECOND, 0);
-
             updateTimeText(c);
             startAlarm(c);
     }
@@ -304,11 +294,9 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlertReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
-
         if (c.before(Calendar.getInstance())) {
             c.add(Calendar.DATE, 1);
         }
-
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
     }
 
@@ -341,6 +329,7 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
                                     // });
                                 }
 
+
                                 @NonNull
                                 @Override
                                 public MedicationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -354,17 +343,12 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
                     }
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-
-
     }
-
-
 
     // store schedule for medicine
     private void addSchedule() {
