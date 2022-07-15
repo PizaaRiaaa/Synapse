@@ -61,7 +61,7 @@
             android:textColor="@color/mid_grey"
             android:elevation="5dp"
             android:textAlignment="center"
-            android:inputType="text|textNoSuggestions"/>
+            android:inputType="textCapWords"/>
 
         <Space
             android:layout_width="wrap_content"

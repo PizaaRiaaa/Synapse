@@ -60,7 +60,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
-public class Medication extends AppCompatActivity{
+public class Medication extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener{
 
     // instance fields
     private DatabaseReference referenceProfile, referenceCompanion, referenceReminders;
@@ -70,6 +70,7 @@ public class Medication extends AppCompatActivity{
     private int count = 0;
     private String seniorID;
 
+    private final Calendar calendar = Calendar.getInstance();
     private RecyclerView recyclerView;
     private ImageView pill1, pill2, pill3, pill4;
     private TextView tv1,tv2,tv3,tv4,tv5,tv6, etName, etDose;
@@ -144,7 +145,11 @@ public class Medication extends AppCompatActivity{
         fabAddMedicine.setOnClickListener(v -> dialog.show());
 
         // close the dialog box
-        btnClose.setOnClickListener(v -> dialog.dismiss());
+        btnClose.setOnClickListener(v -> {
+            dialog.dismiss();
+            Intent intent = getIntent();
+            startActivity(intent);
+        });
 
         // increment and decrement for number picker
         ibMinus.setOnClickListener(this::decrement);
@@ -207,33 +212,38 @@ public class Medication extends AppCompatActivity{
 
         // display time picker
         buttonTimePicker.setOnClickListener(v -> {
-           // DialogFragment timePicker = new TimePickerFragment();
-           // timePicker.show(getSupportFragmentManager(), "time picker");
+            DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                    calendar.set(Calendar.YEAR, year);
+                    calendar.set(Calendar.MONTH, month);
+                    calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-           // Calendar now = Calendar.getInstance();
-           // TimePickerDialog tpd = new TimePickerDialog(Medication.this, null,
-           //         now.get(Calendar.HOUR_OF_DAY),
-           //         now.get(Calendar.MINUTE),
-           //         false);
-           // tpd.show();
-           // DatePickerDialog dpd = new DatePickerDialog(Medication.this, null,
-           //         now.get(Calendar.YEAR),
-           //         now.get(Calendar.MONTH),
-           //         now.get(Calendar.DAY_OF_MONTH));
-           // dpd.show();
+                    // display timepicker
+                    DialogFragment timePicker = new TimePickerFragment();
+                    timePicker.show(getSupportFragmentManager(), "time picker");
 
-            showDateTimeDialog(buttonTimePicker);
+                }
+            };
+
+            new DatePickerDialog(Medication.this, dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+            updateTimeText(calendar);
+
         });
 
         // perform add schedule
-         btnAddSchedule.setOnClickListener(v -> addSchedule());
+         btnAddSchedule.setOnClickListener(v -> {
+             startAlarm(calendar);
+             addSchedule();
+         });
+
         // load recyclerview
         LoadScheduleForMedication();
 
     }
 
     private void showDateTimeDialog(AppCompatImageButton buttonTimePicker){
-        final Calendar calendar = Calendar.getInstance();
+
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -248,10 +258,12 @@ public class Medication extends AppCompatActivity{
                         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                         calendar.set(Calendar.MINUTE, minute);
 
-                        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm");
+                        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm a");
                         tvTime.setText("Alarm set for " + simpleDateFormat.format(calendar.getTime()));
                         time = simpleDateFormat.format(calendar.getTime());
+
                     }
+
                 };
 
                new TimePickerDialog(Medication.this, timeSetListener, calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE), false).show();
@@ -260,6 +272,7 @@ public class Medication extends AppCompatActivity{
         };
 
         new DatePickerDialog(Medication.this, dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -275,42 +288,35 @@ public class Medication extends AppCompatActivity{
         etDose.setText("" + count);
     }
 
-   // @Override
-   // public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-   //     String time = "Alarm set for: " + hourOfDay + "h" + minute;
-   //     tvTime.setText(time);
-   // }
+ @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-   // @Override
-   // public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-   //     String date = "You picked the following date: "+dayOfMonth+"/"+(monthOfYear+1)+"/"+year;
-   // }
-//    @Override
-//    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-//            Calendar c = Calendar.getInstance();
-//            c.set(Calendar.HOUR_OF_DAY, hourOfDay);
-//            c.set(Calendar.MINUTE, minute);
-//            c.set(Calendar.SECOND, 0);
-//            updateTimeText(c);
-//            startAlarm(c);
-//    }
-//
-//    private void updateTimeText(Calendar c) {
-//            String timeText = "Alarm set for: ";
-//            timeText += DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime());
-//            tvTime.setText(timeText);
-//            time = DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime());
-//    }
-//
-//    private void startAlarm(Calendar c) {
-//        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-//        Intent intent = new Intent(this, AlertReceiver.class);
-//        @SuppressLint("UnspecifiedImmutableFlag") PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
-//        if (c.before(Calendar.getInstance())) {
-//            c.add(Calendar.DATE, 1);
-//        }
-//        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
-//    }
+            calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            calendar.set(Calendar.MINUTE, minute);
+            calendar.set(Calendar.SECOND, 0);
+
+    }
+
+    private void updateTimeText(Calendar c) {
+        String timeText = "Alarm set for: ";
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm a");
+        tvTime.setText("Alarm set for " + simpleDateFormat.format(calendar.getTime()));
+        time = simpleDateFormat.format(calendar.getTime());
+
+           // timeText += DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime());
+           // tvTime.setText(timeText);
+           // time = DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime());
+    }
+
+    private void startAlarm(Calendar c) {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlertReceiver.class);
+        @SuppressLint("UnspecifiedImmutableFlag") PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+        if (c.before(Calendar.getInstance())) {
+            c.add(Calendar.DATE, 1);
+        }
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+    }
 
     // display all schedules for medication
     private void LoadScheduleForMedication(){
@@ -377,6 +383,7 @@ public class Medication extends AppCompatActivity{
            hashMap.put("Type", med);
            hashMap.put("userID",mUser.getUid());
 
+
            referenceCompanion.child(mUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                @Override
                public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -393,9 +400,9 @@ public class Medication extends AppCompatActivity{
                                            if(task1.isSuccessful()){
                                                //etSMS.setText(null);
 
+
                                                dialog.dismiss();
                                                CookieBar.build(Medication.this)
-                                                       .setTitle("Set Medicine")
                                                        .setMessage("You have successfully schedule medicine")
                                                        .setIcon(R.drawable.ic_cookie_check)
                                                        .setCookiePosition(CookieBar.TOP)
