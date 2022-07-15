@@ -1,4 +1,4 @@
-package com.example.synapse.screen.util;
+package com.example.synapse.screen.util.notifications;
 
 import android.annotation.TargetApi;
 import android.app.NotificationChannel;
@@ -9,13 +9,13 @@ import android.os.Build;
 import com.example.synapse.R;
 import androidx.core.app.NotificationCompat;
 
-public class NotificationHelper extends ContextWrapper {
+public class MedicineNotificationHelper extends ContextWrapper {
     public static final String channelID = "channelID";
     public static final String channelName = "Channel Name";
 
     private NotificationManager mManager;
 
-    public NotificationHelper(Context base) {
+    public MedicineNotificationHelper(Context base) {
         super(base);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannel();

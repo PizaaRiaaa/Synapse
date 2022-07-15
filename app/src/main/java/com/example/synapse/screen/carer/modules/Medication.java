@@ -4,23 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.synapse.R;
 import com.example.synapse.screen.carer.CarerHome;
-import com.example.synapse.screen.carer.SearchPeople;
-import com.example.synapse.screen.carer.ViewPeople;
 import com.example.synapse.screen.util.AlertReceiver;
 import com.example.synapse.screen.util.MedicationViewHolder;
 import com.example.synapse.screen.util.ReadWriteMedication;
-import com.example.synapse.screen.util.ReadWriteUserDetails;
-import com.example.synapse.screen.util.SearchSeniorViewHolder;
 import com.example.synapse.screen.util.TimePickerFragment;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -37,37 +30,39 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
-
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import org.aviran.cookiebar2.CookieBar;
+
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
+public class Medication extends AppCompatActivity{
 
-public class Medication extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener{
-
-    private final String MEDICATION = "Medication";
+    // instance fields
     private DatabaseReference referenceProfile, referenceCompanion, referenceReminders;
     private FirebaseUser mUser;
     private Dialog dialog;
@@ -97,10 +92,6 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
         ImageButton ibBack, btnClose, ibMinus, ibAdd;
         AppCompatImageButton buttonTimePicker;
         AppCompatButton btnAddSchedule;
-
-        // set layout for recyclerview
-        recyclerView = findViewById(R.id.recyclerview_medication);
-        recyclerView.setLayoutManager(new GridLayoutManager(Medication.this,2));
 
         dialog = new Dialog(Medication.this);
         dialog.setContentView(R.layout.custom_dialog_box_add_medication);
@@ -132,6 +123,10 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
         tv3 = dialog.findViewById(R.id.tvBrown); tv4 = dialog.findViewById(R.id.tvPink);
         tv5 = dialog.findViewById(R.id.tvBlue); tv6 = dialog.findViewById(R.id.tvWhite);
 
+        // set layout for recyclerview
+        recyclerView = findViewById(R.id.recyclerview_medication);
+        recyclerView.setLayoutManager(new GridLayoutManager(Medication.this,2));
+
         // set bottomNavigationView to transparent
         bottomNavigationView.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent));
 
@@ -146,14 +141,10 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
         });
 
         // display dialog box
-        fabAddMedicine.setOnClickListener(v -> {
-            dialog.show();
-        });
+        fabAddMedicine.setOnClickListener(v -> dialog.show());
 
         // close the dialog box
-        btnClose.setOnClickListener(v -> {
-            dialog.dismiss();
-        });
+        btnClose.setOnClickListener(v -> dialog.dismiss());
 
         // increment and decrement for number picker
         ibMinus.setOnClickListener(this::decrement);
@@ -162,102 +153,113 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
         // check what shape was clicked
         pill1.setOnClickListener(v -> {
             pill1.setBackground(AppCompatResources.getDrawable(Medication.this, R.drawable.rounded_button_pick_role));
-            pill2.setBackground(null);
-            pill3.setBackground(null);
-            pill4.setBackground(null);
-            pillShape = "Pill1";
+            pill2.setBackground(null); pill3.setBackground(null);
+            pill4.setBackground(null); pillShape = "Pill1";
         });
 
         pill2.setOnClickListener(v -> {
             pill2.setBackground(AppCompatResources.getDrawable(Medication.this, R.drawable.rounded_button_pick_role));
-            pill1.setBackground(null);
-            pill3.setBackground(null);
-            pill4.setBackground(null);
-            pillShape = "Pill2";
+            pill1.setBackground(null); pill3.setBackground(null);
+            pill4.setBackground(null); pillShape = "Pill2";
         });
         pill3.setOnClickListener(v -> {
             pill3.setBackground(AppCompatResources.getDrawable(Medication.this, R.drawable.rounded_button_pick_role));
-            pill1.setBackground(null);
-            pill2.setBackground(null);
-            pill4.setBackground(null);
-            pillShape = "Pill3";
+            pill1.setBackground(null); pill2.setBackground(null);
+            pill4.setBackground(null); pillShape = "Pill3";
         });
         pill4.setOnClickListener(v -> {
             pill4.setBackground(AppCompatResources.getDrawable(Medication.this, R.drawable.rounded_button_pick_role));
-            pill1.setBackground(null);
-            pill2.setBackground(null);
-            pill3.setBackground(null);
-            pillShape = "Pill4";
+            pill1.setBackground(null); pill2.setBackground(null);
+            pill3.setBackground(null); pillShape = "Pill4";
         });
 
         // check what color was clicked
         color1.setOnClickListener(v -> {
-            tv1.setTextColor(getColor(R.color.dark_grey));
-            tv2.setTextColor(getColor(R.color.et_stroke));
-            tv3.setTextColor(getColor(R.color.et_stroke));
-            tv4.setTextColor(getColor(R.color.et_stroke));
-            tv5.setTextColor(getColor(R.color.et_stroke));
-            tv6.setTextColor(getColor(R.color.et_stroke));
-            color = "Green";
+            tv1.setTextColor(getColor(R.color.dark_grey)); tv2.setTextColor(getColor(R.color.et_stroke));
+            tv3.setTextColor(getColor(R.color.et_stroke)) ;tv4.setTextColor(getColor(R.color.et_stroke));
+            tv5.setTextColor(getColor(R.color.et_stroke)); tv6.setTextColor(getColor(R.color.et_stroke)); color = "Green";
         });
         color2.setOnClickListener(v -> {
-            tv2.setTextColor(getColor(R.color.dark_grey));
-            tv1.setTextColor(getColor(R.color.et_stroke));
-            tv3.setTextColor(getColor(R.color.et_stroke));
-            tv4.setTextColor(getColor(R.color.et_stroke));
-            tv5.setTextColor(getColor(R.color.et_stroke));
-            tv6.setTextColor(getColor(R.color.et_stroke));
-            color = "Red";
+            tv2.setTextColor(getColor(R.color.dark_grey)); tv1.setTextColor(getColor(R.color.et_stroke));
+            tv3.setTextColor(getColor(R.color.et_stroke)); tv4.setTextColor(getColor(R.color.et_stroke));
+            tv5.setTextColor(getColor(R.color.et_stroke)); tv6.setTextColor(getColor(R.color.et_stroke)); color = "Red";
         });
         color3.setOnClickListener(v -> {
-            tv3.setTextColor(getColor(R.color.dark_grey));
-            tv1.setTextColor(getColor(R.color.et_stroke));
-            tv2.setTextColor(getColor(R.color.et_stroke));
-            tv4.setTextColor(getColor(R.color.et_stroke));
-            tv5.setTextColor(getColor(R.color.et_stroke));
-            tv6.setTextColor(getColor(R.color.et_stroke));
-            color = "Brown";
+            tv3.setTextColor(getColor(R.color.dark_grey)); tv1.setTextColor(getColor(R.color.et_stroke));
+            tv2.setTextColor(getColor(R.color.et_stroke)); tv4.setTextColor(getColor(R.color.et_stroke));
+            tv5.setTextColor(getColor(R.color.et_stroke)); tv6.setTextColor(getColor(R.color.et_stroke)); color = "Brown";
         });
         color4.setOnClickListener(v -> {
-            tv4.setTextColor(getColor(R.color.dark_grey));
-            tv1.setTextColor(getColor(R.color.et_stroke));
-            tv2.setTextColor(getColor(R.color.et_stroke));
-            tv3.setTextColor(getColor(R.color.et_stroke));
-            tv5.setTextColor(getColor(R.color.et_stroke));
-            tv6.setTextColor(getColor(R.color.et_stroke));
-            color = "Pink";
+            tv4.setTextColor(getColor(R.color.dark_grey)); tv1.setTextColor(getColor(R.color.et_stroke));
+            tv2.setTextColor(getColor(R.color.et_stroke)); tv3.setTextColor(getColor(R.color.et_stroke));
+            tv5.setTextColor(getColor(R.color.et_stroke)); tv6.setTextColor(getColor(R.color.et_stroke)); color = "Pink";
         });
         color5.setOnClickListener(v -> {
-            tv5.setTextColor(getColor(R.color.dark_grey));
-            tv1.setTextColor(getColor(R.color.et_stroke));
-            tv2.setTextColor(getColor(R.color.et_stroke));
-            tv3.setTextColor(getColor(R.color.et_stroke));
-            tv4.setTextColor(getColor(R.color.et_stroke));
-            tv6.setTextColor(getColor(R.color.et_stroke));
-            color = "Blue";
+            tv5.setTextColor(getColor(R.color.dark_grey)); tv1.setTextColor(getColor(R.color.et_stroke));
+            tv2.setTextColor(getColor(R.color.et_stroke)); tv3.setTextColor(getColor(R.color.et_stroke));
+            tv4.setTextColor(getColor(R.color.et_stroke)); tv6.setTextColor(getColor(R.color.et_stroke)); color = "Blue";
         });
         color6.setOnClickListener(v -> {
-            tv6.setTextColor(getColor(R.color.dark_grey));
-            tv1.setTextColor(getColor(R.color.et_stroke));
-            tv2.setTextColor(getColor(R.color.et_stroke));
-            tv3.setTextColor(getColor(R.color.et_stroke));
-            tv4.setTextColor(getColor(R.color.et_stroke));
-            tv5.setTextColor(getColor(R.color.et_stroke));
-            color = "White";
+            tv6.setTextColor(getColor(R.color.dark_grey)); tv1.setTextColor(getColor(R.color.et_stroke));
+            tv2.setTextColor(getColor(R.color.et_stroke)); tv3.setTextColor(getColor(R.color.et_stroke));
+            tv4.setTextColor(getColor(R.color.et_stroke)); tv5.setTextColor(getColor(R.color.et_stroke)); color = "White";
         });
 
         // display time picker
         buttonTimePicker.setOnClickListener(v -> {
-            DialogFragment timePicker = new TimePickerFragment();
-            timePicker.show(getSupportFragmentManager(), "time picker");
+           // DialogFragment timePicker = new TimePickerFragment();
+           // timePicker.show(getSupportFragmentManager(), "time picker");
+
+           // Calendar now = Calendar.getInstance();
+           // TimePickerDialog tpd = new TimePickerDialog(Medication.this, null,
+           //         now.get(Calendar.HOUR_OF_DAY),
+           //         now.get(Calendar.MINUTE),
+           //         false);
+           // tpd.show();
+           // DatePickerDialog dpd = new DatePickerDialog(Medication.this, null,
+           //         now.get(Calendar.YEAR),
+           //         now.get(Calendar.MONTH),
+           //         now.get(Calendar.DAY_OF_MONTH));
+           // dpd.show();
+
+            showDateTimeDialog(buttonTimePicker);
         });
 
-         btnAddSchedule.setOnClickListener(v -> {
-              addSchedule();
-         });
+        // perform add schedule
+         btnAddSchedule.setOnClickListener(v -> addSchedule());
+        // load recyclerview
+        LoadScheduleForMedication();
 
-         LoadScheduleForMedication();
+    }
 
+    private void showDateTimeDialog(AppCompatImageButton buttonTimePicker){
+        final Calendar calendar = Calendar.getInstance();
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, month);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        calendar.set(Calendar.MINUTE, minute);
+
+                        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm");
+                        tvTime.setText("Alarm set for " + simpleDateFormat.format(calendar.getTime()));
+                        time = simpleDateFormat.format(calendar.getTime());
+                    }
+                };
+
+               new TimePickerDialog(Medication.this, timeSetListener, calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE), false).show();
+
+            }
+        };
+
+        new DatePickerDialog(Medication.this, dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
     @SuppressLint("SetTextI18n")
@@ -273,32 +275,42 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
         etDose.setText("" + count);
     }
 
-    @Override
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            Calendar c = Calendar.getInstance();
-            c.set(Calendar.HOUR_OF_DAY, hourOfDay);
-            c.set(Calendar.MINUTE, minute);
-            c.set(Calendar.SECOND, 0);
-            updateTimeText(c);
-            startAlarm(c);
-    }
+   // @Override
+   // public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+   //     String time = "Alarm set for: " + hourOfDay + "h" + minute;
+   //     tvTime.setText(time);
+   // }
 
-    private void updateTimeText(Calendar c) {
-            String timeText = "Alarm set for: ";
-            timeText += DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime());
-            tvTime.setText(timeText);
-            time = DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime());
-    }
-
-    private void startAlarm(Calendar c) {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, AlertReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
-        if (c.before(Calendar.getInstance())) {
-            c.add(Calendar.DATE, 1);
-        }
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
-    }
+   // @Override
+   // public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+   //     String date = "You picked the following date: "+dayOfMonth+"/"+(monthOfYear+1)+"/"+year;
+   // }
+//    @Override
+//    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+//            Calendar c = Calendar.getInstance();
+//            c.set(Calendar.HOUR_OF_DAY, hourOfDay);
+//            c.set(Calendar.MINUTE, minute);
+//            c.set(Calendar.SECOND, 0);
+//            updateTimeText(c);
+//            startAlarm(c);
+//    }
+//
+//    private void updateTimeText(Calendar c) {
+//            String timeText = "Alarm set for: ";
+//            timeText += DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime());
+//            tvTime.setText(timeText);
+//            time = DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime());
+//    }
+//
+//    private void startAlarm(Calendar c) {
+//        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+//        Intent intent = new Intent(this, AlertReceiver.class);
+//        @SuppressLint("UnspecifiedImmutableFlag") PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+//        if (c.before(Calendar.getInstance())) {
+//            c.add(Calendar.DATE, 1);
+//        }
+//        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+//    }
 
     // display all schedules for medication
     private void LoadScheduleForMedication(){
@@ -306,11 +318,12 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
-                    for(DataSnapshot ds1 : snapshot.getChildren()){
+                    for(DataSnapshot ignored : snapshot.getChildren()){
                         for(DataSnapshot ds2 : snapshot.getChildren()){
                             Query query = ds2.getRef();
                             FirebaseRecyclerOptions<ReadWriteMedication> options = new FirebaseRecyclerOptions.Builder<ReadWriteMedication>().setQuery(query, ReadWriteMedication.class).build();
                             FirebaseRecyclerAdapter<ReadWriteMedication, MedicationViewHolder> adapter = new FirebaseRecyclerAdapter<ReadWriteMedication, MedicationViewHolder>(options) {
+                                @SuppressLint("SetTextI18n")
                                 @Override
                                 protected void onBindViewHolder(@NonNull MedicationViewHolder holder, @SuppressLint("RecyclerView") int position, @NonNull ReadWriteMedication model) {
 
@@ -353,13 +366,15 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
     // store schedule for medicine
     private void addSchedule() {
 
-           HashMap hashMap = new HashMap();
+        String med = "Medication";
+        HashMap hashMap = new HashMap();
+
            hashMap.put("Name",etName.getText().toString());
            hashMap.put("Dose",etDose.getText().toString());
-           hashMap.put("Time",tvTime.getText().toString());
+           hashMap.put("Time", time);
            hashMap.put("Shape",pillShape);
            hashMap.put("PillColor", color);
-           hashMap.put("Type", MEDICATION);
+           hashMap.put("Type", med);
            hashMap.put("userID",mUser.getUid());
 
            referenceCompanion.child(mUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -374,13 +389,18 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
                              @Override
                              public void onComplete(@NonNull Task task) {
                                  if(task.isSuccessful()){
-                                       referenceReminders.child(mUser.getUid()).child(seniorID).push().updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
-                                           @Override
-                                           public void onComplete(@NonNull Task task) {
-                                               if(task.isSuccessful()){
-                                                   //etSMS.setText(null);
-                                                   Toast.makeText(Medication.this, "You have successfully send the message", Toast.LENGTH_SHORT).show();
-                                               }
+                                       referenceReminders.child(mUser.getUid()).child(seniorID).push().updateChildren(hashMap).addOnCompleteListener(task1 -> {
+                                           if(task1.isSuccessful()){
+                                               //etSMS.setText(null);
+
+                                               dialog.dismiss();
+                                               CookieBar.build(Medication.this)
+                                                       .setTitle("Set Medicine")
+                                                       .setMessage("You have successfully schedule medicine")
+                                                       .setIcon(R.drawable.ic_cookie_check)
+                                                       .setCookiePosition(CookieBar.TOP)
+                                                       .setDuration(5000)
+                                                       .show();
                                            }
                                        });
                                  }
@@ -395,4 +415,6 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
                }
            });
        }
+
+
 }
