@@ -45,20 +45,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import org.aviran.cookiebar2.CookieBar;
-
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class Medication extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener{
 
@@ -147,8 +143,7 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
         // close the dialog box
         btnClose.setOnClickListener(v -> {
             dialog.dismiss();
-            Intent intent = getIntent();
-            startActivity(intent);
+            startActivity(new Intent(getIntent()));
         });
 
         // increment and decrement for number picker
@@ -225,9 +220,8 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
 
                 }
             };
-
             new DatePickerDialog(Medication.this, dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
-            updateTimeText(calendar);
+
 
         });
 
@@ -235,6 +229,8 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
          btnAddSchedule.setOnClickListener(v -> {
              startAlarm(calendar);
              addSchedule();
+             //startActivity(new Intent(getIntent()));
+
          });
 
         // load recyclerview
@@ -261,18 +257,12 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
                         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm a");
                         tvTime.setText("Alarm set for " + simpleDateFormat.format(calendar.getTime()));
                         time = simpleDateFormat.format(calendar.getTime());
-
                     }
-
                 };
-
                new TimePickerDialog(Medication.this, timeSetListener, calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE), false).show();
-
             }
         };
-
         new DatePickerDialog(Medication.this, dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -290,16 +280,15 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
 
  @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
-            calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-            calendar.set(Calendar.MINUTE, minute);
-            calendar.set(Calendar.SECOND, 0);
-
+        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 0);
+        updateTimeText(calendar);
     }
 
+    @SuppressLint("SetTextI18n")
     private void updateTimeText(Calendar c) {
-        String timeText = "Alarm set for: ";
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm a");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM dd yyyy hh:mm a", Locale.ENGLISH);
         tvTime.setText("Alarm set for " + simpleDateFormat.format(calendar.getTime()));
         time = simpleDateFormat.format(calendar.getTime());
 
@@ -383,7 +372,6 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
            hashMap.put("Type", med);
            hashMap.put("userID",mUser.getUid());
 
-
            referenceCompanion.child(mUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                @Override
                public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -396,19 +384,17 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
                              @Override
                              public void onComplete(@NonNull Task task) {
                                  if(task.isSuccessful()){
+
                                        referenceReminders.child(mUser.getUid()).child(seniorID).push().updateChildren(hashMap).addOnCompleteListener(task1 -> {
                                            if(task1.isSuccessful()){
-                                               //etSMS.setText(null);
-
-
                                                dialog.dismiss();
-                                               CookieBar.build(Medication.this)
-                                                       .setMessage("You have successfully schedule medicine")
-                                                       .setIcon(R.drawable.ic_cookie_check)
-                                                       .setCookiePosition(CookieBar.TOP)
-                                                       .setDuration(5000)
-                                                       .show();
                                            }
+                                           CookieBar.build(Medication.this)
+                                                   .setMessage("You have successfully schedule medicine")
+                                                   .setIcon(R.drawable.ic_cookie_check)
+                                                   .setCookiePosition(CookieBar.TOP)
+                                                   .setDuration(5000)
+                                                   .show();
                                        });
                                  }
                              }
@@ -416,12 +402,11 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
                       }
                   }
                }
+
                @Override
                public void onCancelled(@NonNull DatabaseError error) {
                    Toast.makeText(Medication.this, "Something went wrong! Please try again.", Toast.LENGTH_SHORT).show();
                }
            });
        }
-
-
 }
