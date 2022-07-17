@@ -48,12 +48,11 @@
             android:layout_weight="1"/>
 
     </LinearLayout>
-
+    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal">
 
         <com.google.android.material.card.MaterialCardView
@@ -66,7 +65,7 @@
             app:cardCornerRadius="20dp">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/acb_search_carer"
+            android:id="@+id/searchBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="null"
@@ -130,23 +129,347 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/gameBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="GAMES"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="20dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/dark_green">
 
-    <Button
-        android:id="@+id/searchBtn"
-        android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Symptom Journal"
+                android:textSize="25sp"
+                android:textColor="@color/dark_green"
+                android:fontFamily="@font/redhat_display_bold"
+                android:layout_margin="15dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Captures important health \n and mood information"
+                android:fontFamily="@font/redhat_display_bold"
+                android:layout_marginStart="15dp"
+                android:textSize="15sp"/>
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="end|top"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_splash_logo"/>
+
+        <FrameLayout
+            android:id="@+id/category_container"
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/btnOpen"
+            android:layout_width="130dp"
+            android:layout_height="35dp"
+            android:layout_gravity="bottom|end"
+            android:background="@color/dark_green"
+            android:textColor="@color/white"
+            app:contentPadding="9dp"
+            app:shapeAppearanceOverlay="@style/roundedImageView"/>
+
+            <TextView
+                android:id="@+id/tvOpenJournal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:text="OPEN"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="5dp"/>
+
+        </FrameLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="search"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <!-- medication module -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_margin="10dp"
+            android:layout_weight="0.7"
+            app:cardBackgroundColor="@color/medications_bg"
+            app:strokeColor="@color/dark_green"
+            app:strokeWidth="1dp"
+            app:cardCornerRadius="20dp">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/ic_medications"
+                android:contentDescription="@string/pick_carer"
+                android:scaleType="fitCenter" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/redhat_display_bold"
+                    android:text="@string/tvMedication"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textColor="@color/medication_title" />
+
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- game module -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardGames"
+            app:cardBackgroundColor="@color/games_bg"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_weight="0.7"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="20dp">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/ic_games"
+                android:contentDescription="@string/pick_carer"
+                android:scaleType="fitCenter"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="bottom">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/redhat_display_bold"
+                    android:textColor="@color/games_title"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:text="@string/tvGames"/>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <!-- physical activity module -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardPhysicalActivity"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_margin="10dp"
+            android:layout_weight="0.7"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/dark_violet"
+            app:cardBackgroundColor="@color/physical_activity_bg"
+            app:cardCornerRadius="20dp">
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/ic_physical_activity"
+                android:contentDescription="@string/pick_carer"
+                android:scaleType="fitCenter"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="bottom">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/redhat_display_bold"
+                    android:textColor="@color/physical_title"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:text="@string/tvPhysicalActivity"/>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- appointment module -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardAppointment"
+            app:cardBackgroundColor="@color/appointment_bg"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_weight="0.7"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="20dp">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/ic_appointment"
+                android:contentDescription="@string/pick_carer"
+                android:scaleType="fitCenter"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="bottom">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/redhat_display_bold"
+                    android:textColor="@color/appointment_title"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:text="@string/tvAppointment"/>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <!-- location module -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardMyLocation"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_margin="10dp"
+            android:layout_weight="0.7"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/dark_green"
+            app:strokeWidth="1dp"
+            app:cardCornerRadius="20dp">
+
+            <ImageView
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/ic_map"
+                android:contentDescription="@string/pick_carer"
+                android:scaleType="fitCenter" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/redhat_display_bold"
+                    android:text="My Location"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textColor="@color/medication_title" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardEmergency"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_margin="10dp"
+            android:layout_weight="0.7"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/red_decline_request"
+            app:strokeWidth="1dp"
+            app:cardCornerRadius="20dp">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/ic_emergency"
+                android:contentDescription="@string/pick_carer"
+                android:scaleType="fitCenter"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="bottom">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/redhat_display_bold"
+                    android:textColor="@color/red_decline_request"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:text="Emergency"/>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
 </LinearLayout>
