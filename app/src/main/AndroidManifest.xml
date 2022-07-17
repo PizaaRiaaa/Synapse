@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.synapse">
+    package="com.example.synapse" >
 
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
@@ -14,7 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Synapse"
-        tools:targetApi="31">
+        tools:targetApi="31" >
+        <activity
+            android:name=".screen.senior.dashboard.MedicationDashboard"
+            android:exported="false" />
         <activity
             android:name=".screen.carer.modules.Medication"
             android:exported="false" />
@@ -37,7 +40,7 @@
             android:name=".screen.senior.games.BrainTrainer"
             android:exported="false" />
         <activity
-            android:name=".screen.senior.GameDashboard"
+            android:name=".screen.senior.dashboard.GameDashboard"
             android:exported="false" />
         <activity
             android:name=".screen.senior.SeniorHome"
@@ -68,7 +71,7 @@
             android:exported="false" />
         <activity
             android:name=".Splashscreen"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -76,9 +79,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".screen.util.AlertReceiver"/>
-
-
+        <receiver android:name=".screen.util.AlertReceiver" />
     </application>
 
 </manifest>

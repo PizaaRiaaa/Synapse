@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     android:orientation="vertical"
-    tools:context=".screen.senior.GameDashboard">
+    tools:context=".screen.senior.dashboard.GameDashboard">
 
     <Button
         android:layout_margin="20dp"

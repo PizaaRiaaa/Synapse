@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal">
 
         <ImageView
@@ -19,7 +18,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/carer_profile_pic"
-            android:backgroundTint="@color/carer_profile_pic"
             android:contentDescription="@string/pick_carer"
             android:scaleType="fitCenter"
             android:layout_margin="10dp"/>
@@ -30,8 +28,8 @@
             android:layout_height="wrap_content"
             android:text="Hi, Name"
             android:textSize="20sp"
-            android:fontFamily="@font/redhat_display_bold"
-            android:layout_margin="18dp"
+            android:fontFamily="@font/redhat_display_regular"
+            android:layout_margin="15dp"
             android:textColor="@color/dark_grey"
             android:layout_weight="1"/>
 
@@ -42,10 +40,10 @@
             android:fontFamily="@font/redhat_display_bold"
             android:textSize="30sp"
             android:textColor="@color/dark_green"
-            android:text="9:41 am"
-            android:textAlignment="center"
-            android:layout_margin="18dp"
-            android:layout_weight="1"/>
+            android:text="Time"
+            android:textAlignment="textEnd"
+            android:layout_margin="15dp"
+            android:layout_weight="1.5"/>
 
     </LinearLayout>
     
@@ -68,7 +66,7 @@
             android:id="@+id/searchBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="null"
+            android:background="@color/light_green"
             android:textColor="@color/white"
             android:drawableEnd="@drawable/ic_search"
             android:drawableTint="@color/white"
@@ -92,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/dark_green"
-                android:background="null"
+                android:background="@color/dark_green"
                 android:drawableEnd="@drawable/ic_chat"
                 android:drawableTint="@color/white"
                 android:paddingStart="10dp"
@@ -116,7 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/dark_green"
-                android:background="null"
+                android:background="@color/dark_green"
                 android:textColor="@color/white"
                 android:drawableEnd="@drawable/ic_settings"
                 android:drawableTint="@color/white"
@@ -155,7 +153,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Captures important health \n and mood information"
+                android:text="CAPTURES IMPORTANT HEALTH \n AND MOOD INFORMATION"
                 android:fontFamily="@font/redhat_display_bold"
                 android:layout_marginStart="15dp"
                 android:textSize="15sp"/>
@@ -191,7 +189,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
                 android:text="OPEN"
-                android:textSize="18sp"
+                android:textSize="20sp"
+                android:fontFamily="@font/redhat_display_bold"
                 android:textColor="@color/white"
                 android:layout_marginEnd="30dp"
                 android:layout_marginBottom="5dp"/>
@@ -208,13 +207,12 @@
 
         <!-- medication module -->
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardMedication"
             android:layout_width="0dp"
             android:layout_height="120dp"
             android:layout_margin="10dp"
             android:layout_weight="0.7"
             app:cardBackgroundColor="@color/medications_bg"
-            app:strokeColor="@color/dark_green"
-            app:strokeWidth="1dp"
             app:cardCornerRadius="20dp">
 
             <ImageView
@@ -304,8 +302,6 @@
             android:layout_height="120dp"
             android:layout_margin="10dp"
             android:layout_weight="0.7"
-            app:strokeWidth="1dp"
-            app:strokeColor="@color/dark_violet"
             app:cardBackgroundColor="@color/physical_activity_bg"
             app:cardCornerRadius="20dp">
 

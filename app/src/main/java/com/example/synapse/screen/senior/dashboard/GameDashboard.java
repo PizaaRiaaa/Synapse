@@ -1,4 +1,4 @@
-package com.example.synapse.screen.senior;
+package com.example.synapse.screen.senior.dashboard;
 
 import androidx.appcompat.app.AppCompatActivity;
 
