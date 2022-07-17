@@ -21,12 +21,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.BreakIterator;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
@@ -36,6 +39,7 @@ public class SeniorHome extends AppCompatActivity {
     private FirebaseUser mUser;
     private ImageView ivProfilePic;
     private TextView tvSeniorName;
+    private TextClock currentTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +49,7 @@ public class SeniorHome extends AppCompatActivity {
         MaterialCardView medicationBtn = findViewById(R.id.cardMedication);
         MaterialCardView gameBtn = findViewById(R.id.cardGames);
         AppCompatButton btnSearch = findViewById(R.id.searchBtn);
-        TextView currentTime = findViewById(R.id.tvTime);
+        currentTime = findViewById(R.id.tcTime);
         ivProfilePic = findViewById(R.id.ivSeniorProfilePic);
         tvSeniorName = findViewById(R.id.tvSeniorName);
 
@@ -63,12 +67,12 @@ public class SeniorHome extends AppCompatActivity {
         btnSearch.setOnClickListener(view -> startActivity(new Intent(SeniorHome.this, SearchPeople.class)));
 
         // display current time
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm a");
-        Date current_time = Calendar.getInstance().getTime();
-        currentTime.setText(simpleDateFormat.format(current_time.getTime()));
+        currentTime.setFormat12Hour("hh:mm a");
 
         showUserProfile(userID);
     }
+
+
 
     public void showUserProfile(String firebaseUser){
         referenceProfile.child(firebaseUser).addListenerForSingleValueEvent(new ValueEventListener() {

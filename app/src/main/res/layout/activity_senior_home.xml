@@ -33,14 +33,14 @@
             android:textColor="@color/dark_grey"
             android:layout_weight="1"/>
 
-        <TextView
-            android:id="@+id/tvTime"
+        <TextClock
+            android:id="@+id/tcTime"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/redhat_display_bold"
             android:textSize="30sp"
             android:textColor="@color/dark_green"
-            android:text="Time"
+            android:format12Hour="hh:mm a"
             android:textAlignment="textEnd"
             android:layout_margin="15dp"
             android:layout_weight="1.5"/>
