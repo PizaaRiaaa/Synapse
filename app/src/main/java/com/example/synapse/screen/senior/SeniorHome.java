@@ -73,7 +73,6 @@ public class SeniorHome extends AppCompatActivity {
     }
 
 
-
     public void showUserProfile(String firebaseUser){
         referenceProfile.child(firebaseUser).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

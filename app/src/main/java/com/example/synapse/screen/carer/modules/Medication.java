@@ -238,33 +238,6 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
 
     }
 
-    private void showDateTimeDialog(AppCompatImageButton buttonTimePicker){
-
-        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, month);
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                        calendar.set(Calendar.MINUTE, minute);
-
-                        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm a");
-                        tvTime.setText("Alarm set for " + simpleDateFormat.format(calendar.getTime()));
-                        time = simpleDateFormat.format(calendar.getTime());
-                    }
-                };
-               new TimePickerDialog(Medication.this, timeSetListener, calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE), false).show();
-            }
-        };
-        new DatePickerDialog(Medication.this, dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
-    }
-
     @SuppressLint("SetTextI18n")
     public void increment(View v){
         count++;
@@ -323,8 +296,8 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
                                 protected void onBindViewHolder(@NonNull MedicationViewHolder holder, @SuppressLint("RecyclerView") int position, @NonNull ReadWriteMedication model) {
 
                                     // display medication reminders
-                                    holder.Name.setText(model.getName());
-                                    holder.Dose.setText(model.getDose() + " times today");
+                                    holder.name.setText(model.getName());
+                                    holder.dose.setText(model.getDose() + " times today");
 
                                     // // open user's profile and send user's userKey to another activity
                                     // holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -341,7 +314,7 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
                                 @NonNull
                                 @Override
                                 public MedicationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                                    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_view_medication_schedule, parent, false);
+                                    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_view_carer_medication_schedule, parent, false);
                                     return new MedicationViewHolder(view);
                                 }
                             };

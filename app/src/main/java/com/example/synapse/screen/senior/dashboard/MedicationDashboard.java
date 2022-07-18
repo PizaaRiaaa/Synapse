@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.synapse.R;
 import com.example.synapse.screen.senior.SeniorHome;
+import com.example.synapse.screen.util.AlertReceiver;
 import com.example.synapse.screen.util.MedicationViewHolder;
 import com.example.synapse.screen.util.ReadWriteMedication;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -21,18 +22,30 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TimePicker;
 
-public class MedicationDashboard extends AppCompatActivity {
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
+public class MedicationDashboard extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
 
     private DatabaseReference referenceReminders;
     private FirebaseUser mUser;
     private RecyclerView recyclerView;
+    private Calendar calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +68,13 @@ public class MedicationDashboard extends AppCompatActivity {
         LoadScheduleForMedication();
     }
 
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 0);
+    }
+
     // display all schedules for medication
     private void LoadScheduleForMedication(){
         referenceReminders.child(mUser.getUid()).addValueEventListener(new ValueEventListener() {
@@ -70,9 +90,21 @@ public class MedicationDashboard extends AppCompatActivity {
                                 @Override
                                 protected void onBindViewHolder(@NonNull MedicationViewHolder holder, @SuppressLint("RecyclerView") int position, @NonNull ReadWriteMedication model) {
 
+                                    Calendar c = Calendar.getInstance();
+                                    SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd yyyy hh:mm a", Locale.ENGLISH);
+                                    try {
+                                        c.setTime(sdf.parse(holder.time_of_medication = model.getTime()));
+
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                    startAlarm(c);
+
+
                                     // display medication reminders
-                                    holder.Name.setText(model.getName());
-                                    holder.Dose.setText(model.getDose() + " times today");
+                                    holder.name.setText(model.getName());
+                                    holder.dose.setText(model.getDose() + " times today");
+
 
                                     // // open user's profile and send user's userKey to another activity
                                     // holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +121,7 @@ public class MedicationDashboard extends AppCompatActivity {
                                 @NonNull
                                 @Override
                                 public MedicationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                                    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_view_medication_schedule, parent, false);
+                                    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_view_senior_medication_schedule, parent, false);
                                     return new MedicationViewHolder(view);
                                 }
                             };
@@ -104,5 +136,16 @@ public class MedicationDashboard extends AppCompatActivity {
 
             }
         });
+    }
+
+    // alarm for medications on recyclerview
+    private void startAlarm(Calendar c) {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlertReceiver.class);
+        @SuppressLint("UnspecifiedImmutableFlag") PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+        if (c.before(Calendar.getInstance())) {
+            c.add(Calendar.DATE, 1);
+        }
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
     }
 }

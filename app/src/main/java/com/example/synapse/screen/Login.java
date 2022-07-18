@@ -50,7 +50,7 @@ import java.util.Objects;
 public class Login extends AppCompatActivity {
 
     private static final String TAG = "loginActivity";
-    private DatabaseReference referenceUser, referenceRequest;
+    private DatabaseReference referenceUser, referenceRequest, referenceCompanion;
     private EditText etEmail, etPassword;
     private FirebaseAuth mAuth;
     private String userType;
@@ -69,6 +69,7 @@ public class Login extends AppCompatActivity {
 
         referenceUser = FirebaseDatabase.getInstance().getReference("Registered Users");
         referenceRequest = FirebaseDatabase.getInstance().getReference("Request");
+        referenceCompanion = FirebaseDatabase.getInstance().getReference("Companion");
 
 
         // authenticate user
@@ -145,6 +146,7 @@ public class Login extends AppCompatActivity {
 
                             if(userType.equals("Carer")){
 
+                                // check if carer already send request to senior
                                 referenceRequest.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -165,6 +167,26 @@ public class Login extends AppCompatActivity {
                                     }
                                 });
 
+                                // else check if carer and senior are already companion
+                                referenceCompanion.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                        if(snapshot.exists()){
+                                            Toast.makeText(Login.this, "You are logged in now", Toast.LENGTH_LONG).show();
+                                            startActivity(new Intent(Login.this, CarerHome.class));
+                                            finish();
+                                        }else{
+                                            startActivity(new Intent(Login.this, SendRequest.class));
+                                            finish();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        Toast.makeText(Login.this, "Semething went wrong! Please try again.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
 
                             }else if(userType.equals("Senior")){
                                 Toast.makeText(Login.this, "You are logged in now", Toast.LENGTH_LONG).show();

@@ -6,15 +6,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.synapse.R;
 
+import java.util.Calendar;
+
 public class MedicationViewHolder extends RecyclerView.ViewHolder {
 
-    public TextView Name;
-    public TextView Dose;
+    public TextView name;
+    public TextView dose;
+    public String time_of_medication;
 
     public MedicationViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        Name = itemView.findViewById(R.id.tvNameOfPill);
-        Dose = itemView.findViewById(R.id.tvDoseOfPill);
+        name = itemView.findViewById(R.id.tvNameOfPill);
+        dose = itemView.findViewById(R.id.tvDoseOfPill);
     }
 }
