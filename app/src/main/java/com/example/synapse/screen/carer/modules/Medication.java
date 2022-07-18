@@ -124,6 +124,7 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
         recyclerView = findViewById(R.id.recyclerview_medication);
         recyclerView.setLayoutManager(new GridLayoutManager(Medication.this,2));
 
+
         // set bottomNavigationView to transparent
         bottomNavigationView.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent));
 
@@ -264,10 +265,6 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM dd yyyy hh:mm a", Locale.ENGLISH);
         tvTime.setText("Alarm set for " + simpleDateFormat.format(calendar.getTime()));
         time = simpleDateFormat.format(calendar.getTime());
-
-           // timeText += DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime());
-           // tvTime.setText(timeText);
-           // time = DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime());
     }
 
     private void startAlarm(Calendar c) {
@@ -278,6 +275,21 @@ public class Medication extends AppCompatActivity implements TimePickerDialog.On
             c.add(Calendar.DATE, 1);
         }
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+
+            PendingIntent.getActivity(
+                    this,
+                    0, intent,
+                    PendingIntent.FLAG_IMMUTABLE);
+        }
+        else
+        {
+           PendingIntent.getActivity(
+                    this,
+                    0, intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+        }
     }
 
     // display all schedules for medication

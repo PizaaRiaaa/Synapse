@@ -70,5 +70,6 @@ dependencies {
 
     // cookie bar interactive message on the screen
     implementation 'org.aviran.cookiebar2:cookiebar2:1.1.5'
-
+// required to avoid crash on Android 12 API 31
+    implementation 'androidx.work:work-runtime-ktx:2.7.1'
 }
