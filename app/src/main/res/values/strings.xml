@@ -33,13 +33,40 @@
     <!-- register screen -->
     <string name="carer_info">Carer\'s info</string>
     <string name="full_name">Full Name</string>
-    <string name="email_address">Email Address</string>
+    <string name="email_address">Email</string>
     <string name="mobile_number">Mobile Number</string>
     <string name="signup">SIGNUP</string>
-    <string name="senior_s_info">Senior\'s info</string>
     <string name="thank_you_for_signing_up">Thank you for \n signing up!</string>
     <string name="sent_email">We\'re glad yo\'re here! \n Before you start exploring, we \n just sent you the email \n confirmation</string>
     <string name="mbLogin">LOGIN</string>
+
+    <!-- barangay list -->
+    <string-array name="barangay">
+        <item>Addition Hills</item>
+        <item>Bagong Silang</item>
+        <item>Barangay Drive</item>
+        <item>Barangka Ibaba</item>
+        <item>Barangka Ilaya</item>
+        <item>Barangka Bato</item>
+        <item>Burol</item>
+        <item>Hagdang Bato Itaas</item>
+        <item>Hagdang Bato Libis</item>
+        <item>Harapin Ang Bukas</item>
+        <item>Highway Hills</item>
+        <item>Hulo</item>
+        <item>Mabini-J. Rizal</item>
+        <item>Malamig</item>
+        <item>Mauway</item>
+        <item>Namayan</item>
+        <item>New Zañiga</item>
+        <item>Pag-asa</item>
+        <item>Plainview</item>
+        <item>Pleasant Hills</item>
+        <item>Poblacion</item>
+        <item>San Jose</item>
+        <item>Vergara</item>
+        <item>Wack-Wack Greenhills</item>
+    </string-array>
 
     <!-- carer home screen -->
     <string name="tvCarer_home_screen">Carer</string>
@@ -48,11 +75,11 @@
     <string name="tv_senior_barangay_city">Barangay, City</string>
 
     <string name="tv_senior_barangay">Barangay</string>
-    <string name="tv_senior_city">City</string>
+    <string name="tv_senior_city">Mandaluyong City</string>
 
     <string name="tv_userType">UserType</string>
     <string name="tvSeniorAge">Age</string>
-    <string name="tvCareRecipient">Care Recipient</string>
+    <string name="tvAssignedSenior">Assigned Senior</string>
     <string name="tvNotify">Notify</string>
     <string name="tvScheduleNotifications">Schedule notifications for your senior loved ones</string>
     <string name="tvMedication">Medication</string>
@@ -71,7 +98,7 @@
     <!-- send request screen -->
     <string name="tvSendRequest">Send request</string>
     <string name="tvDeclineRequest">Decline request</string>
-    <string name="tvSubHeading">to get started send request to your \n senior loved ones and start scheduling \n reminders..</string>
+    <string name="tvSubHeading">to get started send request to your \n senior loved ones and start scheduling \n reminders</string>
 
     <!-- Set Medicine -->
     <string name="tv_heading1">Add New Medicine</string>

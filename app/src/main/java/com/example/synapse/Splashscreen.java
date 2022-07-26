@@ -43,7 +43,7 @@ public class Splashscreen extends AppCompatActivity {
 
         // extracting user reference from database "Registered Users", "Request" and "Companion" nodes
         mAuth = FirebaseAuth.getInstance();
-        referenceUser = FirebaseDatabase.getInstance().getReference("Registered Users");
+        referenceUser = FirebaseDatabase.getInstance().getReference("Users");
         referenceRequest = FirebaseDatabase.getInstance().getReference("Request");
         referenceCompanion = FirebaseDatabase.getInstance().getReference("Companion");
 
@@ -87,7 +87,6 @@ public class Splashscreen extends AppCompatActivity {
 
                     // check if current user is senior, carer or admin
                     if(userType.equals("Senior")){
-                        Toast.makeText(Splashscreen.this, "Already Logged In!", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Splashscreen.this, SeniorHome.class));
                         finish();
 
@@ -104,7 +103,6 @@ public class Splashscreen extends AppCompatActivity {
                                        checkStatus = ds.child("status").getValue().toString();
 
                                        if(checkStatus.equals("pending")){
-                                           Toast.makeText(Splashscreen.this, "Already Logged In!", Toast.LENGTH_SHORT).show();
                                            startActivity(new Intent(Splashscreen.this, CarerHome.class));
                                            finish();
                                        }else{ // it means senior decline the carer request
@@ -131,7 +129,6 @@ public class Splashscreen extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 if(snapshot.exists()){
-                                    Toast.makeText(Splashscreen.this, "Already Logged In!", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(Splashscreen.this, CarerHome.class));
                                     finish();
                                 }

@@ -11,6 +11,8 @@ import com.google.android.material.button.MaterialButton;
 public class SendRequestSeniorViewHolder extends RecyclerView.ViewHolder {
 
     public TextView fullName;
+    public TextView barangay;
+    public TextView age;
     public ImageView profileImage;
     public MaterialButton btnSendRequest;
 
@@ -18,7 +20,9 @@ public class SendRequestSeniorViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
 
         fullName = itemView.findViewById(R.id.tvFullNameSendRequest);
+        barangay = itemView.findViewById(R.id.tvBarangay);
         profileImage = itemView.findViewById(R.id.ivSendRequestProfileImage);
         btnSendRequest = itemView.findViewById(R.id.btnSendRequest);
+        age = itemView.findViewById(R.id.tvAge);
     }
 }

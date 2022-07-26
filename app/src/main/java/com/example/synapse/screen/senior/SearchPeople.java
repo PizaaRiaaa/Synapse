@@ -46,8 +46,7 @@ public class SearchPeople extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_senior_search_people);
 
-        // extracting user reference from database "Registered Users"
-        mUserRef = FirebaseDatabase.getInstance().getReference().child("Registered Users");
+        mUserRef = FirebaseDatabase.getInstance().getReference().child("Users");
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 

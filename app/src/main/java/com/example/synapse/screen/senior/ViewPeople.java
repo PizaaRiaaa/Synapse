@@ -52,7 +52,7 @@ public class ViewPeople extends AppCompatActivity {
         Toast.makeText(this,"" + userID, Toast.LENGTH_SHORT).show();
 
         // extract reference to database "Registered Users", "Request", and "Companion" nodes
-        mUserRef = FirebaseDatabase.getInstance().getReference().child("Registered Users").child(userID);
+        mUserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
         requestRef = FirebaseDatabase.getInstance().getReference().child("Request");
         assignedCompanionRef = FirebaseDatabase.getInstance().getReference().child("Companion");
         mAuth = FirebaseAuth.getInstance();

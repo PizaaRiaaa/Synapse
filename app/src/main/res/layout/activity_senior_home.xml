@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:background="@color/light_green"
             android:textColor="@color/white"
-            android:drawableEnd="@drawable/ic_search"
+            android:drawableEnd="@drawable/ic_white_search"
             android:drawableTint="@color/white"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"

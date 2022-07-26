@@ -16,21 +16,29 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.Objects;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class CarerHome extends AppCompatActivity {
 
+    private static final String TAG = "" ;
     private DatabaseReference referenceProfile, referenceRequest, referenceCompanion;
     private ImageView ivProfilePic, ivSeniorProfilePic;
     private TextView tvSeniorFullName;
+    private TextView tvBarangay;
+    private TextView tvSeniorAge;
     private String seniorID, imageURL;
     private FirebaseUser user;
     private ShapeableImageView btnMedication;
@@ -43,14 +51,17 @@ public class CarerHome extends AppCompatActivity {
         ivProfilePic = findViewById(R.id.ivCarerProfilePic);
         ivSeniorProfilePic = findViewById(R.id.ivSeniorProfilePic);
         tvSeniorFullName = findViewById(R.id.tvSeniorFullName);
+        tvBarangay = findViewById(R.id.tvSeniorBarangay);
+        tvSeniorAge = findViewById(R.id.tvSeniorAge);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
         // get instance of the current user
         user = FirebaseAuth.getInstance().getCurrentUser();
-        referenceProfile = FirebaseDatabase.getInstance().getReference("Registered Users");
+        referenceProfile = FirebaseDatabase.getInstance().getReference("Users");
         referenceCompanion = FirebaseDatabase.getInstance().getReference("Companion");
         referenceRequest = FirebaseDatabase.getInstance().getReference("Request");
         String userID = user.getUid();
+
 
         // set bottomNavigationView to transparent
         bottomNavigationView.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent));
@@ -87,6 +98,19 @@ public class CarerHome extends AppCompatActivity {
         });
    }
 
+   // calculate senior's age
+    public int calculateAge(long date){
+        Calendar dob = Calendar.getInstance();
+        dob.setTimeInMillis(date);
+        Calendar today = Calendar.getInstance();
+        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+
+        if(today.get(Calendar.DAY_OF_MONTH) < dob.get(Calendar.DAY_OF_MONTH)){
+            age--;
+        }
+        return age;
+    }
+
    // display assigned senior info
     private void showSeniorProfile(String firebaseUser){
         // check if carer already send request
@@ -106,8 +130,23 @@ public class CarerHome extends AppCompatActivity {
                                     ReadWriteUserDetails seniorProfile = snapshot.getValue(ReadWriteUserDetails.class);
 
                                     assert seniorProfile != null;
+                                    // get user's age from date of birth
+                                    String user_dob = seniorProfile.getDOB();
+                                    Calendar cal = Calendar.getInstance();
+                                    SimpleDateFormat format = new SimpleDateFormat("MM dd yyyy", Locale.ENGLISH);
+                                    try {
+                                        cal.setTime(Objects.requireNonNull(format.parse(user_dob)));
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+
                                     String fullName = seniorProfile.fullName;
+                                    String barangay = seniorProfile.address;
+
                                     tvSeniorFullName.setText(fullName);
+                                    tvBarangay.setText("Brgy." + barangay + ",");
+                                    tvSeniorAge.setText(Integer.toString(calculateAge(cal.getTimeInMillis()))+ " yrs");
+
                                     imageURL = Objects.requireNonNull(snapshot.child("imageURL").getValue()).toString();
                                     Picasso.get()
                                             .load(imageURL)

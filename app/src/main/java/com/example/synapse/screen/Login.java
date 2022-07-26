@@ -67,10 +67,9 @@ public class Login extends AppCompatActivity {
         etPassword = findViewById(R.id.etLoginPassword);
         mAuth = FirebaseAuth.getInstance();
 
-        referenceUser = FirebaseDatabase.getInstance().getReference("Registered Users");
+        referenceUser = FirebaseDatabase.getInstance().getReference("Users");
         referenceRequest = FirebaseDatabase.getInstance().getReference("Request");
         referenceCompanion = FirebaseDatabase.getInstance().getReference("Companion");
-
 
         // authenticate user
         btnLogin.setOnClickListener(view -> {
@@ -159,6 +158,8 @@ public class Login extends AppCompatActivity {
                                             startActivity(new Intent(Login.this, SendRequest.class));
                                             finish();
                                         }
+
+
                                     }
 
                                     @Override
@@ -176,9 +177,6 @@ public class Login extends AppCompatActivity {
                                             Toast.makeText(Login.this, "You are logged in now", Toast.LENGTH_LONG).show();
                                             startActivity(new Intent(Login.this, CarerHome.class));
                                             finish();
-                                        }else{
-                                            startActivity(new Intent(Login.this, SendRequest.class));
-                                            finish();
                                         }
                                     }
 
@@ -194,7 +192,6 @@ public class Login extends AppCompatActivity {
                                 finish();
                             }
                         }
-
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
                             Toast.makeText(Login.this, "Something went wrong! Please try again.", Toast.LENGTH_LONG).show();

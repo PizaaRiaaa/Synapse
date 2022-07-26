@@ -88,6 +88,11 @@
         <item name="cookieActionSize">18sp</item>
     </style>
 
+    <!-- custome TextInputLayout -->
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxStrokeColor">@color/dark_grey</item>
+        <item name="boxStrokeWidth">2dp</item>
+    </style>
 
 
 </resources>

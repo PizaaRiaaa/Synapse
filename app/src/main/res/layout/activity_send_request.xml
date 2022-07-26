@@ -30,19 +30,19 @@
         android:textSize="18sp"
         android:textAlignment="center" />
 
-    <SearchView
-        android:id="@+id/search_field_send_request"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:background="@drawable/search_view"
-        android:iconifiedByDefault="false"
-        android:inputType="textCapWords"
-        android:queryBackground="@null"
-        android:queryHint="Search senior's full name"
-        android:layout_marginTop="20dp"/>
-
         <!-- recycle view for all senior users -->
+        <SearchView
+            android:id="@+id/search_field_send_request"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/search_view"
+            android:iconifiedByDefault="false"
+            android:inputType="textCapWords"
+            android:queryBackground="@null"
+            android:queryHint="Search senior's full name" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_sendRequest"
             android:layout_width="match_parent"

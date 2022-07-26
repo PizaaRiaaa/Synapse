@@ -1,4 +1,4 @@
-package com.example.synapse.screen.util;
+package com.example.synapse.screen.util.notifications;
 
 import android.view.View;
 import android.widget.TextView;

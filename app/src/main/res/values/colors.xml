@@ -8,6 +8,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color  name="mtrl_textinput_default_box_stroke_color">@color/et_stroke</color>
 
     <!-- violet -->
     <color name="light_violet">#9673F7</color>
@@ -34,7 +35,6 @@
     <color name="mid_grey">#7E7E7E</color>
     <color name="dark_grey">#565555</color>
     <color name="light_grey_input">#F3F3F3</color>
-    <color name="mtrl_textinput_default_box_stroke_color">#fff</color>
 
     <!-- carer home screen -->
     <color name="bg_home_screen">#F8F9FC</color>

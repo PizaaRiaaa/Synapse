@@ -30,10 +30,18 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.SearchView;
 import android.widget.Toast;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Objects;
 import com.squareup.picasso.Picasso;
+import org.aviran.cookiebar2.CookieBar;
+import org.joda.time.Period;
+import org.joda.time.PeriodType;
+
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class SendRequest extends AppCompatActivity {
@@ -65,8 +73,8 @@ public class SendRequest extends AppCompatActivity {
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.mid_grey));
         window.setNavigationBarColor(ContextCompat.getColor(this, R.color.mid_grey));
 
-        // extracting user reference from database "Registered Users" and "Request" nodes
-        mUserRef = FirebaseDatabase.getInstance().getReference().child("Registered Users");
+        // extracting user reference from database "Registered Users" and "Relquest" nodes
+        mUserRef = FirebaseDatabase.getInstance().getReference().child("Users");
         requestRef = FirebaseDatabase.getInstance().getReference().child("Request");
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
@@ -117,6 +125,7 @@ public class SendRequest extends AppCompatActivity {
         FirebaseRecyclerOptions<ReadWriteUserDetails> options = new FirebaseRecyclerOptions.Builder<ReadWriteUserDetails>().setQuery(query, ReadWriteUserDetails.class).build();
 
         FirebaseRecyclerAdapter<ReadWriteUserDetails, SendRequestSeniorViewHolder> adapter = new FirebaseRecyclerAdapter<ReadWriteUserDetails, SendRequestSeniorViewHolder>(options) {
+            @SuppressLint("SetTextI18n")
             @Override
             protected void onBindViewHolder(@NonNull SendRequestSeniorViewHolder holder, @SuppressLint("RecyclerView") int position, @NonNull ReadWriteUserDetails model) {
                 // prevent current login user display in recycler view
@@ -127,6 +136,7 @@ public class SendRequest extends AppCompatActivity {
                         holder.itemView.setVisibility(View.GONE);
                         holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
                     }
+
                     // display profile pic of every senior users
                     Log.i("success",model.getImageURL());
                     Picasso.get()
@@ -135,8 +145,20 @@ public class SendRequest extends AppCompatActivity {
                             .transform(new CropCircleTransformation())
                             .into(holder.profileImage);
 
+                    // get user's age from date of birth
+                    String user_dob = model.getDOB();
+                    Calendar cal = Calendar.getInstance();
+                    SimpleDateFormat format = new SimpleDateFormat("MM dd yyyy", Locale.ENGLISH);
+                    try {
+                        cal.setTime(Objects.requireNonNull(format.parse(user_dob)));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
                     // display details of every senior users
                     holder.fullName.setText(model.getFullName());
+                    holder.barangay.setText("Brgy." + model.getAddress() + ",");
+                    holder.age.setText(Integer.toString(calculateAge(cal.getTimeInMillis())) + " yrs");
 
                     // send request
                     holder.btnSendRequest.setOnClickListener(v -> {
@@ -158,9 +180,21 @@ public class SendRequest extends AppCompatActivity {
                 return new SendRequestSeniorViewHolder(view);
             }
         };
-
         adapter.startListening();
         recyclerView.setAdapter(adapter);
+    }
+
+    // calculate user's age
+    public int calculateAge(long date){
+        Calendar dob = Calendar.getInstance();
+        dob.setTimeInMillis(date);
+        Calendar today = Calendar.getInstance();
+        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+
+        if(today.get(Calendar.DAY_OF_MONTH) < dob.get(Calendar.DAY_OF_MONTH)){
+            age--;
+        }
+        return age;
     }
 
     // perform send request action

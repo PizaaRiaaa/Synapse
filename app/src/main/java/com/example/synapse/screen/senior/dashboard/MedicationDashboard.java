@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.synapse.R;
 import com.example.synapse.screen.senior.SeniorHome;
-import com.example.synapse.screen.util.AlertReceiver;
-import com.example.synapse.screen.util.MedicationViewHolder;
+import com.example.synapse.screen.util.notifications.AlertReceiver;
+import com.example.synapse.screen.util.notifications.MedicationViewHolder;
 import com.example.synapse.screen.util.ReadWriteMedication;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -20,7 +20,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -33,11 +32,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TimePicker;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 public class MedicationDashboard extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
@@ -45,7 +42,8 @@ public class MedicationDashboard extends AppCompatActivity implements TimePicker
     private DatabaseReference referenceReminders;
     private FirebaseUser mUser;
     private RecyclerView recyclerView;
-    private Calendar calendar;
+    private final Calendar calendar = Calendar.getInstance();
+    //private Calendar calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +96,7 @@ public class MedicationDashboard extends AppCompatActivity implements TimePicker
                                     } catch (ParseException e) {
                                         e.printStackTrace();
                                     }
-                                    startAlarm(c);
+                                    //startAlarm(c);
 
 
                                     // display medication reminders
