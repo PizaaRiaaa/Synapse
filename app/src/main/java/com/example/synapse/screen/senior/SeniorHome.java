@@ -8,7 +8,6 @@ import com.example.synapse.screen.senior.dashboard.GameDashboard;
 import com.example.synapse.screen.senior.dashboard.MedicationDashboard;
 import com.example.synapse.screen.util.ReadWriteUserDetails;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,9 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.FirebaseMessagingService;
 import com.squareup.picasso.Picasso;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -31,14 +28,7 @@ import android.widget.ImageView;
 import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.text.BreakIterator;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
-
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class SeniorHome extends AppCompatActivity {
@@ -138,12 +128,10 @@ public class SeniorHome extends AppCompatActivity {
                     }
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(SeniorHome.this, "Something went wrong! Please try again.", Toast.LENGTH_SHORT).show();
             }
         });
     }
-
 }

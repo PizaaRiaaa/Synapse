@@ -35,7 +35,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         super.onMessageReceived(remoteMessage);
 
 
-// playing audio and vibration when user se reques
+      // playing audio and vibration when user se reques
         Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
         r.play();
@@ -100,7 +100,6 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
 
     }
-
 }
 
 

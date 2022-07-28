@@ -84,7 +84,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:23.0.6'
 
     implementation 'joda-time:joda-time:2.10.14'
-
     // Retrofit2
     //implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
     //implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
