@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.synapse.R;
 import com.example.synapse.screen.senior.SeniorHome;
 import com.example.synapse.screen.util.notifications.AlertReceiver;
-import com.example.synapse.screen.util.notifications.MedicationViewHolder;
+import com.example.synapse.screen.util.MedicationViewHolder;
 import com.example.synapse.screen.util.ReadWriteMedication;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;

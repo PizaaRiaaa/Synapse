@@ -179,9 +179,22 @@ public class CarerHome extends AppCompatActivity {
                                         if(snapshot.exists()){
                                             ReadWriteUserDetails seniorProfile = snapshot.getValue(ReadWriteUserDetails.class);
                                             assert seniorProfile != null;
+                                            // get user's age from date of birth
+                                            String user_dob = seniorProfile.getDOB();
+                                            Calendar cal = Calendar.getInstance();
+                                            SimpleDateFormat format = new SimpleDateFormat("MM dd yyyy", Locale.ENGLISH);
+                                            try {
+                                                cal.setTime(Objects.requireNonNull(format.parse(user_dob)));
+                                            } catch (ParseException e) {
+                                                e.printStackTrace();
+                                            }
 
                                             String fullName = seniorProfile.fullName;
+                                            String barangay = seniorProfile.address;
+
                                             tvSeniorFullName.setText(fullName);
+                                            tvBarangay.setText("Brgy." + barangay + ",");
+                                            tvSeniorAge.setText(Integer.toString(calculateAge(cal.getTimeInMillis()))+ " yrs");
 
                                             imageURL = Objects.requireNonNull(snapshot.child("imageURL").getValue()).toString();
                                             Picasso.get()
